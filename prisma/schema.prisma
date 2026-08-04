@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["public"] // Define your allowed database schemas here
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model devices {
+  id        BigInt   @id @default(autoincrement())
+  vendor_id BigInt
+  name      String
+  bus       String?
+  devs_name String?
+  dev_id    String?
+  driver_id BigInt?
+  drivers   drivers? @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vendors   vendors  @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  issues    issues[]
+
+  @@schema("public") // This table will be created in the default 'public' schema
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model drivers {
+  id       BigInt    @id @default(autoincrement())
+  name     String    @unique
+  dev_type String
+  devices  devices[]
+
+  @@schema("public") // This table will be created in the default 'public' schema
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model issues {
+  id      BigInt   @id @default(autoincrement())
+  dev_id  BigInt?
+  issue   String
+  devices devices? @relation(fields: [dev_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public") // This table will be created in the default 'public' schema
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model vendors {
+  id      BigInt    @id @default(autoincrement())
+  name    String?   @default("")
+  pci_id  String?
+  pcidev  String?
+  usb_id  String?
+  usbdev  String?
+  devices devices[]
+
+  @@schema("public") // This table will be created in the default 'public' schema
+}
