@@ -25,25 +25,25 @@ export default async function Search({
 
   const searchFilter = search
     ? {
-        OR: [
-          {
-            name: {
-              contains: search,
-              mode: "insensitive" as const,
-            },
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: "insensitive" as const,
           },
-          {
-            vendors: {
-              is: {
-                name: {
-                  contains: search,
-                  mode: "insensitive" as const,
-                },
+        },
+        {
+          vendors: {
+            is: {
+              name: {
+                contains: search,
+                mode: "insensitive" as const,
               },
             },
           },
-        ],
-      }
+        },
+      ],
+    }
     : {};
 
   const baseWhere = {
@@ -53,11 +53,11 @@ export default async function Search({
 
   const queryWhere = devType
     ? {
-        ...baseWhere,
-        drivers: {
-          dev_type: devType,
-        },
-      }
+      ...baseWhere,
+      drivers: {
+        dev_type: devType,
+      },
+    }
     : baseWhere;
 
   const [devices, totalCount] = await Promise.all([
@@ -96,20 +96,20 @@ export default async function Search({
   return (
     <div>
       <div className="flex items-center justify-center text-lg font-bold m-8">
-        Listing 
+        Listing
         {bus && bus !== "" ? ` ${bus}` : ""}
         &nbsp;devices
         {devType && devType !== "" ? ` of type ${devType}` : ""}
         {search && search !== "" ? ` matching "${search}"` : ""}
       </div>
-        <div className="flex justify-between m-8 items-center">
-          {previousPageHref ? (
-            <Link href={previousPageHref}>Previous page</Link>
-          ) : <>&nbsp;</>}
-          {nextPageHref ? (
-            <Link href={nextPageHref}>Next page</Link>
-          ) : <>&nbsp;</>}
-        </div>
+      <div className="flex justify-between m-8 items-center">
+        {previousPageHref ? (
+          <Link href={previousPageHref}>Previous page</Link>
+        ) : <>&nbsp;</>}
+        {nextPageHref ? (
+          <Link href={nextPageHref}>Next page</Link>
+        ) : <>&nbsp;</>}
+      </div>
       <div>
         {devices.map((device) => (
           <DeviceCard key={device.id} device={device} />
