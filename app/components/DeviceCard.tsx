@@ -2,7 +2,7 @@ import type { DeviceWithVendorAndDriver } from "@/lib/local-types";
 
 export default function DeviceCard({ device }: { device: DeviceWithVendorAndDriver }) {
   return (
-    <div className="grid grid-cols-4 gap-4 border border-gray-300 rounded p-4 m-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border border-gray-300 rounded p-4 m-4">
       <div className="flex flex-col font-bold">
         <div>Vendor:</div>
         <div>Device:</div>
