@@ -23,13 +23,31 @@ export default async function Search({
   const currentPage = rawPage ? Math.max(1, Number.parseInt(rawPage, 10)) : 1;
   const pageSize = 5;
 
+  const searchFilter = search
+    ? {
+        OR: [
+          {
+            name: {
+              contains: search,
+              mode: "insensitive" as const,
+            },
+          },
+          {
+            vendors: {
+              is: {
+                name: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
+              },
+            },
+          },
+        ],
+      }
+    : {};
+
   const baseWhere = {
-    ...(search ? {
-      name: {
-        contains: search,
-        mode: "insensitive" as const,
-      },
-    } : {}),
+    ...searchFilter,
     ...(bus ? { bus } : {}),
   };
 
