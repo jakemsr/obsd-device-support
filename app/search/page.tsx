@@ -102,6 +102,11 @@ export default async function Search({
         {devType && devType !== "" ? ` of type ${devType}` : ""}
         {search && search !== "" ? ` matching "${search}"` : ""}
       </div>
+      {totalCount === 0 && (
+        <div className="flex items-center justify-center text-lg font-bold m-8">
+          No devices found.
+        </div>
+      )}
       <div className="flex justify-between m-8 items-center">
         {previousPageHref ? (
           <Link href={previousPageHref}>Previous page</Link>
