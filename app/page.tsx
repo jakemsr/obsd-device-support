@@ -32,8 +32,8 @@ const busTypes = await getBusTypes();
 export default function Home() {
 
   return (
-    <div className="min-h-svh bg-gray-50 flex flex-col items-center justify-center">
-      <h1 className="text-xl sm:text-2xl md:text-4xl font-bold mb-8 font-sans text-[#333333]">
+    <div className="min-h-svh flex flex-col items-center justify-center">
+      <h1 className="text-xl sm:text-2xl md:text-4xl font-bold mb-8 font-sans">
         OpenBSD Device Support Database
       </h1>
       <div className="mt-4">
