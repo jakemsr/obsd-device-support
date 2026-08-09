@@ -77,7 +77,7 @@ export default async function Search({
 
   return (
     <div>
-      <div>
+      <div className="flex items-center justify-center text-lg font-bold m-8">
         Listing 
         {bus && bus !== "" ? ` ${bus}` : ""}
         &nbsp;devices
