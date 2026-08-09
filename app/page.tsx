@@ -1,64 +1,103 @@
 import prisma from "@/lib/prisma";
 
-export default async function Home() {
+
+// get device types from public.drivers table
+async function getDeviceTypes(): Promise<string[]> {
+  const deviceTypes = await prisma.drivers.findMany({
+    distinct: ["dev_type"],
+    select: {
+      dev_type: true,
+    },
+  });
+
+  return deviceTypes.map((driver) => driver.dev_type);
+}
+
+// get unique bus types from public.devices table
+async function getBusTypes(): Promise<string[]> {
+  const busTypes = await prisma.devices.findMany({
+    distinct: ["bus"],
+    select: {
+      bus: true,
+    },
+  });
+
+  return busTypes.map((device) => device.bus);
+}
+
+const deviceTypes = await getDeviceTypes();
+const busTypes = await getBusTypes();
+
+
+export default function Home() {
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
-      <h1 className="text-4xl font-bold mb-8 font-sans text-[#333333]">
+    <div className="min-h-svh bg-gray-50 flex flex-col items-center justify-center">
+      <h1 className="text-2xl md:text-4xl font-bold mb-8 font-sans text-[#333333]">
         OpenBSD Device Support Database
       </h1>
       <div className="mt-4">
-        <form action="/search" method="get" className="flex items-baseline gap-2">
-          <label htmlFor="search">Search</label>
-          <input
-            type="text"
-            id="search"
-            name="search"
-            className="mt-2 p-2 border border-gray-300 rounded"
-            placeholder="Search for a device..."
-          />
-          <label htmlFor="bus">Bus</label>
-          <select
-            id="bus"
-            name="bus"
-            className="mt-2 p-2 border border-gray-300 rounded"
-          >
-            <option value="">Select Bus</option>
-            <option value="PCI">PCI</option>
-            <option value="USB">USB</option>
-            <option value="SCSI">SCSI</option>
-          </select>
+        <form action="/search" method="get" className="flex flex-col md:flex-row gap-2">
+          <div className="flex gap-2 items-center">
+            <label htmlFor="search">Search</label>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              className="p-2 border border-gray-300 rounded"
+              placeholder="Search a device name..."
+            />
+          </div>
+          <div className="flex gap-2 items-center">
+            <label htmlFor="bus">Bus</label>
+            <select
+              id="bus"
+              name="bus"
+              className="p-2 border border-gray-300 rounded"
+            >
+              <option value="">Select Bus</option>
+              {busTypes.map((busType) => (
+                <option key={busType} value={busType}>
+                  {busType}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex gap-2 items-center">
 
-          <label htmlFor="devType">Type</label>
-          <select
-            id="devType"
-            name="devType"
-            className="mt-2 p-2 border border-gray-300 rounded"
-          >
-            <option value="">Select Type</option>
-            <option value="network/wireless">Network/Wireless</option>
-            <option value="network/ethernet">Network/Ethernet</option>
-            <option value="storage">Storage</option>
-            <option value="audio">Audio</option>
-          </select>
-          <button
-            type="submit"
-            className="mt-4 p-2 bg-blue-500 text-white rounded"
-          >
-            Search
-          </button>
+            <label htmlFor="devType">Type</label>
+            <select
+              id="devType"
+              name="devType"
+              className="p-2 border border-gray-300 rounded"
+            >
+              <option value="">Select Type</option>
+              {deviceTypes.map((deviceType) => (
+                <option key={deviceType} value={deviceType}>
+                  {deviceType}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex gap-2 items-center">
+            <button
+              type="submit"
+              className="p-2 bg-blue-500 text-white rounded"
+            >
+              Search
+            </button>
+          </div>
         </form>
 
       </div>
       <div className="mt-4 text-sm text-gray-600">
-        Quick Search:
-        <a href="/search?devType=network/wireless">Network/Wireless</a>
-        &nbsp;|&nbsp;
-        <a href="/search?devType=network/ethernet">Network/Ethernet</a>
-        &nbsp;|&nbsp;
-        <a href="/search?devType=storage">Storage</a>
-        &nbsp;|&nbsp;
-        <a href="/search?devType=audio">Audio</a>
+        Quick Search:&nbsp;
+        {deviceTypes.map((deviceType, index) => (
+          <span key={deviceType}>
+            <a href={`/search?devType=${encodeURIComponent(deviceType)}`}>{deviceType}</a>
+            {index < deviceTypes.length - 1 && " | "}
+          </span>
+        ))}
       </div>
     </div>
   );
