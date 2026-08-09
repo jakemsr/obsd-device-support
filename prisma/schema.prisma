@@ -14,7 +14,7 @@ model devices {
   id        BigInt   @id @default(autoincrement())
   vendor_id BigInt
   name      String
-  bus       String?
+  bus       String
   devs_name String?
   dev_id    String?
   driver_id BigInt?
