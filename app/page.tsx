@@ -33,11 +33,11 @@ export default function Home() {
 
   return (
     <div className="min-h-svh bg-gray-50 flex flex-col items-center justify-center">
-      <h1 className="text-2xl md:text-4xl font-bold mb-8 font-sans text-[#333333]">
+      <h1 className="text-xl sm:text-2xl md:text-4xl font-bold mb-8 font-sans text-[#333333]">
         OpenBSD Device Support Database
       </h1>
       <div className="mt-4">
-        <form action="/search" method="get" className="flex flex-col md:flex-row gap-2">
+        <form action="/search" method="get" className="flex flex-col md:flex-row items-center gap-2">
           <div className="flex gap-2 items-center">
             <label htmlFor="search">Search</label>
             <input
