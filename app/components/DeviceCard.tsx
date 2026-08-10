@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { DeviceWithVendorAndDriver } from "@/lib/local-types";
 
 export default function DeviceCard({ device }: { device: DeviceWithVendorAndDriver }) {
@@ -11,7 +12,31 @@ export default function DeviceCard({ device }: { device: DeviceWithVendorAndDriv
       <div className="flex flex-col">
         <div>{device.vendors?.name}</div>
         <div>{device.name}</div>
-        <div><a href={`https://man.openbsd.org/${device.drivers?.name}.4`} target="_blank" rel="noopener noreferrer">{device.drivers?.name}</a></div>
+        <div>
+          <Link
+            href={`https://man.openbsd.org/${device.drivers?.name}.4`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-blue-600 hover:underline"
+          >
+            <span>{device.drivers?.name}</span>
+            <svg
+              aria-hidden="true"
+              className="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 4.5H15.5V12.5M15.5 4.5L4.5 15.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+        </div>
       </div>
       <div className="flex flex-col font-bold">
         <div>Bus:</div>
