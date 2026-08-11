@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "import:vendors": "tsx utils/import-vendors.ts",
-    "import:devices": "tsx utils/match-devices.ts"
+    "import:devices": "tsx utils/match-devices.ts",
+    "import:wicat": "tsx utils/search-wi-cat.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
