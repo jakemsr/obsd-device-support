@@ -54,7 +54,8 @@ export const ModelName = {
   devices: 'devices',
   drivers: 'drivers',
   issues: 'issues',
-  vendors: 'vendors'
+  vendors: 'vendors',
+  other_device_names: 'other_device_names'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -114,6 +115,15 @@ export const VendorsScalarFieldEnum = {
 } as const
 
 export type VendorsScalarFieldEnum = (typeof VendorsScalarFieldEnum)[keyof typeof VendorsScalarFieldEnum]
+
+
+export const Other_device_namesScalarFieldEnum = {
+  id: 'id',
+  device_name: 'device_name',
+  device_id: 'device_id'
+} as const
+
+export type Other_device_namesScalarFieldEnum = (typeof Other_device_namesScalarFieldEnum)[keyof typeof Other_device_namesScalarFieldEnum]
 
 
 export const SortOrder = {

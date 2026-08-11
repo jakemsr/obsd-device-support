@@ -244,6 +244,7 @@ export type devicesWhereInput = {
   drivers?: Prisma.XOR<Prisma.DriversNullableScalarRelationFilter, Prisma.driversWhereInput> | null
   vendors?: Prisma.XOR<Prisma.VendorsScalarRelationFilter, Prisma.vendorsWhereInput>
   issues?: Prisma.IssuesListRelationFilter
+  other_device_names?: Prisma.Other_device_namesListRelationFilter
 }
 
 export type devicesOrderByWithRelationInput = {
@@ -257,6 +258,7 @@ export type devicesOrderByWithRelationInput = {
   drivers?: Prisma.driversOrderByWithRelationInput
   vendors?: Prisma.vendorsOrderByWithRelationInput
   issues?: Prisma.issuesOrderByRelationAggregateInput
+  other_device_names?: Prisma.other_device_namesOrderByRelationAggregateInput
 }
 
 export type devicesWhereUniqueInput = Prisma.AtLeast<{
@@ -273,6 +275,7 @@ export type devicesWhereUniqueInput = Prisma.AtLeast<{
   drivers?: Prisma.XOR<Prisma.DriversNullableScalarRelationFilter, Prisma.driversWhereInput> | null
   vendors?: Prisma.XOR<Prisma.VendorsScalarRelationFilter, Prisma.vendorsWhereInput>
   issues?: Prisma.IssuesListRelationFilter
+  other_device_names?: Prisma.Other_device_namesListRelationFilter
 }, "id">
 
 export type devicesOrderByWithAggregationInput = {
@@ -312,6 +315,7 @@ export type devicesCreateInput = {
   drivers?: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
+  other_device_names?: Prisma.other_device_namesCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesUncheckedCreateInput = {
@@ -323,6 +327,7 @@ export type devicesUncheckedCreateInput = {
   dev_id?: string | null
   driver_id?: bigint | number | null
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
+  other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesUpdateInput = {
@@ -334,6 +339,7 @@ export type devicesUpdateInput = {
   drivers?: Prisma.driversUpdateOneWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
+  other_device_names?: Prisma.other_device_namesUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesUncheckedUpdateInput = {
@@ -345,6 +351,7 @@ export type devicesUncheckedUpdateInput = {
   dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   driver_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
+  other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesCreateManyInput = {
@@ -430,6 +437,11 @@ export type devicesOrderByRelationAggregateInput = {
 export type DevicesNullableScalarRelationFilter = {
   is?: Prisma.devicesWhereInput | null
   isNot?: Prisma.devicesWhereInput | null
+}
+
+export type DevicesScalarRelationFilter = {
+  is?: Prisma.devicesWhereInput
+  isNot?: Prisma.devicesWhereInput
 }
 
 export type BigIntFieldUpdateOperationsInput = {
@@ -556,6 +568,20 @@ export type devicesUncheckedUpdateManyWithoutVendorsNestedInput = {
   deleteMany?: Prisma.devicesScalarWhereInput | Prisma.devicesScalarWhereInput[]
 }
 
+export type devicesCreateNestedOneWithoutOther_device_namesInput = {
+  create?: Prisma.XOR<Prisma.devicesCreateWithoutOther_device_namesInput, Prisma.devicesUncheckedCreateWithoutOther_device_namesInput>
+  connectOrCreate?: Prisma.devicesCreateOrConnectWithoutOther_device_namesInput
+  connect?: Prisma.devicesWhereUniqueInput
+}
+
+export type devicesUpdateOneRequiredWithoutOther_device_namesNestedInput = {
+  create?: Prisma.XOR<Prisma.devicesCreateWithoutOther_device_namesInput, Prisma.devicesUncheckedCreateWithoutOther_device_namesInput>
+  connectOrCreate?: Prisma.devicesCreateOrConnectWithoutOther_device_namesInput
+  upsert?: Prisma.devicesUpsertWithoutOther_device_namesInput
+  connect?: Prisma.devicesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.devicesUpdateToOneWithWhereWithoutOther_device_namesInput, Prisma.devicesUpdateWithoutOther_device_namesInput>, Prisma.devicesUncheckedUpdateWithoutOther_device_namesInput>
+}
+
 export type devicesCreateWithoutDriversInput = {
   id?: bigint | number
   name: string
@@ -564,6 +590,7 @@ export type devicesCreateWithoutDriversInput = {
   dev_id?: string | null
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
+  other_device_names?: Prisma.other_device_namesCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesUncheckedCreateWithoutDriversInput = {
@@ -574,6 +601,7 @@ export type devicesUncheckedCreateWithoutDriversInput = {
   devs_name?: string | null
   dev_id?: string | null
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
+  other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesCreateOrConnectWithoutDriversInput = {
@@ -623,6 +651,7 @@ export type devicesCreateWithoutIssuesInput = {
   dev_id?: string | null
   drivers?: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
+  other_device_names?: Prisma.other_device_namesCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesUncheckedCreateWithoutIssuesInput = {
@@ -633,6 +662,7 @@ export type devicesUncheckedCreateWithoutIssuesInput = {
   devs_name?: string | null
   dev_id?: string | null
   driver_id?: bigint | number | null
+  other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesCreateOrConnectWithoutIssuesInput = {
@@ -659,6 +689,7 @@ export type devicesUpdateWithoutIssuesInput = {
   dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   drivers?: Prisma.driversUpdateOneWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
+  other_device_names?: Prisma.other_device_namesUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesUncheckedUpdateWithoutIssuesInput = {
@@ -669,6 +700,7 @@ export type devicesUncheckedUpdateWithoutIssuesInput = {
   devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   driver_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesCreateWithoutVendorsInput = {
@@ -679,6 +711,7 @@ export type devicesCreateWithoutVendorsInput = {
   dev_id?: string | null
   drivers?: Prisma.driversCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
+  other_device_names?: Prisma.other_device_namesCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesUncheckedCreateWithoutVendorsInput = {
@@ -689,6 +722,7 @@ export type devicesUncheckedCreateWithoutVendorsInput = {
   dev_id?: string | null
   driver_id?: bigint | number | null
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
+  other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
 }
 
 export type devicesCreateOrConnectWithoutVendorsInput = {
@@ -717,6 +751,66 @@ export type devicesUpdateManyWithWhereWithoutVendorsInput = {
   data: Prisma.XOR<Prisma.devicesUpdateManyMutationInput, Prisma.devicesUncheckedUpdateManyWithoutVendorsInput>
 }
 
+export type devicesCreateWithoutOther_device_namesInput = {
+  id?: bigint | number
+  name: string
+  bus: string
+  devs_name?: string | null
+  dev_id?: string | null
+  drivers?: Prisma.driversCreateNestedOneWithoutDevicesInput
+  vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
+  issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
+}
+
+export type devicesUncheckedCreateWithoutOther_device_namesInput = {
+  id?: bigint | number
+  vendor_id: bigint | number
+  name: string
+  bus: string
+  devs_name?: string | null
+  dev_id?: string | null
+  driver_id?: bigint | number | null
+  issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
+}
+
+export type devicesCreateOrConnectWithoutOther_device_namesInput = {
+  where: Prisma.devicesWhereUniqueInput
+  create: Prisma.XOR<Prisma.devicesCreateWithoutOther_device_namesInput, Prisma.devicesUncheckedCreateWithoutOther_device_namesInput>
+}
+
+export type devicesUpsertWithoutOther_device_namesInput = {
+  update: Prisma.XOR<Prisma.devicesUpdateWithoutOther_device_namesInput, Prisma.devicesUncheckedUpdateWithoutOther_device_namesInput>
+  create: Prisma.XOR<Prisma.devicesCreateWithoutOther_device_namesInput, Prisma.devicesUncheckedCreateWithoutOther_device_namesInput>
+  where?: Prisma.devicesWhereInput
+}
+
+export type devicesUpdateToOneWithWhereWithoutOther_device_namesInput = {
+  where?: Prisma.devicesWhereInput
+  data: Prisma.XOR<Prisma.devicesUpdateWithoutOther_device_namesInput, Prisma.devicesUncheckedUpdateWithoutOther_device_namesInput>
+}
+
+export type devicesUpdateWithoutOther_device_namesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  bus?: Prisma.StringFieldUpdateOperationsInput | string
+  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivers?: Prisma.driversUpdateOneWithoutDevicesNestedInput
+  vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
+  issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
+}
+
+export type devicesUncheckedUpdateWithoutOther_device_namesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  bus?: Prisma.StringFieldUpdateOperationsInput | string
+  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driver_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
+}
+
 export type devicesCreateManyDriversInput = {
   id?: bigint | number
   vendor_id: bigint | number
@@ -734,6 +828,7 @@ export type devicesUpdateWithoutDriversInput = {
   dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
+  other_device_names?: Prisma.other_device_namesUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesUncheckedUpdateWithoutDriversInput = {
@@ -744,6 +839,7 @@ export type devicesUncheckedUpdateWithoutDriversInput = {
   devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
+  other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesUncheckedUpdateManyWithoutDriversInput = {
@@ -772,6 +868,7 @@ export type devicesUpdateWithoutVendorsInput = {
   dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   drivers?: Prisma.driversUpdateOneWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
+  other_device_names?: Prisma.other_device_namesUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesUncheckedUpdateWithoutVendorsInput = {
@@ -782,6 +879,7 @@ export type devicesUncheckedUpdateWithoutVendorsInput = {
   dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   driver_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
+  other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
 }
 
 export type devicesUncheckedUpdateManyWithoutVendorsInput = {
@@ -800,10 +898,12 @@ export type devicesUncheckedUpdateManyWithoutVendorsInput = {
 
 export type DevicesCountOutputType = {
   issues: number
+  other_device_names: number
 }
 
 export type DevicesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   issues?: boolean | DevicesCountOutputTypeCountIssuesArgs
+  other_device_names?: boolean | DevicesCountOutputTypeCountOther_device_namesArgs
 }
 
 /**
@@ -823,6 +923,13 @@ export type DevicesCountOutputTypeCountIssuesArgs<ExtArgs extends runtime.Types.
   where?: Prisma.issuesWhereInput
 }
 
+/**
+ * DevicesCountOutputType without action
+ */
+export type DevicesCountOutputTypeCountOther_device_namesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.other_device_namesWhereInput
+}
+
 
 export type devicesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -835,6 +942,7 @@ export type devicesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   drivers?: boolean | Prisma.devices$driversArgs<ExtArgs>
   vendors?: boolean | Prisma.vendorsDefaultArgs<ExtArgs>
   issues?: boolean | Prisma.devices$issuesArgs<ExtArgs>
+  other_device_names?: boolean | Prisma.devices$other_device_namesArgs<ExtArgs>
   _count?: boolean | Prisma.DevicesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["devices"]>
 
@@ -877,6 +985,7 @@ export type devicesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   drivers?: boolean | Prisma.devices$driversArgs<ExtArgs>
   vendors?: boolean | Prisma.vendorsDefaultArgs<ExtArgs>
   issues?: boolean | Prisma.devices$issuesArgs<ExtArgs>
+  other_device_names?: boolean | Prisma.devices$other_device_namesArgs<ExtArgs>
   _count?: boolean | Prisma.DevicesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type devicesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -894,6 +1003,7 @@ export type $devicesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     drivers: Prisma.$driversPayload<ExtArgs> | null
     vendors: Prisma.$vendorsPayload<ExtArgs>
     issues: Prisma.$issuesPayload<ExtArgs>[]
+    other_device_names: Prisma.$other_device_namesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1300,6 +1410,7 @@ export interface Prisma__devicesClient<T, Null = never, ExtArgs extends runtime.
   drivers<T extends Prisma.devices$driversArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.devices$driversArgs<ExtArgs>>): Prisma.Prisma__driversClient<runtime.Types.Result.GetResult<Prisma.$driversPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   vendors<T extends Prisma.vendorsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.vendorsDefaultArgs<ExtArgs>>): Prisma.Prisma__vendorsClient<runtime.Types.Result.GetResult<Prisma.$vendorsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   issues<T extends Prisma.devices$issuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.devices$issuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$issuesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  other_device_names<T extends Prisma.devices$other_device_namesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.devices$other_device_namesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$other_device_namesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1777,6 +1888,30 @@ export type devices$issuesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.IssuesScalarFieldEnum | Prisma.IssuesScalarFieldEnum[]
+}
+
+/**
+ * devices.other_device_names
+ */
+export type devices$other_device_namesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the other_device_names
+   */
+  select?: Prisma.other_device_namesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the other_device_names
+   */
+  omit?: Prisma.other_device_namesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.other_device_namesInclude<ExtArgs> | null
+  where?: Prisma.other_device_namesWhereInput
+  orderBy?: Prisma.other_device_namesOrderByWithRelationInput | Prisma.other_device_namesOrderByWithRelationInput[]
+  cursor?: Prisma.other_device_namesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Other_device_namesScalarFieldEnum | Prisma.Other_device_namesScalarFieldEnum[]
 }
 
 /**
