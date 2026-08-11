@@ -4,7 +4,7 @@ import prisma from "../lib/prisma";
 
 const usbdevsPath = "/usr/src/sys/dev/usb/usbdevs";
 
-const currDriver = "mtw";
+const currDriver = "atu";
 
 const driverConfig = {
   mtw:
@@ -15,15 +15,17 @@ const driverConfig = {
     filter: "^\\s*USB_ID\\(",
     match: "^\\s*USB_ID\\((\\S+),\\s+(\\S+)\\),?\\s*$",
     path: "/usr/src/sys/dev/usb/if_mtw.c",
+    removeVendor: false,
   },
   atu:
   {
     name: "atu",
     devType: "network/wireless",
     bus: "USB",
-    filter: "^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*}\\s*,?\\s*$",
-    match: "^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*}\\s*,?\\s*$",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*,?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*,`,
     path: "/usr/src/sys/dev/usb/if_atu.c",
+    removeVendor: true,
   },
 };
 
@@ -46,7 +48,8 @@ function extractDeviceFields(text: string): DeviceRecord[] {
 
       return {
         vendor_dev: match[1],
-        device_dev: match[2],
+        device_dev: driverConfig[currDriver].removeVendor?
+          match[2].substring(match[1].length + 1) :  match[2],
       };
     })
     .filter((value): value is DeviceRecord => Boolean(value));
@@ -59,7 +62,7 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
     console.log(`USB device found: ${match[1]} ${match[2]}`);
     const deviceDevId = match[1];
     const deviceName = match[2];
-/*
+
     const vendor = await prisma.vendors.findFirst({
       where: { usbdev: vendor_dev },
     });
@@ -90,9 +93,9 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
     } else {
       console.log(`Device already exists: ${existing.dev_id} ${existing.name}!!!\n`);
     }
-*/
+
   } else {
-    throw new Error(`USB device not found: ${vendor_dev} ${device_dev}`);
+    throw new Error(`USB device not found: '${vendor_dev}' '${device_dev}'`);
   }
 }
 
