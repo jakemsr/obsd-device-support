@@ -91,7 +91,7 @@ export default function Home() {
         </form>
 
       </div>
-      <div className="mt-4 text-sm text-gray-600">
+      <div className="mt-4 text-sm">
         Quick Search:&nbsp;
         {deviceTypes.map((deviceType, index) => (
           <span key={deviceType}>
