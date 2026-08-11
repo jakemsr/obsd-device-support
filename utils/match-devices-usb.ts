@@ -16,6 +16,15 @@ const driverConfig = {
     match: "^\\s*USB_ID\\((\\S+),\\s+(\\S+)\\),?\\s*$",
     path: "/usr/src/sys/dev/usb/if_mtw.c",
   },
+  atu:
+  {
+    name: "atu",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: "^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*}\\s*,?\\s*$",
+    match: "^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*}\\s*,?\\s*$",
+    path: "/usr/src/sys/dev/usb/if_atu.c",
+  },
 };
 
 
