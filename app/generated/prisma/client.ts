@@ -64,3 +64,8 @@ export type issues = Prisma.issuesModel
  * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
  */
 export type vendors = Prisma.vendorsModel
+/**
+ * Model other_device_names
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type other_device_names = Prisma.other_device_namesModel

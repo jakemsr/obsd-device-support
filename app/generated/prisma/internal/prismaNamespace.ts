@@ -400,7 +400,8 @@ export const ModelName = {
   devices: 'devices',
   drivers: 'drivers',
   issues: 'issues',
-  vendors: 'vendors'
+  vendors: 'vendors',
+  other_device_names: 'other_device_names'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "devices" | "drivers" | "issues" | "vendors"
+    modelProps: "devices" | "drivers" | "issues" | "vendors" | "other_device_names"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -716,6 +717,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    other_device_names: {
+      payload: Prisma.$other_device_namesPayload<ExtArgs>
+      fields: Prisma.other_device_namesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.other_device_namesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.other_device_namesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>
+        }
+        findFirst: {
+          args: Prisma.other_device_namesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.other_device_namesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>
+        }
+        findMany: {
+          args: Prisma.other_device_namesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>[]
+        }
+        create: {
+          args: Prisma.other_device_namesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>
+        }
+        createMany: {
+          args: Prisma.other_device_namesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.other_device_namesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>[]
+        }
+        delete: {
+          args: Prisma.other_device_namesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>
+        }
+        update: {
+          args: Prisma.other_device_namesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>
+        }
+        deleteMany: {
+          args: Prisma.other_device_namesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.other_device_namesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.other_device_namesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>[]
+        }
+        upsert: {
+          args: Prisma.other_device_namesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$other_device_namesPayload>
+        }
+        aggregate: {
+          args: Prisma.Other_device_namesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOther_device_names>
+        }
+        groupBy: {
+          args: Prisma.other_device_namesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Other_device_namesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.other_device_namesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Other_device_namesCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -796,6 +871,15 @@ export const VendorsScalarFieldEnum = {
 } as const
 
 export type VendorsScalarFieldEnum = (typeof VendorsScalarFieldEnum)[keyof typeof VendorsScalarFieldEnum]
+
+
+export const Other_device_namesScalarFieldEnum = {
+  id: 'id',
+  device_name: 'device_name',
+  device_id: 'device_id'
+} as const
+
+export type Other_device_namesScalarFieldEnum = (typeof Other_device_namesScalarFieldEnum)[keyof typeof Other_device_namesScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1038,6 +1122,7 @@ export type GlobalOmitConfig = {
   drivers?: Prisma.driversOmit
   issues?: Prisma.issuesOmit
   vendors?: Prisma.vendorsOmit
+  other_device_names?: Prisma.other_device_namesOmit
 }
 
 /* Types for Logging */

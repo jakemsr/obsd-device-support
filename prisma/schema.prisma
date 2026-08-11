@@ -5,24 +5,25 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  schemas  = ["public"] // Define your allowed database schemas here
+  schemas  = ["public"]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model devices {
-  id        BigInt   @id @default(autoincrement())
-  vendor_id BigInt
-  name      String
-  bus       String?
-  devs_name String?
-  dev_id    String?
-  driver_id BigInt?
-  drivers   drivers? @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  vendors   vendors  @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  issues    issues[]
+  id                 BigInt               @id @default(autoincrement())
+  vendor_id          BigInt
+  name               String
+  bus                String
+  devs_name          String?
+  dev_id             String?
+  driver_id          BigInt?
+  drivers            drivers?             @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vendors            vendors              @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  issues             issues[]
+  other_device_names other_device_names[]
 
-  @@schema("public") // This table will be created in the default 'public' schema
+  @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -32,7 +33,7 @@ model drivers {
   dev_type String
   devices  devices[]
 
-  @@schema("public") // This table will be created in the default 'public' schema
+  @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -42,7 +43,7 @@ model issues {
   issue   String
   devices devices? @relation(fields: [dev_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@schema("public") // This table will be created in the default 'public' schema
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -57,5 +58,15 @@ model vendors {
   usbdev  String?
   devices devices[]
 
-  @@schema("public") // This table will be created in the default 'public' schema
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model other_device_names {
+  id          BigInt  @id @default(autoincrement())
+  device_name String  @default("")
+  device_id   BigInt
+  devices     devices @relation(fields: [device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
