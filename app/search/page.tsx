@@ -1,6 +1,5 @@
-import prisma from "@/lib/prisma";
-import DeviceCard from "@/app/components/DeviceCard";
-import Link from "next/link";
+import { Suspense } from "react";
+import SearchDevices from "../components/SearchDevices";
 
 
 export default async function Search({
@@ -60,66 +59,27 @@ export default async function Search({
     }
     : baseWhere;
 
-  const [devices, totalCount] = await Promise.all([
-    prisma.devices.findMany({
-      where: queryWhere,
-      orderBy: {
-        id: "asc",
-      },
-      skip: (currentPage - 1) * pageSize,
-      take: pageSize,
-      include: {
-        vendors: true,
-        drivers: true,
-      },
-    }),
-    prisma.devices.count({
-      where: queryWhere,
-    }),
-  ]);
-
-  const hasNextPage = currentPage * pageSize < totalCount;
-  const hasPreviousPage = currentPage > 1;
-
-  const buildPageHref = (targetPage: number) => {
-    const queryParams = new URLSearchParams();
-    if (search) queryParams.set("search", search);
-    if (bus) queryParams.set("bus", bus);
-    if (devType) queryParams.set("devType", devType);
-    queryParams.set("page", targetPage.toString());
-    return `/search?${queryParams.toString()}`;
-  };
-
-  const previousPageHref = hasPreviousPage ? buildPageHref(currentPage - 1) : undefined;
-  const nextPageHref = hasNextPage ? buildPageHref(currentPage + 1) : undefined;
 
   return (
-    <div>
-      <div className="flex items-center justify-center text-lg font-bold m-8">
+    <>
+      <div className="text-center text-lg md:text-2xl font-bold mx-4 mt-4">
         Listing
         {bus && bus !== "" ? ` ${bus}` : ""}
         &nbsp;devices
         {devType && devType !== "" ? ` of type ${devType}` : ""}
         {search && search !== "" ? ` matching "${search}"` : ""}
       </div>
-      {totalCount === 0 && (
-        <div className="flex items-center justify-center text-lg font-bold m-8">
-          No devices found.
-        </div>
-      )}
-      <div className="flex justify-between m-8 items-center">
-        {previousPageHref ? (
-          <Link href={previousPageHref}>Previous page</Link>
-        ) : <>&nbsp;</>}
-        {nextPageHref ? (
-          <Link href={nextPageHref}>Next page</Link>
-        ) : <>&nbsp;</>}
-      </div>
-      <div>
-        {devices.map((device) => (
-          <DeviceCard key={device.id} device={device} />
-        ))}
-      </div>
-    </div>
+
+      <Suspense fallback={<div className="flex items-center justify-center font-bold m-8">Loading devices...</div>}>
+        <SearchDevices
+          queryWhere={queryWhere}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          search={search}
+          bus={bus}
+          devType={devType}
+        />
+      </Suspense>
+    </>
   );
 }
