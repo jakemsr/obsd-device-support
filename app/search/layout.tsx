@@ -7,7 +7,7 @@ export default function SearchLayout({
 }) {
   return (
     <div className="">
-      <div className="flex justify-between items-center text-sm sm:text-base bg-gray-100 p-4">
+      <div className="flex justify-between items-center text-sm sm:text-base bg-gray-100 dark:bg-gray-800 p-4">
         <Link href="/" className="text-blue-700 hover:underline">Home</Link>
         <span className="text-center">OpenBSD Device Support Database</span>
         <Link href="/login" className="text-blue-700 cursor-not-allowed pointer-events-none">Login</Link>

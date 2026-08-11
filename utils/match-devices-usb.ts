@@ -15,6 +15,7 @@ const driverConfig = {
     filter: "^\\s*USB_ID\\(",
     match: "^\\s*USB_ID\\((\\S+),\\s+(\\S+)\\),?\\s*$",
     path: "/usr/src/sys/dev/usb/if_mtw.c",
+    removeVendor: false,
   },
   atu:
   {
@@ -24,6 +25,7 @@ const driverConfig = {
     filter: "^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*}\\s*,?\\s*$",
     match: "^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*}\\s*,?\\s*$",
     path: "/usr/src/sys/dev/usb/if_atu.c",
+    removeVendor: true,
   },
 };
 
@@ -46,7 +48,8 @@ function extractDeviceFields(text: string): DeviceRecord[] {
 
       return {
         vendor_dev: match[1],
-        device_dev: match[2],
+        device_dev: driverConfig[currDriver].removeVendor ?
+          match[2].substring(match[1].length + 1) : match[2],
       };
     })
     .filter((value): value is DeviceRecord => Boolean(value));
