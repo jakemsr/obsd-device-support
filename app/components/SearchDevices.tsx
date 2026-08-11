@@ -63,7 +63,7 @@ export default async function SearchDevices({ queryWhere, currentPage, pageSize,
           )}
         </div>
       </div>
-      <div className="flex gap-2 items-center justify-between text-sm text-blue-700 mx-8 mt-2">
+      <div className="flex gap-2 items-center justify-between text-sm text-blue-700 dark:text-blue-400 mx-8 mt-2">
 
         <div>
           {previousPageHref ? (

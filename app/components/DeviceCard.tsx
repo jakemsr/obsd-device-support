@@ -17,7 +17,7 @@ export default function DeviceCard({ device }: { device: DeviceWithVendorAndDriv
             href={`https://man.openbsd.org/${device.drivers?.name}.4`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-blue-600 hover:underline"
+            className="inline-flex items-center gap-1 text-blue-700 dark:text-blue-400 hover:underline"
           >
             <span>{device.drivers?.name}</span>
             <svg
