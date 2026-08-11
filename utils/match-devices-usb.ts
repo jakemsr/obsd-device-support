@@ -4,11 +4,20 @@ import prisma from "../lib/prisma";
 
 const usbdevsPath = "/usr/src/sys/dev/usb/usbdevs";
 
-const driverPath = "/usr/src/sys/dev/usb/if_mtw.c";
-const driverName = "mtw";
-const driverDevType = "network/wireless";
-const driverBus = "USB";
-const driverMatch = "USB_ID";
+const currDriver = "mtw";
+
+const driverConfig = {
+  mtw:
+  {
+    name: "mtw",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: "^\\s*USB_ID\\(",
+    match: "^\\s*USB_ID\\((\\S+),\\s+(\\S+)\\),?\\s*$",
+    path: "/usr/src/sys/dev/usb/if_mtw.c",
+  },
+};
+
 
 type DeviceRecord = {
   vendor_dev: string;
@@ -19,9 +28,9 @@ function extractDeviceFields(text: string): DeviceRecord[] {
   return text
     .split(/\r?\n/)
     .map((line) => line.trim())
-    .filter((line) => new RegExp(`^\\s*USB_ID\\(`).test(line))
+    .filter((line) => new RegExp(driverConfig[currDriver].filter).test(line))
     .map((line) => {
-      const match = line.match(new RegExp(`^\\s*USB_ID\\((\\S+),\\s+(\\S+)\\),?\\s*$`));
+      const match = line.match(new RegExp(driverConfig[currDriver].match));
       if (!match) {
         return null;
       }
@@ -65,7 +74,7 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
           name: deviceName,
           vendor_id: vendor.id,
           driver_id: driverId,
-          bus: driverBus ?? null,
+          bus: driverConfig[currDriver].bus ?? null,
         },
       });
       console.log(`Device created: ${deviceDevId} ${deviceName}\n`);
@@ -108,13 +117,13 @@ async function importDriver(): Promise<void> {
 
   // Implementation for importing the driver goes here
   const existingDriver = await prisma.drivers.findFirst({
-    where: { name: driverName },
+    where: { name: driverConfig[currDriver].name },
   });
   if (!existingDriver) {
     const driver = await prisma.drivers.create({
       data: {
-        name: driverName,
-        dev_type: driverDevType,
+        name: driverConfig[currDriver].name,
+        dev_type: driverConfig[currDriver].devType,
       },
     });
     console.log(`Driver created: ${driver.id} ${driver.name}`);
@@ -124,7 +133,7 @@ async function importDriver(): Promise<void> {
     driverId = existingDriver.id;
   }
 
-  importDevices(driverPath, driverId)
+  importDevices(driverConfig[currDriver].path, driverId)
       .catch((error) => {
         console.error("Device import failed:", error);
         process.exitCode = 1;
