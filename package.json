@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "import:vendors": "tsx utils/import-vendors.ts",
-    "import:devices": "tsx utils/match-devices.ts",
+    "import:vendors-pci": "tsx utils/import-vendors-pci.ts",
+    "import:devices-pci": "tsx utils/match-devices-pci.ts",
+    "import:devices-usb": "tsx utils/match-devices-usb.ts",
     "import:wicat": "tsx utils/search-wi-cat.ts"
   },
   "dependencies": {
