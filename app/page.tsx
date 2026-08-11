@@ -46,6 +46,7 @@ export default function Home() {
               name="search"
               className="p-2 border border-gray-300 rounded"
               placeholder="Search a device name..."
+              autoFocus
             />
           </div>
           <div className="flex gap-2 items-center">
