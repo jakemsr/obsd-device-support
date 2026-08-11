@@ -83,7 +83,7 @@ async function importDevices(filePath: string, driverId: bigint): Promise<void> 
   try {
     text = await readFile(filePath, "utf8");
   } catch (e) {
-    console.log(error.message);
+    console.log((e as Error).message);
     process.exit(-1);
   }
   const extracted = extractDeviceFields(text);
