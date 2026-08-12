@@ -58,14 +58,12 @@ export default function DeviceCard({ device }: { device: FullDeviceInfo }) {
         </div>
       </div>
 
-      {device.other_device_names?.length > 0 && (
-      <div className="flex gap-2 col-span-1 sm:col-span-2">
-        <div className="font-bold">Other names:</div>
-        <div className="flex flex-wrap">
-          {device.other_device_names?.map((otherName, index) => (
-            <div key={otherName.id}>{index > 0 && ", "}{otherName.device_name}</div>
+      {device.other_device_names.length > 0 && (
+      <div className="col-span-1 sm:col-span-2">
+        <span className="font-bold">Other names: </span>
+          {device.other_device_names.map((otherName, index) => (
+            <span key={otherName.id} className="inline-block">{otherName.device_name}{index < device.other_device_names.length - 1 ? ",\u00A0" : ""}</span>
           ))}
-        </div>
       </div>
       )}
     </div>
