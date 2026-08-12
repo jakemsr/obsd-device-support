@@ -25,6 +25,7 @@ export default async function SearchDevices({ queryWhere, currentPage, pageSize,
       include: {
         vendors: true,
         drivers: true,
+        other_device_names: true,
       },
     }),
     prisma.devices.count({

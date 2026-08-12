@@ -1,7 +1,7 @@
 import Link from "next/link";
-import type { DeviceWithVendorAndDriver } from "@/lib/local-types";
+import type { FullDeviceInfo } from "@/lib/local-types";
 
-export default function DeviceCard({ device }: { device: DeviceWithVendorAndDriver }) {
+export default function DeviceCard({ device }: { device: FullDeviceInfo }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-gray-300 rounded p-4 m-4">
       <div>
@@ -57,6 +57,17 @@ export default function DeviceCard({ device }: { device: DeviceWithVendorAndDriv
           <div>{device.dev_id}</div>
         </div>
       </div>
+
+      {device.other_device_names?.length > 0 && (
+      <div className="flex gap-2 col-span-1 sm:col-span-2">
+        <div className="font-bold">Other names:</div>
+        <div className="flex flex-wrap">
+          {device.other_device_names?.map((otherName, index) => (
+            <div key={otherName.id}>{index > 0 && ", "}{otherName.device_name}</div>
+          ))}
+        </div>
+      </div>
+      )}
     </div>
   );
 }
