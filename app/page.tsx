@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import SearchFields from "./components/SearchFields";
 import SearchFieldsSkeleton from "./components/SearchFieldsSkeleton";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -14,6 +15,14 @@ export default function Home() {
         <SearchFields />
       </Suspense>
 
+      <div className="mt-4 text-sm sm:text-base text-center">
+        <Link
+          href="/docs/how_this_works"
+          className="text-link hover:underline"
+        >
+          How this works
+        </Link>
+      </div>
     </div>
   );
 }
