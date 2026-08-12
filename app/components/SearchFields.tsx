@@ -1,3 +1,4 @@
+import Link from "next/link";
 import prisma from "@/lib/prisma";
 
 
@@ -91,7 +92,12 @@ export default async function SearchFields() {
         Quick Search:&nbsp;
         {deviceTypes.map((deviceType, index) => (
           <span key={deviceType}>
-            <a href={`/search?devType=${encodeURIComponent(deviceType)}`}>{deviceType}</a>
+            <Link
+              href={`/search?devType=${encodeURIComponent(deviceType)}`}
+              className="text-link hover:underline"
+            >
+              {deviceType}
+            </Link>
             {index < deviceTypes.length - 1 && " | "}
           </span>
         ))}
