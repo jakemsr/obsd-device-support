@@ -21,27 +21,42 @@ export default async function Search({
       : undefined;
   const currentPage = rawPage ? Math.max(1, Number.parseInt(rawPage, 10)) : 1;
   const pageSize = 5;
+  const searchTerms = search
+    ? search.trim().split(/\s+/).filter(Boolean)
+    : [];
 
-  const searchFilter = search
+  const searchFilter = searchTerms.length
     ? {
-      OR: [
-        {
-          name: {
-            contains: search,
-            mode: "insensitive" as const,
+      AND: searchTerms.map((term) => ({
+        OR: [
+          {
+            name: {
+              contains: term,
+              mode: "insensitive" as const,
+            },
           },
-        },
-        {
-          vendors: {
-            is: {
-              name: {
-                contains: search,
-                mode: "insensitive" as const,
+          {
+            vendors: {
+              is: {
+                name: {
+                  contains: term,
+                  mode: "insensitive" as const,
+                },
               },
             },
           },
-        },
-      ],
+          {
+            other_device_names: {
+              some: {
+                device_name: {
+                  contains: term,
+                  mode: "insensitive" as const,
+                },
+              },
+            },
+          },
+        ],
+      })),
     }
     : {};
 
