@@ -1,5 +1,5 @@
 import "dotenv/config";
-import prisma from "../lib/prisma";
+import prisma from "@/lib/prisma";
 
 // get vendor and device ids from public.devices table
 // where bus is USB
@@ -68,17 +68,12 @@ async function fetchData(vendorID: string, deviceID: string): Promise<any> {
     return data;
   } catch (error) {
     return null;
-    return Promise.reject(new Error(`Failed to parse JSON: ${error}`));
+    //return Promise.reject(new Error(`Failed to parse JSON: ${error}`));
   }
-  // const data = await response.json();
-  // return data;
 }
 
 async function main() {
   const vendorAndDeviceIds = await getVendorAndDeviceIds();
-  //const vendorAndDeviceIds = [
-  //  { vendor_usb_id: "2001", device_usb_id: "330f" },
-  //];
   for (const { device_id, vendor_usb_id, vendor_name, device_usb_id, device_name } of vendorAndDeviceIds) {
     if (vendor_usb_id && device_usb_id) {
       console.log(`Fetching data for ${vendor_name} ${device_name}, ${vendor_usb_id}:${device_usb_id}`);
@@ -95,19 +90,16 @@ async function main() {
           vendorID: entry.printouts["Vendor ID"][0],
           deviceID: entry.printouts["Device ID"][0],
         }));
-        //console.log(fulltexts);
         const filtered = fulltexts.filter((entry: any) =>
           entry.interface === "USB" &&
           entry.USBconn === "Male A" &&
           entry.vendorID === vendor_usb_id &&
           entry.deviceID === device_usb_id
         );
-        //console.log(filtered);
-        //console.log(`Vendor ID: ${vendor_usb_id}, Vendor Name: ${vendor_name}, Device ID: ${device_usb_id}, Device Name: ${device_name}`);
         if (filtered.length > 0) {
           console.log(`Found ${filtered.length} matching entries:`);
           filtered.forEach(async (entry: any, index: number) => {
-            console.log(`${entry.fulltext}`);
+            console.log(`Adding ${entry.fulltext}`);
             await prisma.other_device_names.create({
               data: {
                 device_name: entry.fulltext,
