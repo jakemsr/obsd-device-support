@@ -4,8 +4,6 @@ import prisma from "../lib/prisma";
 
 const usbdevsPath = "/usr/src/sys/dev/usb/usbdevs";
 
-const currDriver = "atu";
-
 const driverConfig = {
   mtw:
   {
@@ -27,8 +25,79 @@ const driverConfig = {
     path: "/usr/src/sys/dev/usb/if_atu.c",
     removeVendor: true,
   },
+  bwfm:
+  {
+    name: "bwfm",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_bwfm_usb.c",
+    removeVendor: true,
+  },
+  otus:
+  {
+    name: "otus",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_otus.c",
+    removeVendor: true,
+  },
+  ural:
+  {
+    name: "ural",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_ral.c",
+    removeVendor: true,
+  },
+  rsu:
+  {
+    name: "rsu",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_rsu.c",
+    removeVendor: true,
+  },
+  rum:
+  {
+    name: "rum",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_rum.c",
+    removeVendor: true,
+  },
+  uath:
+  {
+    name: "uath",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: "^\\s*UATH_DEV_U.\\(",
+    match: "^\\s*UATH_DEV_U.\\((\\S+),\\s+(\\S+)\\),?\\s*$",
+    path: "/usr/src/sys/dev/usb/if_uath.c",
+    removeVendor: false,
+  },
+  upgt:
+  {
+    name: "upgt",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_upgt.c",
+    removeVendor: true,
+  },
 };
 
+const currDriver = "upgt";
 
 type DeviceRecord = {
   vendor_dev: string;
@@ -62,7 +131,7 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
     console.log(`USB device found: ${match[1]} ${match[2]}`);
     const deviceDevId = match[1];
     const deviceName = match[2];
-
+// /*
     const vendor = await prisma.vendors.findFirst({
       where: { usbdev: vendor_dev },
     });
@@ -84,7 +153,7 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
           dev_id: deviceDevId,
           devs_name: device_dev,
           name: deviceName,
-          vendor_id: vendor.id,
+          vendor_id: vendor.id,          
           driver_id: driverId,
           bus: driverConfig[currDriver].bus ?? null,
         },
@@ -93,7 +162,7 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
     } else {
       console.log(`Device already exists: ${existing.dev_id} ${existing.name}!!!\n`);
     }
-
+// */
   } else {
     throw new Error(`USB device not found: '${vendor_dev}' '${device_dev}'`);
   }
