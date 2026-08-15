@@ -76,6 +76,7 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
       where: {
         dev_id: deviceDevId,
         vendor_id: vendor.id,
+        driver_id: driverId,
       },
     });
     if (!existing) {
