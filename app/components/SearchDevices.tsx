@@ -17,9 +17,11 @@ export default async function SearchDevices({ queryWhere, currentPage, pageSize,
   const [devices, totalCount] = await Promise.all([
     prisma.devices.findMany({
       where: queryWhere,
-      orderBy: {
-        id: "asc",
-      },
+      orderBy: [
+        { name: "asc" },
+        { vendors: { name: "asc" } },
+        { dev_id: "asc" },
+      ],
       skip: (currentPage - 1) * pageSize,
       take: pageSize,
       include: {
