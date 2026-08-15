@@ -17,8 +17,8 @@ model devices {
   bus                String
   devs_name          String?
   dev_id             String?
-  driver_id          BigInt?
-  drivers            drivers?             @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  driver_id          BigInt
+  drivers            drivers              @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   vendors            vendors              @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   issues             issues[]
   other_device_names other_device_names[]

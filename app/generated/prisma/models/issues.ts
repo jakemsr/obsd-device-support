@@ -365,6 +365,14 @@ export type issuesUncheckedUpdateManyWithoutDevicesNestedInput = {
   deleteMany?: Prisma.issuesScalarWhereInput | Prisma.issuesScalarWhereInput[]
 }
 
+export type NullableBigIntFieldUpdateOperationsInput = {
+  set?: bigint | number | null
+  increment?: bigint | number
+  decrement?: bigint | number
+  multiply?: bigint | number
+  divide?: bigint | number
+}
+
 export type issuesCreateWithoutDevicesInput = {
   id?: bigint | number
   issue: string
