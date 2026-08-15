@@ -434,11 +434,6 @@ export type devicesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type DevicesNullableScalarRelationFilter = {
-  is?: Prisma.devicesWhereInput | null
-  isNot?: Prisma.devicesWhereInput | null
-}
-
 export type DevicesScalarRelationFilter = {
   is?: Prisma.devicesWhereInput
   isNot?: Prisma.devicesWhereInput
@@ -504,12 +499,10 @@ export type devicesCreateNestedOneWithoutIssuesInput = {
   connect?: Prisma.devicesWhereUniqueInput
 }
 
-export type devicesUpdateOneWithoutIssuesNestedInput = {
+export type devicesUpdateOneRequiredWithoutIssuesNestedInput = {
   create?: Prisma.XOR<Prisma.devicesCreateWithoutIssuesInput, Prisma.devicesUncheckedCreateWithoutIssuesInput>
   connectOrCreate?: Prisma.devicesCreateOrConnectWithoutIssuesInput
   upsert?: Prisma.devicesUpsertWithoutIssuesInput
-  disconnect?: Prisma.devicesWhereInput | boolean
-  delete?: Prisma.devicesWhereInput | boolean
   connect?: Prisma.devicesWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.devicesUpdateToOneWithWhereWithoutIssuesInput, Prisma.devicesUpdateWithoutIssuesInput>, Prisma.devicesUncheckedUpdateWithoutIssuesInput>
 }

@@ -173,7 +173,7 @@ export type issuesGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type IssuesGroupByOutputType = {
   id: bigint
-  dev_id: bigint | null
+  dev_id: bigint
   issue: string
   _count: IssuesCountAggregateOutputType | null
   _avg: IssuesAvgAggregateOutputType | null
@@ -202,14 +202,14 @@ export type issuesWhereInput = {
   OR?: Prisma.issuesWhereInput[]
   NOT?: Prisma.issuesWhereInput | Prisma.issuesWhereInput[]
   id?: Prisma.BigIntFilter<"issues"> | bigint | number
-  dev_id?: Prisma.BigIntNullableFilter<"issues"> | bigint | number | null
+  dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
   issue?: Prisma.StringFilter<"issues"> | string
-  devices?: Prisma.XOR<Prisma.DevicesNullableScalarRelationFilter, Prisma.devicesWhereInput> | null
+  devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }
 
 export type issuesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  dev_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  dev_id?: Prisma.SortOrder
   issue?: Prisma.SortOrder
   devices?: Prisma.devicesOrderByWithRelationInput
 }
@@ -219,14 +219,14 @@ export type issuesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.issuesWhereInput | Prisma.issuesWhereInput[]
   OR?: Prisma.issuesWhereInput[]
   NOT?: Prisma.issuesWhereInput | Prisma.issuesWhereInput[]
-  dev_id?: Prisma.BigIntNullableFilter<"issues"> | bigint | number | null
+  dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
   issue?: Prisma.StringFilter<"issues"> | string
-  devices?: Prisma.XOR<Prisma.DevicesNullableScalarRelationFilter, Prisma.devicesWhereInput> | null
+  devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }, "id">
 
 export type issuesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  dev_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  dev_id?: Prisma.SortOrder
   issue?: Prisma.SortOrder
   _count?: Prisma.issuesCountOrderByAggregateInput
   _avg?: Prisma.issuesAvgOrderByAggregateInput
@@ -240,37 +240,37 @@ export type issuesScalarWhereWithAggregatesInput = {
   OR?: Prisma.issuesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.issuesScalarWhereWithAggregatesInput | Prisma.issuesScalarWhereWithAggregatesInput[]
   id?: Prisma.BigIntWithAggregatesFilter<"issues"> | bigint | number
-  dev_id?: Prisma.BigIntNullableWithAggregatesFilter<"issues"> | bigint | number | null
+  dev_id?: Prisma.BigIntWithAggregatesFilter<"issues"> | bigint | number
   issue?: Prisma.StringWithAggregatesFilter<"issues"> | string
 }
 
 export type issuesCreateInput = {
   id?: bigint | number
   issue: string
-  devices?: Prisma.devicesCreateNestedOneWithoutIssuesInput
+  devices: Prisma.devicesCreateNestedOneWithoutIssuesInput
 }
 
 export type issuesUncheckedCreateInput = {
   id?: bigint | number
-  dev_id?: bigint | number | null
+  dev_id: bigint | number
   issue: string
 }
 
 export type issuesUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   issue?: Prisma.StringFieldUpdateOperationsInput | string
-  devices?: Prisma.devicesUpdateOneWithoutIssuesNestedInput
+  devices?: Prisma.devicesUpdateOneRequiredWithoutIssuesNestedInput
 }
 
 export type issuesUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  dev_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  dev_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   issue?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type issuesCreateManyInput = {
   id?: bigint | number
-  dev_id?: bigint | number | null
+  dev_id: bigint | number
   issue: string
 }
 
@@ -281,7 +281,7 @@ export type issuesUpdateManyMutationInput = {
 
 export type issuesUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  dev_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  dev_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   issue?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -365,14 +365,6 @@ export type issuesUncheckedUpdateManyWithoutDevicesNestedInput = {
   deleteMany?: Prisma.issuesScalarWhereInput | Prisma.issuesScalarWhereInput[]
 }
 
-export type NullableBigIntFieldUpdateOperationsInput = {
-  set?: bigint | number | null
-  increment?: bigint | number
-  decrement?: bigint | number
-  multiply?: bigint | number
-  divide?: bigint | number
-}
-
 export type issuesCreateWithoutDevicesInput = {
   id?: bigint | number
   issue: string
@@ -414,7 +406,7 @@ export type issuesScalarWhereInput = {
   OR?: Prisma.issuesScalarWhereInput[]
   NOT?: Prisma.issuesScalarWhereInput | Prisma.issuesScalarWhereInput[]
   id?: Prisma.BigIntFilter<"issues"> | bigint | number
-  dev_id?: Prisma.BigIntNullableFilter<"issues"> | bigint | number | null
+  dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
   issue?: Prisma.StringFilter<"issues"> | string
 }
 
@@ -444,21 +436,21 @@ export type issuesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   dev_id?: boolean
   issue?: boolean
-  devices?: boolean | Prisma.issues$devicesArgs<ExtArgs>
+  devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
 export type issuesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dev_id?: boolean
   issue?: boolean
-  devices?: boolean | Prisma.issues$devicesArgs<ExtArgs>
+  devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
 export type issuesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dev_id?: boolean
   issue?: boolean
-  devices?: boolean | Prisma.issues$devicesArgs<ExtArgs>
+  devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
 export type issuesSelectScalar = {
@@ -469,23 +461,23 @@ export type issuesSelectScalar = {
 
 export type issuesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dev_id" | "issue", ExtArgs["result"]["issues"]>
 export type issuesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  devices?: boolean | Prisma.issues$devicesArgs<ExtArgs>
+  devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }
 export type issuesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  devices?: boolean | Prisma.issues$devicesArgs<ExtArgs>
+  devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }
 export type issuesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  devices?: boolean | Prisma.issues$devicesArgs<ExtArgs>
+  devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }
 
 export type $issuesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "issues"
   objects: {
-    devices: Prisma.$devicesPayload<ExtArgs> | null
+    devices: Prisma.$devicesPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
-    dev_id: bigint | null
+    dev_id: bigint
     issue: string
   }, ExtArgs["result"]["issues"]>
   composites: {}
@@ -881,7 +873,7 @@ readonly fields: issuesFieldRefs;
  */
 export interface Prisma__issuesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  devices<T extends Prisma.issues$devicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.issues$devicesArgs<ExtArgs>>): Prisma.Prisma__devicesClient<runtime.Types.Result.GetResult<Prisma.$devicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  devices<T extends Prisma.devicesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.devicesDefaultArgs<ExtArgs>>): Prisma.Prisma__devicesClient<runtime.Types.Result.GetResult<Prisma.$devicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1312,25 +1304,6 @@ export type issuesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many issues to delete.
    */
   limit?: number
-}
-
-/**
- * issues.devices
- */
-export type issues$devicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the devices
-   */
-  select?: Prisma.devicesSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the devices
-   */
-  omit?: Prisma.devicesOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.devicesInclude<ExtArgs> | null
-  where?: Prisma.devicesWhereInput
 }
 
 /**
