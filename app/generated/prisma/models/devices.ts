@@ -205,8 +205,8 @@ export type DevicesGroupByOutputType = {
   vendor_id: bigint
   name: string
   bus: string
-  devs_name: string | null
-  dev_id: string | null
+  devs_name: string
+  dev_id: string
   driver_id: bigint
   _count: DevicesCountAggregateOutputType | null
   _avg: DevicesAvgAggregateOutputType | null
@@ -238,8 +238,8 @@ export type devicesWhereInput = {
   vendor_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   name?: Prisma.StringFilter<"devices"> | string
   bus?: Prisma.StringFilter<"devices"> | string
-  devs_name?: Prisma.StringNullableFilter<"devices"> | string | null
-  dev_id?: Prisma.StringNullableFilter<"devices"> | string | null
+  devs_name?: Prisma.StringFilter<"devices"> | string
+  dev_id?: Prisma.StringFilter<"devices"> | string
   driver_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   drivers?: Prisma.XOR<Prisma.DriversScalarRelationFilter, Prisma.driversWhereInput>
   vendors?: Prisma.XOR<Prisma.VendorsScalarRelationFilter, Prisma.vendorsWhereInput>
@@ -252,8 +252,8 @@ export type devicesOrderByWithRelationInput = {
   vendor_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   bus?: Prisma.SortOrder
-  devs_name?: Prisma.SortOrderInput | Prisma.SortOrder
-  dev_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  devs_name?: Prisma.SortOrder
+  dev_id?: Prisma.SortOrder
   driver_id?: Prisma.SortOrder
   drivers?: Prisma.driversOrderByWithRelationInput
   vendors?: Prisma.vendorsOrderByWithRelationInput
@@ -269,8 +269,8 @@ export type devicesWhereUniqueInput = Prisma.AtLeast<{
   vendor_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   name?: Prisma.StringFilter<"devices"> | string
   bus?: Prisma.StringFilter<"devices"> | string
-  devs_name?: Prisma.StringNullableFilter<"devices"> | string | null
-  dev_id?: Prisma.StringNullableFilter<"devices"> | string | null
+  devs_name?: Prisma.StringFilter<"devices"> | string
+  dev_id?: Prisma.StringFilter<"devices"> | string
   driver_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   drivers?: Prisma.XOR<Prisma.DriversScalarRelationFilter, Prisma.driversWhereInput>
   vendors?: Prisma.XOR<Prisma.VendorsScalarRelationFilter, Prisma.vendorsWhereInput>
@@ -283,8 +283,8 @@ export type devicesOrderByWithAggregationInput = {
   vendor_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   bus?: Prisma.SortOrder
-  devs_name?: Prisma.SortOrderInput | Prisma.SortOrder
-  dev_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  devs_name?: Prisma.SortOrder
+  dev_id?: Prisma.SortOrder
   driver_id?: Prisma.SortOrder
   _count?: Prisma.devicesCountOrderByAggregateInput
   _avg?: Prisma.devicesAvgOrderByAggregateInput
@@ -301,8 +301,8 @@ export type devicesScalarWhereWithAggregatesInput = {
   vendor_id?: Prisma.BigIntWithAggregatesFilter<"devices"> | bigint | number
   name?: Prisma.StringWithAggregatesFilter<"devices"> | string
   bus?: Prisma.StringWithAggregatesFilter<"devices"> | string
-  devs_name?: Prisma.StringNullableWithAggregatesFilter<"devices"> | string | null
-  dev_id?: Prisma.StringNullableWithAggregatesFilter<"devices"> | string | null
+  devs_name?: Prisma.StringWithAggregatesFilter<"devices"> | string
+  dev_id?: Prisma.StringWithAggregatesFilter<"devices"> | string
   driver_id?: Prisma.BigIntWithAggregatesFilter<"devices"> | bigint | number
 }
 
@@ -310,8 +310,8 @@ export type devicesCreateInput = {
   id?: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
@@ -323,8 +323,8 @@ export type devicesUncheckedCreateInput = {
   vendor_id: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   driver_id: bigint | number
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
   other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
@@ -334,8 +334,8 @@ export type devicesUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
@@ -347,8 +347,8 @@ export type devicesUncheckedUpdateInput = {
   vendor_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
   other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
@@ -359,8 +359,8 @@ export type devicesCreateManyInput = {
   vendor_id: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   driver_id: bigint | number
 }
 
@@ -368,8 +368,8 @@ export type devicesUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type devicesUncheckedUpdateManyInput = {
@@ -377,8 +377,8 @@ export type devicesUncheckedUpdateManyInput = {
   vendor_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -454,10 +454,6 @@ export type BigIntFieldUpdateOperationsInput = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type devicesCreateNestedManyWithoutDriversInput = {
@@ -578,8 +574,8 @@ export type devicesCreateWithoutDriversInput = {
   id?: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
   other_device_names?: Prisma.other_device_namesCreateNestedManyWithoutDevicesInput
@@ -590,8 +586,8 @@ export type devicesUncheckedCreateWithoutDriversInput = {
   vendor_id: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
   other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
 }
@@ -630,8 +626,8 @@ export type devicesScalarWhereInput = {
   vendor_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   name?: Prisma.StringFilter<"devices"> | string
   bus?: Prisma.StringFilter<"devices"> | string
-  devs_name?: Prisma.StringNullableFilter<"devices"> | string | null
-  dev_id?: Prisma.StringNullableFilter<"devices"> | string | null
+  devs_name?: Prisma.StringFilter<"devices"> | string
+  dev_id?: Prisma.StringFilter<"devices"> | string
   driver_id?: Prisma.BigIntFilter<"devices"> | bigint | number
 }
 
@@ -639,8 +635,8 @@ export type devicesCreateWithoutIssuesInput = {
   id?: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
   other_device_names?: Prisma.other_device_namesCreateNestedManyWithoutDevicesInput
@@ -651,8 +647,8 @@ export type devicesUncheckedCreateWithoutIssuesInput = {
   vendor_id: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   driver_id: bigint | number
   other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
 }
@@ -677,8 +673,8 @@ export type devicesUpdateWithoutIssuesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
   other_device_names?: Prisma.other_device_namesUpdateManyWithoutDevicesNestedInput
@@ -689,8 +685,8 @@ export type devicesUncheckedUpdateWithoutIssuesInput = {
   vendor_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
 }
@@ -699,8 +695,8 @@ export type devicesCreateWithoutVendorsInput = {
   id?: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
   other_device_names?: Prisma.other_device_namesCreateNestedManyWithoutDevicesInput
@@ -710,8 +706,8 @@ export type devicesUncheckedCreateWithoutVendorsInput = {
   id?: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   driver_id: bigint | number
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
   other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
@@ -747,8 +743,8 @@ export type devicesCreateWithoutOther_device_namesInput = {
   id?: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
@@ -759,8 +755,8 @@ export type devicesUncheckedCreateWithoutOther_device_namesInput = {
   vendor_id: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   driver_id: bigint | number
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
 }
@@ -785,8 +781,8 @@ export type devicesUpdateWithoutOther_device_namesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
@@ -797,8 +793,8 @@ export type devicesUncheckedUpdateWithoutOther_device_namesInput = {
   vendor_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
 }
@@ -808,16 +804,16 @@ export type devicesCreateManyDriversInput = {
   vendor_id: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
 }
 
 export type devicesUpdateWithoutDriversInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
   other_device_names?: Prisma.other_device_namesUpdateManyWithoutDevicesNestedInput
@@ -828,8 +824,8 @@ export type devicesUncheckedUpdateWithoutDriversInput = {
   vendor_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
   other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
 }
@@ -839,16 +835,16 @@ export type devicesUncheckedUpdateManyWithoutDriversInput = {
   vendor_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type devicesCreateManyVendorsInput = {
   id?: bigint | number
   name: string
   bus: string
-  devs_name?: string | null
-  dev_id?: string | null
+  devs_name: string
+  dev_id: string
   driver_id: bigint | number
 }
 
@@ -856,8 +852,8 @@ export type devicesUpdateWithoutVendorsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
   other_device_names?: Prisma.other_device_namesUpdateManyWithoutDevicesNestedInput
@@ -867,8 +863,8 @@ export type devicesUncheckedUpdateWithoutVendorsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
   other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
@@ -878,8 +874,8 @@ export type devicesUncheckedUpdateManyWithoutVendorsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
-  devs_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dev_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devs_name?: Prisma.StringFieldUpdateOperationsInput | string
+  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -1002,8 +998,8 @@ export type $devicesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     vendor_id: bigint
     name: string
     bus: string
-    devs_name: string | null
-    dev_id: string | null
+    devs_name: string
+    dev_id: string
     driver_id: bigint
   }, ExtArgs["result"]["devices"]>
   composites: {}

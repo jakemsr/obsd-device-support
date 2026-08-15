@@ -15,8 +15,8 @@ model devices {
   vendor_id          BigInt
   name               String
   bus                String
-  devs_name          String?
-  dev_id             String?
+  devs_name          String
+  dev_id             String
   driver_id          BigInt
   drivers            drivers              @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   vendors            vendors              @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
