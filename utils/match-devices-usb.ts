@@ -117,8 +117,8 @@ function extractDeviceFields(text: string): DeviceRecord[] {
 
       return {
         vendor_dev: match[1],
-        device_dev: driverConfig[currDriver].removeVendor?
-          match[2].substring(match[1].length + 1) :  match[2],
+        device_dev: driverConfig[currDriver].removeVendor ?
+          match[2].substring(match[1].length + 1) : match[2],
       };
     })
     .filter((value): value is DeviceRecord => Boolean(value));
@@ -145,6 +145,7 @@ async function findUsbdev(vendor_dev: string, device_dev: string, usbdevsText: s
       where: {
         dev_id: deviceDevId,
         vendor_id: vendor.id,
+        driver_id: driverId,
       },
     });
     if (!existing) {

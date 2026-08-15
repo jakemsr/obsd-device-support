@@ -286,9 +286,9 @@ export type driversUncheckedUpdateManyInput = {
   dev_type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type DriversNullableScalarRelationFilter = {
-  is?: Prisma.driversWhereInput | null
-  isNot?: Prisma.driversWhereInput | null
+export type DriversScalarRelationFilter = {
+  is?: Prisma.driversWhereInput
+  isNot?: Prisma.driversWhereInput
 }
 
 export type driversCountOrderByAggregateInput = {
@@ -323,12 +323,10 @@ export type driversCreateNestedOneWithoutDevicesInput = {
   connect?: Prisma.driversWhereUniqueInput
 }
 
-export type driversUpdateOneWithoutDevicesNestedInput = {
+export type driversUpdateOneRequiredWithoutDevicesNestedInput = {
   create?: Prisma.XOR<Prisma.driversCreateWithoutDevicesInput, Prisma.driversUncheckedCreateWithoutDevicesInput>
   connectOrCreate?: Prisma.driversCreateOrConnectWithoutDevicesInput
   upsert?: Prisma.driversUpsertWithoutDevicesInput
-  disconnect?: Prisma.driversWhereInput | boolean
-  delete?: Prisma.driversWhereInput | boolean
   connect?: Prisma.driversWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.driversUpdateToOneWithWhereWithoutDevicesInput, Prisma.driversUpdateWithoutDevicesInput>, Prisma.driversUncheckedUpdateWithoutDevicesInput>
 }

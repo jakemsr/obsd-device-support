@@ -399,6 +399,10 @@ export type vendorsUpdateOneRequiredWithoutDevicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.vendorsUpdateToOneWithWhereWithoutDevicesInput, Prisma.vendorsUpdateWithoutDevicesInput>, Prisma.vendorsUncheckedUpdateWithoutDevicesInput>
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type vendorsCreateWithoutDevicesInput = {
   id?: bigint | number
   name?: string | null
