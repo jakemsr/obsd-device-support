@@ -14,7 +14,8 @@ export default function Page() {
         The search functionality allows users to search devices based on
         vendor and/or device names. The search results will display a list of devices
         that match the search terms. An empty search field will match all devices
-        in the database.
+        in the database. Devices are listed in the search results in ascending order
+        by device name, then by vendor name, and finally by device ID.
       </p>
       <p>
         Users can filter devices based on bus (connection) and type (functionality).
