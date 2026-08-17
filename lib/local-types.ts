@@ -8,3 +8,12 @@ export type FullDeviceInfo = Prisma.devicesGetPayload<{
   },
 }>;
 
+export type DeviceListEntryProps = {
+  name: string;
+  devType: string;
+  bus: string;
+  vid: string;
+  pid: string;
+}
+
+
