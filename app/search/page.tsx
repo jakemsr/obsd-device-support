@@ -79,7 +79,7 @@ export default async function Search({
       </div>
 
       <Suspense fallback={<div className="flex items-center justify-center font-bold m-8">Loading devices...</div>}>
-        <SearchDevices queryWhere={queryWhere} />
+        <SearchDevices queryWhere={queryWhere} search={search} />
       </Suspense>
     </>
   );
