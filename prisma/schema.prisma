@@ -66,6 +66,7 @@ model other_device_names {
   id          BigInt  @id @default(autoincrement())
   device_name String  @default("")
   device_id   BigInt
+  vendor_name String  @default("")
   devices     devices @relation(fields: [device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
