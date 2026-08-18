@@ -44,35 +44,36 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
       canonicalFields.some((field) => field.includes(term))
     );
 
-    if (canonicalMatches || searchTerms.length === 0) {
-      return [{
-        name: canonicalName,
-        bus: device.bus,
-        devType: device.drivers.dev_type,
-        vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
-        pid: device.dev_id,
-      }];
-    }
-
     const matchingOtherNames = device.other_device_names.filter((otherName) =>
-      searchTerms.every((term) => otherName.device_name.toLocaleLowerCase().includes(term))
+      searchTerms.every((term) =>
+        (`${otherName.vendor_name !== "" ? otherName.vendor_name + " ": ""}${otherName.device_name}`).toLocaleLowerCase().includes(term))
     );
 
-    return matchingOtherNames.length > 0
-      ? matchingOtherNames.map((otherName) => ({
-        name: otherName.device_name,
+    const canonicalEntry = {
+      name: canonicalName,
+      bus: device.bus,
+      devType: device.drivers.dev_type,
+      vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
+      pid: device.dev_id,
+    };
+
+    const alternateEntries = matchingOtherNames.map((otherName) => ({
+        name: `${otherName.vendor_name !== "" ? otherName.vendor_name + " ": ""}${otherName.device_name}`,
         bus: device.bus,
         devType: device.drivers.dev_type,
         vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
         pid: device.dev_id,
-      }))
-      : [{
-        name: canonicalName,
-        bus: device.bus,
-        devType: device.drivers.dev_type,
-        vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
-        pid: device.dev_id,
-      }];
+      }));
+
+    if (searchTerms.length === 0) {
+        return [canonicalEntry, ...alternateEntries];
+    }
+
+    return canonicalMatches
+      ? [canonicalEntry, ...alternateEntries]
+      : alternateEntries.length > 0
+        ? alternateEntries
+        : [{ ...canonicalEntry, name: canonicalName }];
   });
   const sortedDeviceListEntries = deviceListEntries.toSorted((a, b) => a.name.localeCompare(b.name));
 
