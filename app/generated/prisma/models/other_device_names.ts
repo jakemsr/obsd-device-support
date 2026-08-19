@@ -40,18 +40,21 @@ export type Other_device_namesMinAggregateOutputType = {
   id: bigint | null
   device_name: string | null
   device_id: bigint | null
+  vendor_name: string | null
 }
 
 export type Other_device_namesMaxAggregateOutputType = {
   id: bigint | null
   device_name: string | null
   device_id: bigint | null
+  vendor_name: string | null
 }
 
 export type Other_device_namesCountAggregateOutputType = {
   id: number
   device_name: number
   device_id: number
+  vendor_name: number
   _all: number
 }
 
@@ -70,18 +73,21 @@ export type Other_device_namesMinAggregateInputType = {
   id?: true
   device_name?: true
   device_id?: true
+  vendor_name?: true
 }
 
 export type Other_device_namesMaxAggregateInputType = {
   id?: true
   device_name?: true
   device_id?: true
+  vendor_name?: true
 }
 
 export type Other_device_namesCountAggregateInputType = {
   id?: true
   device_name?: true
   device_id?: true
+  vendor_name?: true
   _all?: true
 }
 
@@ -175,6 +181,7 @@ export type Other_device_namesGroupByOutputType = {
   id: bigint
   device_name: string
   device_id: bigint
+  vendor_name: string
   _count: Other_device_namesCountAggregateOutputType | null
   _avg: Other_device_namesAvgAggregateOutputType | null
   _sum: Other_device_namesSumAggregateOutputType | null
@@ -204,6 +211,7 @@ export type other_device_namesWhereInput = {
   id?: Prisma.BigIntFilter<"other_device_names"> | bigint | number
   device_name?: Prisma.StringFilter<"other_device_names"> | string
   device_id?: Prisma.BigIntFilter<"other_device_names"> | bigint | number
+  vendor_name?: Prisma.StringFilter<"other_device_names"> | string
   devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }
 
@@ -211,6 +219,7 @@ export type other_device_namesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   device_name?: Prisma.SortOrder
   device_id?: Prisma.SortOrder
+  vendor_name?: Prisma.SortOrder
   devices?: Prisma.devicesOrderByWithRelationInput
 }
 
@@ -221,6 +230,7 @@ export type other_device_namesWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.other_device_namesWhereInput | Prisma.other_device_namesWhereInput[]
   device_name?: Prisma.StringFilter<"other_device_names"> | string
   device_id?: Prisma.BigIntFilter<"other_device_names"> | bigint | number
+  vendor_name?: Prisma.StringFilter<"other_device_names"> | string
   devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }, "id">
 
@@ -228,6 +238,7 @@ export type other_device_namesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   device_name?: Prisma.SortOrder
   device_id?: Prisma.SortOrder
+  vendor_name?: Prisma.SortOrder
   _count?: Prisma.other_device_namesCountOrderByAggregateInput
   _avg?: Prisma.other_device_namesAvgOrderByAggregateInput
   _max?: Prisma.other_device_namesMaxOrderByAggregateInput
@@ -242,11 +253,13 @@ export type other_device_namesScalarWhereWithAggregatesInput = {
   id?: Prisma.BigIntWithAggregatesFilter<"other_device_names"> | bigint | number
   device_name?: Prisma.StringWithAggregatesFilter<"other_device_names"> | string
   device_id?: Prisma.BigIntWithAggregatesFilter<"other_device_names"> | bigint | number
+  vendor_name?: Prisma.StringWithAggregatesFilter<"other_device_names"> | string
 }
 
 export type other_device_namesCreateInput = {
   id?: bigint | number
   device_name?: string
+  vendor_name?: string
   devices: Prisma.devicesCreateNestedOneWithoutOther_device_namesInput
 }
 
@@ -254,11 +267,13 @@ export type other_device_namesUncheckedCreateInput = {
   id?: bigint | number
   device_name?: string
   device_id: bigint | number
+  vendor_name?: string
 }
 
 export type other_device_namesUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   device_name?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   devices?: Prisma.devicesUpdateOneRequiredWithoutOther_device_namesNestedInput
 }
 
@@ -266,23 +281,27 @@ export type other_device_namesUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   device_name?: Prisma.StringFieldUpdateOperationsInput | string
   device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type other_device_namesCreateManyInput = {
   id?: bigint | number
   device_name?: string
   device_id: bigint | number
+  vendor_name?: string
 }
 
 export type other_device_namesUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   device_name?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type other_device_namesUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   device_name?: Prisma.StringFieldUpdateOperationsInput | string
   device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type Other_device_namesListRelationFilter = {
@@ -299,6 +318,7 @@ export type other_device_namesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   device_name?: Prisma.SortOrder
   device_id?: Prisma.SortOrder
+  vendor_name?: Prisma.SortOrder
 }
 
 export type other_device_namesAvgOrderByAggregateInput = {
@@ -310,12 +330,14 @@ export type other_device_namesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   device_name?: Prisma.SortOrder
   device_id?: Prisma.SortOrder
+  vendor_name?: Prisma.SortOrder
 }
 
 export type other_device_namesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   device_name?: Prisma.SortOrder
   device_id?: Prisma.SortOrder
+  vendor_name?: Prisma.SortOrder
 }
 
 export type other_device_namesSumOrderByAggregateInput = {
@@ -368,11 +390,13 @@ export type other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput = {
 export type other_device_namesCreateWithoutDevicesInput = {
   id?: bigint | number
   device_name?: string
+  vendor_name?: string
 }
 
 export type other_device_namesUncheckedCreateWithoutDevicesInput = {
   id?: bigint | number
   device_name?: string
+  vendor_name?: string
 }
 
 export type other_device_namesCreateOrConnectWithoutDevicesInput = {
@@ -408,26 +432,31 @@ export type other_device_namesScalarWhereInput = {
   id?: Prisma.BigIntFilter<"other_device_names"> | bigint | number
   device_name?: Prisma.StringFilter<"other_device_names"> | string
   device_id?: Prisma.BigIntFilter<"other_device_names"> | bigint | number
+  vendor_name?: Prisma.StringFilter<"other_device_names"> | string
 }
 
 export type other_device_namesCreateManyDevicesInput = {
   id?: bigint | number
   device_name?: string
+  vendor_name?: string
 }
 
 export type other_device_namesUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   device_name?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type other_device_namesUncheckedUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   device_name?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type other_device_namesUncheckedUpdateManyWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   device_name?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -436,6 +465,7 @@ export type other_device_namesSelect<ExtArgs extends runtime.Types.Extensions.In
   id?: boolean
   device_name?: boolean
   device_id?: boolean
+  vendor_name?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["other_device_names"]>
 
@@ -443,6 +473,7 @@ export type other_device_namesSelectCreateManyAndReturn<ExtArgs extends runtime.
   id?: boolean
   device_name?: boolean
   device_id?: boolean
+  vendor_name?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["other_device_names"]>
 
@@ -450,6 +481,7 @@ export type other_device_namesSelectUpdateManyAndReturn<ExtArgs extends runtime.
   id?: boolean
   device_name?: boolean
   device_id?: boolean
+  vendor_name?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["other_device_names"]>
 
@@ -457,9 +489,10 @@ export type other_device_namesSelectScalar = {
   id?: boolean
   device_name?: boolean
   device_id?: boolean
+  vendor_name?: boolean
 }
 
-export type other_device_namesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "device_name" | "device_id", ExtArgs["result"]["other_device_names"]>
+export type other_device_namesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "device_name" | "device_id" | "vendor_name", ExtArgs["result"]["other_device_names"]>
 export type other_device_namesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }
@@ -479,6 +512,7 @@ export type $other_device_namesPayload<ExtArgs extends runtime.Types.Extensions.
     id: bigint
     device_name: string
     device_id: bigint
+    vendor_name: string
   }, ExtArgs["result"]["other_device_names"]>
   composites: {}
 }
@@ -906,6 +940,7 @@ export interface other_device_namesFieldRefs {
   readonly id: Prisma.FieldRef<"other_device_names", 'BigInt'>
   readonly device_name: Prisma.FieldRef<"other_device_names", 'String'>
   readonly device_id: Prisma.FieldRef<"other_device_names", 'BigInt'>
+  readonly vendor_name: Prisma.FieldRef<"other_device_names", 'String'>
 }
     
 
