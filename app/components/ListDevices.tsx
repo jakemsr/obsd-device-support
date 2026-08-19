@@ -159,14 +159,14 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
           </div>
         </div>
         <div>
-          <div className="grid grid-cols-2 sm:grid-cols-7 gap-2 px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-8 sm:gap-2 px-4">
             <div className="col-auto sm:col-span-3">
               Name
             </div>
-            <div className="col-auto sm:col-span-1">
+            <div className="col-auto sm:col-span-2">
               VID:PID
             </div>
-            <div className="col-auto sm:col-span-1 flex sm:justify-center">
+            <div className="col-auto sm:col-span-1">
               Bus
             </div>
             <div className="col-auto sm:col-span-2">
