@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import DeviceListEntry from "./DeviceListEntry";
 import type { DeviceListEntryProps, FullDeviceInfo } from "@/lib/local-types";
 
@@ -50,6 +51,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
     );
 
     const canonicalEntry = {
+      id: device.id,
       name: canonicalName,
       bus: device.bus,
       devType: device.drivers.dev_type,
@@ -59,6 +61,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
 
     const alternateEntries = matchingOtherNames.map((otherName) => ({
         name: `${otherName.vendor_name !== "" ? otherName.vendor_name + " ": ""}${otherName.device_name}`,
+        id: device.id,
         bus: device.bus,
         devType: device.drivers.dev_type,
         vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
@@ -171,7 +174,13 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
             </div>
           </div>
           {filteredDeviceListEntries.map((info, index) => (
-            <DeviceListEntry key={`${info.name}-${info.bus}-${index}`} {...info} />
+            <Link
+              key={index}
+              href={`/device/${info.id}`}
+              className="no-underline text-inherit"
+            >
+              <DeviceListEntry {...info} />
+            </Link>
           ))}
         </div>
       </div>
