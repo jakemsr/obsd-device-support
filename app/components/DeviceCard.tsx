@@ -23,7 +23,7 @@ export default async function DeviceCard({ id }: { id: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-gray-300 rounded p-4 m-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 m-4">
       <div>
         <div className="grid grid-cols-2">
           <div className="font-bold">Vendor:</div>
