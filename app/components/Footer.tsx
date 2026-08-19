@@ -3,8 +3,10 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="mt-auto w-full grid grid-cols-3 px-8 py-4 text-sm sm:text-base">
-      <div className="flex items-center justify-start">
-        &copy; {new Date().getFullYear()}&nbsp;
+      <div className="flex flex-wrap items-center justify-start">
+        <span>
+          &copy; {new Date().getFullYear()}&nbsp;
+        </span>
         <Link
           href="mailto:jake@jakemsr.dev"
           className="text-link hover:underline"
