@@ -1,7 +1,27 @@
+import prisma from "@/lib/prisma";
 import Link from "next/link";
 import type { FullDeviceInfo } from "@/lib/local-types";
 
-export default function DeviceCard({ device }: { device: FullDeviceInfo }) {
+
+export default async function DeviceCard({ id }: { id: string }) {
+
+  const device: FullDeviceInfo | null = await prisma.devices.findUnique({
+    where: { id: BigInt(id) },
+    include: {
+      vendors: true,
+      drivers: true,
+      other_device_names: true,
+    },
+  });
+
+  if (!device) {
+    return (
+      <div>
+        Device not found
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-gray-300 rounded p-4 m-4">
       <div>
@@ -59,12 +79,18 @@ export default function DeviceCard({ device }: { device: FullDeviceInfo }) {
       </div>
 
       {device.other_device_names.length > 0 && (
-      <div className="col-span-1 sm:col-span-2">
-        <span className="font-bold">Other names: </span>
+        <div className="col-span-1 sm:col-span-2">
+          <span className="font-bold">Other names: </span>
           {device.other_device_names.map((otherName, index) => (
-            <span key={otherName.id} className="inline-block">{otherName.device_name}{index < device.other_device_names.length - 1 ? ",\u00A0" : ""}</span>
+            <span
+              key={otherName.id}
+              className="inline-block"
+            >
+              {otherName.vendor_name !== "" ? otherName.vendor_name + " " : ""}
+              {otherName.device_name}{index < device.other_device_names.length - 1 ? ",\u00A0" : ""}
+            </span>
           ))}
-      </div>
+        </div>
       )}
     </div>
   );
