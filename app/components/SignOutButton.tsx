@@ -18,7 +18,7 @@ export const SignOut = () => {
   return (
     <Button onClick={handleClick} disabled={loading}>
       {loading && <LoadingSpinner />}
-      Sign Out
+      Logout
     </Button>
   )
 }
