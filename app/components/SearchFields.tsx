@@ -1,30 +1,45 @@
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 
 
 // get device types from public.drivers table
-async function getDeviceTypes(): Promise<string[]> {
-  const deviceTypes = await prisma.drivers.findMany({
-    distinct: ["dev_type"],
-    select: {
-      dev_type: true,
-    },
-  });
+const getDeviceTypes = unstable_cache(
+  async function getDeviceTypes(): Promise<string[]> {
+    const deviceTypes = await prisma.drivers.findMany({
+      distinct: ["dev_type"],
+      select: {
+        dev_type: true,
+      },
+    });
 
-  return deviceTypes.map((driver) => driver.dev_type);
-}
+    return deviceTypes.map((driver) => driver.dev_type);
+  },
+  ['homepage'], // cache key
+  {
+    tags: ['homepage'],
+    revalidate: 60, // revalidate every 60 seconds
+  }
+)
 
 // get unique bus types from public.devices table
-async function getBusTypes(): Promise<string[]> {
-  const busTypes = await prisma.devices.findMany({
-    distinct: ["bus"],
-    select: {
-      bus: true,
-    },
-  });
+const getBusTypes = unstable_cache(
+  async function getBusTypes(): Promise<string[]> {
+    const busTypes = await prisma.devices.findMany({
+      distinct: ["bus"],
+      select: {
+        bus: true,
+      },
+    });
 
-  return busTypes.map((device) => device.bus);
-}
+    return busTypes.map((device) => device.bus);
+  },
+  ['homepage'], // cache key
+  {
+    tags: ['homepage'],
+    revalidate: 60, // revalidate every 60 seconds
+  }
+);
 
 
 export default async function SearchFields() {
