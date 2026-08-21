@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 
 // get device types from public.drivers table
 const getDeviceTypes = unstable_cache(
-  async function getDeviceTypes(): Promise<string[]> {
+  async (): Promise<string[]> => {
     const deviceTypes = await prisma.drivers.findMany({
       distinct: ["dev_type"],
       select: {
@@ -15,7 +15,7 @@ const getDeviceTypes = unstable_cache(
 
     return deviceTypes.map((driver) => driver.dev_type);
   },
-  ['homepage'], // cache key
+  ['homepage-key-1'], // cache key
   {
     tags: ['homepage'],
     revalidate: 60, // revalidate every 60 seconds
@@ -24,7 +24,7 @@ const getDeviceTypes = unstable_cache(
 
 // get unique bus types from public.devices table
 const getBusTypes = unstable_cache(
-  async function getBusTypes(): Promise<string[]> {
+  async (): Promise<string[]> => {
     const busTypes = await prisma.devices.findMany({
       distinct: ["bus"],
       select: {
@@ -34,7 +34,7 @@ const getBusTypes = unstable_cache(
 
     return busTypes.map((device) => device.bus);
   },
-  ['homepage'], // cache key
+  ['homepage-key-2'], // cache key
   {
     tags: ['homepage'],
     revalidate: 60, // revalidate every 60 seconds
