@@ -78,7 +78,6 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
         ? alternateEntries
         : [{ ...canonicalEntry, name: canonicalName }];
   });
-  const sortedDeviceListEntries = deviceListEntries.toSorted((a, b) => a.name.localeCompare(b.name));
 
   const devTypeFilters = [...new Set(devices.map((device) => device.drivers.dev_type))]
     .map((filter, index) => ({ id: index, name: filter }));
@@ -101,22 +100,24 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
       .filter((name): name is string => name !== undefined)
   );
 
-  const filteredDeviceListEntries = sortedDeviceListEntries.filter(
+  const filteredDeviceListEntries = deviceListEntries.filter(
     (device) =>
       selectedDevTypes.has(device.devType) &&
       selectedBuses.has(device.bus)
   );
+
+  const sortedDeviceListEntries = filteredDeviceListEntries.toSorted((a, b) => a.name.localeCompare(b.name));
 
 
   return (
     <>
       <div>
         <div className="flex items-center justify-center font-bold mt-4">
-          {filteredDeviceListEntries.length === 0 ? (
+          {sortedDeviceListEntries.length === 0 ? (
             <div>No devices matched.</div>
           ) : (
             <div>
-              Matched {filteredDeviceListEntries.length} device{filteredDeviceListEntries.length !== 1 ? "s" : ""}.
+              Matched {sortedDeviceListEntries.length} device{sortedDeviceListEntries.length !== 1 ? "s" : ""}.
             </div>
           )}
         </div>
@@ -173,7 +174,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
               Device Type
             </div>
           </div>
-          {filteredDeviceListEntries.map((info, index) => (
+          {sortedDeviceListEntries.map((info, index) => (
             <Link
               key={index}
               href={`/device/${info.id}`}
