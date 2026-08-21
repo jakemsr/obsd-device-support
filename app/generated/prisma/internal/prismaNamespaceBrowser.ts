@@ -85,7 +85,8 @@ export const DevicesScalarFieldEnum = {
   bus: 'bus',
   devs_name: 'devs_name',
   dev_id: 'dev_id',
-  driver_id: 'driver_id'
+  driver_id: 'driver_id',
+  support_status: 'support_status'
 } as const
 
 export type DevicesScalarFieldEnum = (typeof DevicesScalarFieldEnum)[keyof typeof DevicesScalarFieldEnum]

@@ -40,6 +40,13 @@ export type StringFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringFilter<$PrismaModel> | string
 }
 
+export type Enumsupport_typeFilter<$PrismaModel = never> = {
+  equals?: $Enums.support_type | Prisma.Enumsupport_typeFieldRefInput<$PrismaModel>
+  in?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumsupport_typeFilter<$PrismaModel> | $Enums.support_type
+}
+
 export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
   equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
   in?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel>
@@ -72,6 +79,16 @@ export type StringWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedStringFilter<$PrismaModel>
   _max?: Prisma.NestedStringFilter<$PrismaModel>
+}
+
+export type Enumsupport_typeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.support_type | Prisma.Enumsupport_typeFieldRefInput<$PrismaModel>
+  in?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumsupport_typeWithAggregatesFilter<$PrismaModel> | $Enums.support_type
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumsupport_typeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumsupport_typeFilter<$PrismaModel>
 }
 
 export type StringNullableFilter<$PrismaModel = never> = {
@@ -200,6 +217,13 @@ export type NestedStringFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringFilter<$PrismaModel> | string
 }
 
+export type NestedEnumsupport_typeFilter<$PrismaModel = never> = {
+  equals?: $Enums.support_type | Prisma.Enumsupport_typeFieldRefInput<$PrismaModel>
+  in?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumsupport_typeFilter<$PrismaModel> | $Enums.support_type
+}
+
 export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
   equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
   in?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel>
@@ -253,6 +277,16 @@ export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedStringFilter<$PrismaModel>
   _max?: Prisma.NestedStringFilter<$PrismaModel>
+}
+
+export type NestedEnumsupport_typeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.support_type | Prisma.Enumsupport_typeFieldRefInput<$PrismaModel>
+  in?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.support_type[] | Prisma.ListEnumsupport_typeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumsupport_typeWithAggregatesFilter<$PrismaModel> | $Enums.support_type
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumsupport_typeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumsupport_typeFilter<$PrismaModel>
 }
 
 export type NestedStringNullableFilter<$PrismaModel = never> = {

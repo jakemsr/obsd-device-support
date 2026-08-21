@@ -1137,7 +1137,8 @@ export const DevicesScalarFieldEnum = {
   bus: 'bus',
   devs_name: 'devs_name',
   dev_id: 'dev_id',
-  driver_id: 'driver_id'
+  driver_id: 'driver_id',
+  support_status: 'support_status'
 } as const
 
 export type DevicesScalarFieldEnum = (typeof DevicesScalarFieldEnum)[keyof typeof DevicesScalarFieldEnum]
@@ -1300,6 +1301,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'support_type'
+ */
+export type Enumsupport_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'support_type'>
+    
+
+
+/**
+ * Reference to a field of type 'support_type[]'
+ */
+export type ListEnumsupport_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'support_type[]'>
     
 
 
