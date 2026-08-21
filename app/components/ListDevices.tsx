@@ -7,7 +7,7 @@ import type { DeviceListEntryProps, FullDeviceInfo } from "@/lib/local-types";
 
 enum FilterType {
   Bus = "bus",
-  DevType = "type"
+  DevType = "device type"
 }
 
 interface ListDevicesProps {
@@ -80,9 +80,11 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
   });
 
   const devTypeFilters = [...new Set(devices.map((device) => device.drivers.dev_type))]
+    .sort((a, b) => a.localeCompare(b))
     .map((filter, index) => ({ id: index, name: filter }));
 
   const busFilters = [...new Set(devices.map((device) => device.bus))]
+    .sort((a, b) => a.localeCompare(b))
     .map((filter, index) => ({ id: index, name: filter }));
 
   const [devTypeFilterIds, setDevTypeFilterIds] = useState<number[]>(devTypeFilters.map(filter => filter.id));
@@ -124,10 +126,10 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
       </div>
 
       <div className="flex px-4 mt-4">
-        <div className="flex flex-col w-40">
+        <div className="flex flex-col gap-2 min-w-40">
           Filters:
           <div>
-            Type:
+            <span className="capitalize">{FilterType.DevType}:</span>
             {devTypeFilters
               .map((devType) => (
                 <div key={devType.id}>
@@ -143,7 +145,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
               ))}
           </div>
           <div>
-            Bus:
+            <span className="capitalize">{FilterType.Bus}:</span>
             {busFilters
               .map((bus) => (
                 <div key={bus.id}>
