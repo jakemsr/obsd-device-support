@@ -92,6 +92,10 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
       if (error) {
         setError(error.message || null);
       } else {
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
         switch (mode) {
           case SignInMode.passwordReset:
             setMessage("Password reset email sent! Please check your inbox.");
