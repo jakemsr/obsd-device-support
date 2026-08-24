@@ -24,6 +24,8 @@ model devices {
   issues             issues[]
   other_device_names other_device_names[]
 
+  @@index([vendor_id, bus, dev_id])
+  
   @@schema("public")
 }
 
@@ -58,6 +60,9 @@ model vendors {
   usb_id  String?
   usbdev  String?
   devices devices[]
+
+  @@index([usb_id])
+  @@index([pci_id])
 
   @@schema("public")
 }
