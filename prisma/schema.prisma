@@ -24,8 +24,9 @@ model devices {
   issues             issues[]
   other_device_names other_device_names[]
 
+  /// for /api/devices/by_bus_vid_pid
   @@index([vendor_id, bus, dev_id])
-  
+
   @@schema("public")
 }
 
@@ -74,6 +75,8 @@ model other_device_names {
   device_id   BigInt
   vendor_name String  @default("")
   devices     devices @relation(fields: [device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([device_id])
 
   @@schema("public")
 }
