@@ -127,7 +127,7 @@ const driverConfig = {
   aue:
   {
     name: "aue",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
     match: `^\\s*{{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
@@ -137,7 +137,7 @@ const driverConfig = {
   axe:
   {
     name: "axe",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
     match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
@@ -147,7 +147,7 @@ const driverConfig = {
   axen:
   {
     name: "axen",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*}, AX179`,
     match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
@@ -157,7 +157,7 @@ const driverConfig = {
   cdce:
   {
     name: "cdce",
-    devType: "network/cdc-ecm",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
     match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
@@ -167,7 +167,7 @@ const driverConfig = {
   cue:
   {
     name: "cue",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
     match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
@@ -177,7 +177,7 @@ const driverConfig = {
   kue:
   {
     name: "kue",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
     match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
@@ -187,7 +187,7 @@ const driverConfig = {
   mos:
   {
     name: "mos",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
     match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
@@ -197,7 +197,7 @@ const driverConfig = {
   smsc:
   {
     name: "smsc",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
     match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
@@ -207,7 +207,7 @@ const driverConfig = {
   uaq:
   {
     name: "uaq",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
     match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
@@ -217,7 +217,7 @@ const driverConfig = {
   udav:
   {
     name: "udav",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
     match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
@@ -227,7 +227,7 @@ const driverConfig = {
   ure:
   {
     name: "ure",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
     match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
@@ -237,7 +237,7 @@ const driverConfig = {
   url:
   {
     name: "url",
-    devType: "network/ethernet",
+    devType: "network/wired",
     bus: "USB",
     filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
     match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
