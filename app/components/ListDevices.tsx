@@ -1,0 +1,192 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import DeviceListEntry from "./DeviceListEntry";
+import type { DeviceListEntryProps, FullDeviceInfo } from "@/lib/local-types";
+
+
+enum FilterType {
+  Bus = "bus",
+  DevType = "device type"
+}
+
+interface ListDevicesProps {
+  devices: FullDeviceInfo[];
+  search?: string;
+}
+
+export default function ListDevices({ devices, search }: ListDevicesProps) {
+
+  const handleCheckboxChange = (id: number, mode: FilterType) => {
+    let setter: React.Dispatch<React.SetStateAction<number[]>> = () => [];
+    switch (mode) {
+      case FilterType.Bus:
+        setter = setBusFilterIds;
+        break;
+      case FilterType.DevType:
+        setter = setDevTypeFilterIds;
+        break;
+      default:
+        console.error("handleCheckBoxChange bad mode");
+    }
+    setter((prev) =>
+      prev.includes(id)
+        ? prev.filter((item) => item !== id) // Uncheck: Remove ID
+        : [...prev, id]                     // Check: Add ID
+    );
+  }
+
+  const deviceListEntries: DeviceListEntryProps[] = devices.flatMap((device) => {
+    const searchTerms = search?.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean) ?? [];
+    const vendorName = device.vendors.name ?? "";
+    const canonicalName = `${vendorName} ${device.name}`;
+    const canonicalFields = [vendorName, device.name].map((field) => field.toLocaleLowerCase());
+    const canonicalMatches = searchTerms.every((term) =>
+      canonicalFields.some((field) => field.includes(term))
+    );
+
+    const matchingOtherNames = device.other_device_names.filter((otherName) =>
+      searchTerms.every((term) =>
+        (`${otherName.vendor_name !== "" ? otherName.vendor_name + " ": ""}${otherName.device_name}`).toLocaleLowerCase().includes(term))
+    );
+
+    const canonicalEntry = {
+      id: device.id,
+      name: canonicalName,
+      bus: device.bus,
+      devType: device.drivers.dev_type,
+      vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
+      pid: device.dev_id,
+    };
+
+    const alternateEntries = matchingOtherNames.map((otherName) => ({
+        name: `${otherName.vendor_name !== "" ? otherName.vendor_name + " ": ""}${otherName.device_name}`,
+        id: device.id,
+        bus: device.bus,
+        devType: device.drivers.dev_type,
+        vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
+        pid: device.dev_id,
+      }));
+
+    if (searchTerms.length === 0) {
+        return [canonicalEntry, ...alternateEntries];
+    }
+
+    return canonicalMatches
+      ? [canonicalEntry, ...alternateEntries]
+      : alternateEntries.length > 0
+        ? alternateEntries
+        : [{ ...canonicalEntry, name: canonicalName }];
+  });
+
+  const devTypeFilters = [...new Set(devices.map((device) => device.drivers.dev_type))]
+    .sort((a, b) => a.localeCompare(b))
+    .map((filter, index) => ({ id: index, name: filter }));
+
+  const busFilters = [...new Set(devices.map((device) => device.bus))]
+    .sort((a, b) => a.localeCompare(b))
+    .map((filter, index) => ({ id: index, name: filter }));
+
+  const [devTypeFilterIds, setDevTypeFilterIds] = useState<number[]>(devTypeFilters.map(filter => filter.id));
+  const [busFilterIds, setBusFilterIds] = useState<number[]>(busFilters.map(filter => filter.id));
+
+  const selectedDevTypes = new Set(
+    devTypeFilterIds
+      .map((id) => devTypeFilters[id]?.name)
+      .filter((name): name is string => name !== undefined)
+  );
+
+  const selectedBuses = new Set(
+    busFilterIds
+      .map((id) => busFilters[id]?.name)
+      .filter((name): name is string => name !== undefined)
+  );
+
+  const filteredDeviceListEntries = deviceListEntries.filter(
+    (device) =>
+      selectedDevTypes.has(device.devType) &&
+      selectedBuses.has(device.bus)
+  );
+
+  const sortedDeviceListEntries = filteredDeviceListEntries.toSorted((a, b) => a.name.localeCompare(b.name));
+
+
+  return (
+    <>
+      <div>
+        <div className="flex items-center justify-center font-bold mt-4">
+          {sortedDeviceListEntries.length === 0 ? (
+            <div>No devices matched.</div>
+          ) : (
+            <div>
+              Matched {sortedDeviceListEntries.length} device{sortedDeviceListEntries.length !== 1 ? "s" : ""}.
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="flex px-4 mt-4">
+        <div className="flex flex-col gap-2 min-w-40">
+          Filters:
+          <div>
+            <span className="capitalize">{FilterType.DevType}:</span>
+            {devTypeFilters
+              .map((devType) => (
+                <div key={devType.id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={devTypeFilterIds.includes(devType.id)}
+                      onChange={() => handleCheckboxChange(devType.id, FilterType.DevType)}
+                    />
+                    {devType.name}
+                  </label>
+                </div>
+              ))}
+          </div>
+          <div>
+            <span className="capitalize">{FilterType.Bus}:</span>
+            {busFilters
+              .map((bus) => (
+                <div key={bus.id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={busFilterIds.includes(bus.id)}
+                      onChange={() => handleCheckboxChange(bus.id, FilterType.Bus)}
+                    />
+                    {bus.name}
+                  </label>
+                </div>
+              ))}
+          </div>
+        </div>
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-8 sm:gap-2 px-4">
+            <div className="col-auto sm:col-span-3">
+              Name
+            </div>
+            <div className="col-auto sm:col-span-2">
+              VID:PID
+            </div>
+            <div className="col-auto sm:col-span-1">
+              Bus
+            </div>
+            <div className="col-auto sm:col-span-2">
+              Device Type
+            </div>
+          </div>
+          {sortedDeviceListEntries.map((info, index) => (
+            <Link
+              key={index}
+              href={`/device/${info.id}`}
+              className="no-underline text-inherit"
+            >
+              <DeviceListEntry {...info} />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}

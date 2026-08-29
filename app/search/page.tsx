@@ -14,13 +14,6 @@ export default async function Search({
   const search = typeof filters.search === "string" ? filters.search : undefined;
   const bus = typeof filters.bus === "string" ? filters.bus : undefined;
   const devType = typeof filters.devType === "string" ? filters.devType : undefined;
-  const rawPage = typeof filters.page === "string"
-    ? filters.page
-    : Array.isArray(filters.page)
-      ? filters.page[0]
-      : undefined;
-  const currentPage = rawPage ? Math.max(1, Number.parseInt(rawPage, 10)) : 1;
-  const pageSize = 5;
   const searchTerms = search
     ? search.trim().split(/\s+/).filter(Boolean)
     : [];
@@ -86,14 +79,7 @@ export default async function Search({
       </div>
 
       <Suspense fallback={<div className="flex items-center justify-center font-bold m-8">Loading devices...</div>}>
-        <SearchDevices
-          queryWhere={queryWhere}
-          currentPage={currentPage}
-          pageSize={pageSize}
-          search={search}
-          bus={bus}
-          devType={devType}
-        />
+        <SearchDevices queryWhere={queryWhere} search={search} />
       </Suspense>
     </>
   );

@@ -1,6 +1,8 @@
 import "dotenv/config";
 import prisma from "@/lib/prisma";
 
+// last driver added before last run: 13 uath
+
 // get vendor and device ids from public.devices table
 // where bus is USB
 async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_id: string | null; vendor_name: string | null; device_usb_id: string | null; device_name: string | null }[]> {

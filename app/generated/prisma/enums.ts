@@ -9,7 +9,11 @@
 * 🟢 You can import this file directly.
 */
 
+export const support_type = {
+  supported: 'supported',
+  partial: 'partial',
+  unsupported: 'unsupported',
+  unknown: 'unknown'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type support_type = (typeof support_type)[keyof typeof support_type]

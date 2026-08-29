@@ -309,6 +309,7 @@ async function findDev(vendor_dev: string, device_dev: string, deviceDevsText: s
           vendor_id: vendor.id,
           driver_id: driverId,
           bus: driverConfig[currDriver].bus ?? null,
+          support_status: "supported",
         },
       });
       console.log(`Device created: ${deviceDevId} ${deviceName}\n`);

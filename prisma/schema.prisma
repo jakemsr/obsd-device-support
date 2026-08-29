@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  schemas  = ["public"]
+  schemas  = ["better_auth", "public"]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -18,10 +18,14 @@ model devices {
   devs_name          String
   dev_id             String
   driver_id          BigInt
+  support_status     support_type         @default(unknown)
   drivers            drivers              @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   vendors            vendors              @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   issues             issues[]
   other_device_names other_device_names[]
+
+  /// for /api/devices/by_bus_vid_pid
+  @@index([vendor_id, bus, dev_id])
 
   @@schema("public")
 }
@@ -58,6 +62,9 @@ model vendors {
   usbdev  String?
   devices devices[]
 
+  @@index([usb_id])
+  @@index([pci_id])
+
   @@schema("public")
 }
 
@@ -66,7 +73,89 @@ model other_device_names {
   id          BigInt  @id @default(autoincrement())
   device_name String  @default("")
   device_id   BigInt
+  vendor_name String  @default("")
   devices     devices @relation(fields: [device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([device_id])
+
+  @@schema("public")
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  firstName     String    @default("")
+  lastName      String    @default("")
+  role          String    @default("user")
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("user")
+  @@schema("better_auth")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+  @@schema("better_auth")
+}
+
+model Account {
+  id                    String    @id
+  issuer                String
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([issuer, accountId], map: "account_issuer_accountId_uidx")
+  @@index([userId])
+  @@map("account")
+  @@schema("better_auth")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+  @@schema("better_auth")
+}
+
+enum support_type {
+  supported
+  partial
+  unsupported
+  unknown
 
   @@schema("public")
 }
