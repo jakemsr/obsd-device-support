@@ -24,9 +24,229 @@ const driverConfig = {
     path: "/usr/src/sys/dev/usb/if_atu.c",
     removeVendor: true,
   },
+  bwfm_usb:
+  {
+    name: "bwfm",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_bwfm_usb.c",
+    removeVendor: true,
+  },
+  otus:
+  {
+    name: "otus",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_otus.c",
+    removeVendor: true,
+  },
+  ural:
+  {
+    name: "ural",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_ral.c",
+    removeVendor: true,
+  },
+  rsu:
+  {
+    name: "rsu",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_rsu.c",
+    removeVendor: true,
+  },
+  rum:
+  {
+    name: "rum",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_rum.c",
+    removeVendor: true,
+  },
+  uath:
+  {
+    name: "uath",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: "^\\s*UATH_DEV_U.\\(",
+    match: "^\\s*UATH_DEV_U.\\((\\S+),\\s+(\\S+)\\),?\\s*$",
+    path: "/usr/src/sys/dev/usb/if_uath.c",
+    removeVendor: false,
+  },
+  upgt:
+  {
+    name: "upgt",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_upgt.c",
+    removeVendor: true,
+  },
+  urtw:
+  {
+    name: "urtw",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: "^\\s*URTW_DEV_RTL8187B?\\(",
+    match: "^\\s*URTW_DEV_RTL8187B?\\((\\S+),\\s+(\\S+)\\),?\\s*$",
+    path: "/usr/src/sys/dev/usb/if_urtw.c",
+    removeVendor: false,
+  },
+  wi_usb:
+  {
+    name: "wi",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: `^\\s*{{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
+    match: `^\\s*{{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_wi_usb.c",
+    removeVendor: true,
+  },
+  zyd:
+  {
+    name: "zyd",
+    devType: "network/wireless",
+    bus: "USB",
+    filter: "^\\s*ZYD_ZD1211B?_DEV\\(",
+    match: "^\\s*ZYD_ZD1211B?_DEV\\((\\S+),\\s+(\\S+)\\),?\\s*$",
+    path: "/usr/src/sys/dev/usb/if_zyd.c",
+    removeVendor: false,
+  },
+  aue:
+  {
+    name: "aue",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
+    match: `^\\s*{{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_aue.c",
+    removeVendor: true,
+  },
+  axe:
+  {
+    name: "axe",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
+    match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_axe.c",
+    removeVendor: true,
+  },
+  axen:
+  {
+    name: "axen",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*}, AX179`,
+    match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_axen.c",
+    removeVendor: true,
+  },
+  cdce:
+  {
+    name: "cdce",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
+    match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_cdce.c",
+    removeVendor: true,
+  },
+  cue:
+  {
+    name: "cue",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_cue.c",
+    removeVendor: true,
+  },
+  kue:
+  {
+    name: "kue",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_kue.c",
+    removeVendor: true,
+  },
+  mos:
+  {
+    name: "mos",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
+    match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_mos.c",
+    removeVendor: true,
+  },
+  smsc:
+  {
+    name: "smsc",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_smsc.c",
+    removeVendor: true,
+  },
+  uaq:
+  {
+    name: "uaq",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_uaq.c",
+    removeVendor: true,
+  },
+  udav:
+  {
+    name: "udav",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
+    match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_udav.c",
+    removeVendor: true,
+  },
+  ure:
+  {
+    name: "ure",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},?`,
+    match: `^\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_(\\S+)\\s*},?`,
+    path: "/usr/src/sys/dev/usb/if_ure.c",
+    removeVendor: true,
+  },
+  url:
+  {
+    name: "url",
+    devType: "network/wired",
+    bus: "USB",
+    filter: `^\\s*{\\s*{\\s*USB_VENDOR_\\S+\\s*,\\s*USB_PRODUCT_\\S+\\s*},`,
+    match: `^\\s*{\\s*{\\s*USB_VENDOR_(\\S+)\\s*,\\s*USB_PRODUCT_([^\\s}]*)\\s*},`,
+    path: "/usr/src/sys/dev/usb/if_url.c",
+    removeVendor: true,
+  },
 };
 
-const currDriver = "mtw";
+const currDriver = "url";
 
 const deviceDevsPath = driverConfig[currDriver].bus === "USB" ?
   "/usr/src/sys/dev/usb/usbdevs" : "/usr/src/sys/dev/pci/pcidevs";
@@ -57,13 +277,13 @@ function extractDeviceFields(text: string): DeviceRecord[] {
 }
 
 async function findDev(vendor_dev: string, device_dev: string, deviceDevsText: string, driverId: bigint): Promise<void> {
-  const regex = new RegExp(`^product\\s+${vendor_dev}\\s+${device_dev}\\s+(\\S+)\\s+(.+)`, 'm');
+  const regex = new RegExp(`^product\\s+${vendor_dev}\\s+${device_dev}\\s+(\\S+)[^\\S\\r\\n]+(.+)`, 'm');
   const match = deviceDevsText.match(regex);
   if (match) {
     console.log(`${driverConfig[currDriver].bus} device found: ${match[1]} ${match[2]}`);
     const deviceDevId = match[1];
     const deviceName = match[2];
-
+// /*
     const vendor = await prisma.vendors.findFirst({
       where: { [driverConfig[currDriver].bus === "USB" ? "usbdev" : "pcidev"]: vendor_dev },
     });
@@ -96,7 +316,7 @@ async function findDev(vendor_dev: string, device_dev: string, deviceDevsText: s
     } else {
       console.log(`Device already exists: ${existing.dev_id} ${existing.name}!!!\n`);
     }
-
+// */
   } else {
     throw new Error(`${driverConfig[currDriver].bus} device not found: ${vendor_dev} ${device_dev}`);
   }
