@@ -46,7 +46,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
     );
 
     const matchingOtherNames = device.other_device_names.filter((otherName) =>
-      searchTerms.every((term) =>
+      searchTerms.some((term) =>
         (`${otherName.vendor_name !== "" ? otherName.vendor_name + " ": ""}${otherName.device_name}`).toLocaleLowerCase().includes(term))
     );
 
