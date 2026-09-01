@@ -13,7 +13,8 @@ const getDeviceTypes = unstable_cache(
       },
     });
 
-    return deviceTypes.map((driver) => driver.dev_type);
+    return deviceTypes.map((driver) => driver.dev_type)
+      .sort((a, b) => a.localeCompare(b));
   },
   ['homepage-key-1'], // cache key
   {
@@ -32,7 +33,8 @@ const getBusTypes = unstable_cache(
       },
     });
 
-    return busTypes.map((device) => device.bus);
+    return busTypes.map((device) => device.bus)
+      .sort((a, b) => a.localeCompare(b));
   },
   ['homepage-key-2'], // cache key
   {
