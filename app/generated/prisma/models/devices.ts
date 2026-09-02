@@ -45,7 +45,7 @@ export type DevicesMinAggregateOutputType = {
   name: string | null
   bus: string | null
   devs_name: string | null
-  dev_id: string | null
+  product_id: string | null
   driver_id: bigint | null
   support_status: $Enums.support_type | null
 }
@@ -56,7 +56,7 @@ export type DevicesMaxAggregateOutputType = {
   name: string | null
   bus: string | null
   devs_name: string | null
-  dev_id: string | null
+  product_id: string | null
   driver_id: bigint | null
   support_status: $Enums.support_type | null
 }
@@ -67,7 +67,7 @@ export type DevicesCountAggregateOutputType = {
   name: number
   bus: number
   devs_name: number
-  dev_id: number
+  product_id: number
   driver_id: number
   support_status: number
   _all: number
@@ -92,7 +92,7 @@ export type DevicesMinAggregateInputType = {
   name?: true
   bus?: true
   devs_name?: true
-  dev_id?: true
+  product_id?: true
   driver_id?: true
   support_status?: true
 }
@@ -103,7 +103,7 @@ export type DevicesMaxAggregateInputType = {
   name?: true
   bus?: true
   devs_name?: true
-  dev_id?: true
+  product_id?: true
   driver_id?: true
   support_status?: true
 }
@@ -114,7 +114,7 @@ export type DevicesCountAggregateInputType = {
   name?: true
   bus?: true
   devs_name?: true
-  dev_id?: true
+  product_id?: true
   driver_id?: true
   support_status?: true
   _all?: true
@@ -212,7 +212,7 @@ export type DevicesGroupByOutputType = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   driver_id: bigint
   support_status: $Enums.support_type
   _count: DevicesCountAggregateOutputType | null
@@ -246,7 +246,7 @@ export type devicesWhereInput = {
   name?: Prisma.StringFilter<"devices"> | string
   bus?: Prisma.StringFilter<"devices"> | string
   devs_name?: Prisma.StringFilter<"devices"> | string
-  dev_id?: Prisma.StringFilter<"devices"> | string
+  product_id?: Prisma.StringFilter<"devices"> | string
   driver_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   support_status?: Prisma.Enumsupport_typeFilter<"devices"> | $Enums.support_type
   drivers?: Prisma.XOR<Prisma.DriversScalarRelationFilter, Prisma.driversWhereInput>
@@ -261,7 +261,7 @@ export type devicesOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   bus?: Prisma.SortOrder
   devs_name?: Prisma.SortOrder
-  dev_id?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   driver_id?: Prisma.SortOrder
   support_status?: Prisma.SortOrder
   drivers?: Prisma.driversOrderByWithRelationInput
@@ -279,7 +279,7 @@ export type devicesWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"devices"> | string
   bus?: Prisma.StringFilter<"devices"> | string
   devs_name?: Prisma.StringFilter<"devices"> | string
-  dev_id?: Prisma.StringFilter<"devices"> | string
+  product_id?: Prisma.StringFilter<"devices"> | string
   driver_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   support_status?: Prisma.Enumsupport_typeFilter<"devices"> | $Enums.support_type
   drivers?: Prisma.XOR<Prisma.DriversScalarRelationFilter, Prisma.driversWhereInput>
@@ -294,7 +294,7 @@ export type devicesOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   bus?: Prisma.SortOrder
   devs_name?: Prisma.SortOrder
-  dev_id?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   driver_id?: Prisma.SortOrder
   support_status?: Prisma.SortOrder
   _count?: Prisma.devicesCountOrderByAggregateInput
@@ -313,7 +313,7 @@ export type devicesScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"devices"> | string
   bus?: Prisma.StringWithAggregatesFilter<"devices"> | string
   devs_name?: Prisma.StringWithAggregatesFilter<"devices"> | string
-  dev_id?: Prisma.StringWithAggregatesFilter<"devices"> | string
+  product_id?: Prisma.StringWithAggregatesFilter<"devices"> | string
   driver_id?: Prisma.BigIntWithAggregatesFilter<"devices"> | bigint | number
   support_status?: Prisma.Enumsupport_typeWithAggregatesFilter<"devices"> | $Enums.support_type
 }
@@ -323,7 +323,7 @@ export type devicesCreateInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   support_status?: $Enums.support_type
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
@@ -337,7 +337,7 @@ export type devicesUncheckedCreateInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   driver_id: bigint | number
   support_status?: $Enums.support_type
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
@@ -349,7 +349,7 @@ export type devicesUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
@@ -363,7 +363,7 @@ export type devicesUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
@@ -376,7 +376,7 @@ export type devicesCreateManyInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   driver_id: bigint | number
   support_status?: $Enums.support_type
 }
@@ -386,7 +386,7 @@ export type devicesUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
 }
 
@@ -396,7 +396,7 @@ export type devicesUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
 }
@@ -407,7 +407,7 @@ export type devicesCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   bus?: Prisma.SortOrder
   devs_name?: Prisma.SortOrder
-  dev_id?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   driver_id?: Prisma.SortOrder
   support_status?: Prisma.SortOrder
 }
@@ -424,7 +424,7 @@ export type devicesMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   bus?: Prisma.SortOrder
   devs_name?: Prisma.SortOrder
-  dev_id?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   driver_id?: Prisma.SortOrder
   support_status?: Prisma.SortOrder
 }
@@ -435,7 +435,7 @@ export type devicesMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   bus?: Prisma.SortOrder
   devs_name?: Prisma.SortOrder
-  dev_id?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   driver_id?: Prisma.SortOrder
   support_status?: Prisma.SortOrder
 }
@@ -594,7 +594,7 @@ export type devicesCreateWithoutDriversInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   support_status?: $Enums.support_type
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
@@ -607,7 +607,7 @@ export type devicesUncheckedCreateWithoutDriversInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   support_status?: $Enums.support_type
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
   other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
@@ -648,7 +648,7 @@ export type devicesScalarWhereInput = {
   name?: Prisma.StringFilter<"devices"> | string
   bus?: Prisma.StringFilter<"devices"> | string
   devs_name?: Prisma.StringFilter<"devices"> | string
-  dev_id?: Prisma.StringFilter<"devices"> | string
+  product_id?: Prisma.StringFilter<"devices"> | string
   driver_id?: Prisma.BigIntFilter<"devices"> | bigint | number
   support_status?: Prisma.Enumsupport_typeFilter<"devices"> | $Enums.support_type
 }
@@ -658,7 +658,7 @@ export type devicesCreateWithoutIssuesInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   support_status?: $Enums.support_type
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
@@ -671,7 +671,7 @@ export type devicesUncheckedCreateWithoutIssuesInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   driver_id: bigint | number
   support_status?: $Enums.support_type
   other_device_names?: Prisma.other_device_namesUncheckedCreateNestedManyWithoutDevicesInput
@@ -698,7 +698,7 @@ export type devicesUpdateWithoutIssuesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
@@ -711,7 +711,7 @@ export type devicesUncheckedUpdateWithoutIssuesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
@@ -722,7 +722,7 @@ export type devicesCreateWithoutVendorsInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   support_status?: $Enums.support_type
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   issues?: Prisma.issuesCreateNestedManyWithoutDevicesInput
@@ -734,7 +734,7 @@ export type devicesUncheckedCreateWithoutVendorsInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   driver_id: bigint | number
   support_status?: $Enums.support_type
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
@@ -772,7 +772,7 @@ export type devicesCreateWithoutOther_device_namesInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   support_status?: $Enums.support_type
   drivers: Prisma.driversCreateNestedOneWithoutDevicesInput
   vendors: Prisma.vendorsCreateNestedOneWithoutDevicesInput
@@ -785,7 +785,7 @@ export type devicesUncheckedCreateWithoutOther_device_namesInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   driver_id: bigint | number
   support_status?: $Enums.support_type
   issues?: Prisma.issuesUncheckedCreateNestedManyWithoutDevicesInput
@@ -812,7 +812,7 @@ export type devicesUpdateWithoutOther_device_namesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
@@ -825,7 +825,7 @@ export type devicesUncheckedUpdateWithoutOther_device_namesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
@@ -837,7 +837,7 @@ export type devicesCreateManyDriversInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   support_status?: $Enums.support_type
 }
 
@@ -846,7 +846,7 @@ export type devicesUpdateWithoutDriversInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   vendors?: Prisma.vendorsUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
@@ -859,7 +859,7 @@ export type devicesUncheckedUpdateWithoutDriversInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
   other_device_names?: Prisma.other_device_namesUncheckedUpdateManyWithoutDevicesNestedInput
@@ -871,7 +871,7 @@ export type devicesUncheckedUpdateManyWithoutDriversInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
 }
 
@@ -880,7 +880,7 @@ export type devicesCreateManyVendorsInput = {
   name: string
   bus: string
   devs_name: string
-  dev_id: string
+  product_id: string
   driver_id: bigint | number
   support_status?: $Enums.support_type
 }
@@ -890,7 +890,7 @@ export type devicesUpdateWithoutVendorsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   drivers?: Prisma.driversUpdateOneRequiredWithoutDevicesNestedInput
   issues?: Prisma.issuesUpdateManyWithoutDevicesNestedInput
@@ -902,7 +902,7 @@ export type devicesUncheckedUpdateWithoutVendorsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   issues?: Prisma.issuesUncheckedUpdateManyWithoutDevicesNestedInput
@@ -914,7 +914,7 @@ export type devicesUncheckedUpdateManyWithoutVendorsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   bus?: Prisma.StringFieldUpdateOperationsInput | string
   devs_name?: Prisma.StringFieldUpdateOperationsInput | string
-  dev_id?: Prisma.StringFieldUpdateOperationsInput | string
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   driver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
 }
@@ -965,7 +965,7 @@ export type devicesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   bus?: boolean
   devs_name?: boolean
-  dev_id?: boolean
+  product_id?: boolean
   driver_id?: boolean
   support_status?: boolean
   drivers?: boolean | Prisma.driversDefaultArgs<ExtArgs>
@@ -981,7 +981,7 @@ export type devicesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   bus?: boolean
   devs_name?: boolean
-  dev_id?: boolean
+  product_id?: boolean
   driver_id?: boolean
   support_status?: boolean
   drivers?: boolean | Prisma.driversDefaultArgs<ExtArgs>
@@ -994,7 +994,7 @@ export type devicesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   bus?: boolean
   devs_name?: boolean
-  dev_id?: boolean
+  product_id?: boolean
   driver_id?: boolean
   support_status?: boolean
   drivers?: boolean | Prisma.driversDefaultArgs<ExtArgs>
@@ -1007,12 +1007,12 @@ export type devicesSelectScalar = {
   name?: boolean
   bus?: boolean
   devs_name?: boolean
-  dev_id?: boolean
+  product_id?: boolean
   driver_id?: boolean
   support_status?: boolean
 }
 
-export type devicesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendor_id" | "name" | "bus" | "devs_name" | "dev_id" | "driver_id" | "support_status", ExtArgs["result"]["devices"]>
+export type devicesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendor_id" | "name" | "bus" | "devs_name" | "product_id" | "driver_id" | "support_status", ExtArgs["result"]["devices"]>
 export type devicesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   drivers?: boolean | Prisma.driversDefaultArgs<ExtArgs>
   vendors?: boolean | Prisma.vendorsDefaultArgs<ExtArgs>
@@ -1043,7 +1043,7 @@ export type $devicesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     bus: string
     devs_name: string
-    dev_id: string
+    product_id: string
     driver_id: bigint
     support_status: $Enums.support_type
   }, ExtArgs["result"]["devices"]>
@@ -1478,7 +1478,7 @@ export interface devicesFieldRefs {
   readonly name: Prisma.FieldRef<"devices", 'String'>
   readonly bus: Prisma.FieldRef<"devices", 'String'>
   readonly devs_name: Prisma.FieldRef<"devices", 'String'>
-  readonly dev_id: Prisma.FieldRef<"devices", 'String'>
+  readonly product_id: Prisma.FieldRef<"devices", 'String'>
   readonly driver_id: Prisma.FieldRef<"devices", 'BigInt'>
   readonly support_status: Prisma.FieldRef<"devices", 'support_type'>
 }

@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
   const devices = await prisma.devices.findMany({
 		where: {
-			dev_id: productId,
+			product_id: productId,
 			bus,
 			vendors: {
 				[bus === "PCI" ? "pci_id" : "usb_id"]: vendorId,

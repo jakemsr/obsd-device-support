@@ -16,7 +16,7 @@ model devices {
   name               String
   bus                String
   devs_name          String
-  dev_id             String
+  product_id         String
   driver_id          BigInt
   support_status     support_type         @default(unknown)
   drivers            drivers              @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -24,7 +24,7 @@ model devices {
   issues             issues[]
   other_device_names other_device_names[]
 
-  @@index([vendor_id, bus, dev_id])
+  @@index([vendor_id, bus, product_id], map: "devices_vendor_id_bus_dev_id_idx")
   @@schema("public")
 }
 

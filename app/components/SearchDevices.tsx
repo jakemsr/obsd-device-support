@@ -16,7 +16,7 @@ export default async function SearchDevices({queryWhere, search}: SearchDevicesP
       orderBy: [
         { name: "asc" },
         { vendors: { name: "asc" } },
-        { dev_id: "asc" },
+        { product_id: "asc" },
       ],
       include: {
         vendors: true,

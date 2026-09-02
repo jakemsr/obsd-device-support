@@ -56,7 +56,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
       bus: device.bus,
       devType: device.drivers.dev_type,
       vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
-      pid: device.dev_id,
+      pid: device.product_id,
     };
 
     const alternateEntries = matchingOtherNames.map((otherName) => ({
@@ -65,7 +65,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
         bus: device.bus,
         devType: device.drivers.dev_type,
         vid: device.bus === "USB" ? device.vendors.usb_id || "" : device.vendors.pci_id || "",
-        pid: device.dev_id,
+        pid: device.product_id,
       }));
 
     if (searchTerms.length === 0) {

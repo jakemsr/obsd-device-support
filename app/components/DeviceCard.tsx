@@ -73,14 +73,14 @@ export default async function DeviceCard({ id }: { id: string }) {
           <div>{device.vendors?.pci_id ?? device.vendors?.usb_id ?? ""}</div>
         </div>
         <div className="grid grid-cols-2">
-          <div className="font-bold">Device ID:</div>
-          <div>{device.dev_id}</div>
+          <div className="font-bold">Product ID:</div>
+          <div>{device.product_id}</div>
         </div>
       </div>
 
       {device.other_device_names.length > 0 && (
         <div className="col-span-1 sm:col-span-2">
-          <span className="font-bold">Other names: </span>
+          <span className="font-bold">Products using this VID/PID: </span>
           {device.other_device_names.map((otherName, index) => (
             <span
               key={otherName.id}

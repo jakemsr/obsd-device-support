@@ -84,7 +84,7 @@ export const DevicesScalarFieldEnum = {
   name: 'name',
   bus: 'bus',
   devs_name: 'devs_name',
-  dev_id: 'dev_id',
+  product_id: 'product_id',
   driver_id: 'driver_id',
   support_status: 'support_status'
 } as const
