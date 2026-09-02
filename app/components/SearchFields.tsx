@@ -58,7 +58,6 @@ export default async function SearchFields() {
               type="text"
               id="search"
               name="search"
-              className="p-2 border border-gray-300 rounded text-[#171717] bg-white"
               placeholder="Search a device name..."
               autoFocus
             />
@@ -68,11 +67,10 @@ export default async function SearchFields() {
             <select
               id="bus"
               name="bus"
-              className="p-2 border border-gray-300 rounded text-[#171717] bg-white"
             >
-              <option className="text-[#171717] bg-white" value="">Select Bus</option>
+              <option value="">Select Bus</option>
               {busTypes.map((busType) => (
-                <option className="text-[#171717] bg-white" key={busType} value={busType}>
+                <option key={busType} value={busType}>
                   {busType}
                 </option>
               ))}
@@ -84,11 +82,10 @@ export default async function SearchFields() {
             <select
               id="devType"
               name="devType"
-              className="p-2 border border-gray-300 rounded text-[#171717] bg-white"
             >
-              <option className="text-[#171717] bg-white" value="">Select Type</option>
+              <option value="">Select Type</option>
               {deviceTypes.map((deviceType) => (
-                <option className="text-[#171717] bg-white" key={deviceType} value={deviceType}>
+                <option key={deviceType} value={deviceType}>
                   {deviceType}
                 </option>
               ))}
