@@ -17,3 +17,12 @@ export const support_type = {
 } as const
 
 export type support_type = (typeof support_type)[keyof typeof support_type]
+
+
+export const roles = {
+  admin: 'admin',
+  editor: 'editor',
+  user: 'user'
+} as const
+
+export type roles = (typeof roles)[keyof typeof roles]

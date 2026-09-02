@@ -24,9 +24,7 @@ model devices {
   issues             issues[]
   other_device_names other_device_names[]
 
-  /// for /api/devices/by_bus_vid_pid
   @@index([vendor_id, bus, dev_id])
-
   @@schema("public")
 }
 
@@ -64,7 +62,6 @@ model vendors {
 
   @@index([usb_id])
   @@index([pci_id])
-
   @@schema("public")
 }
 
@@ -77,7 +74,6 @@ model other_device_names {
   devices     devices @relation(fields: [device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([device_id])
-
   @@schema("public")
 }
 
@@ -91,7 +87,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   firstName     String    @default("")
   lastName      String    @default("")
-  role          String    @default("user")
+  role          roles     @default(user)
   accounts      Account[]
   sessions      Session[]
 
@@ -158,4 +154,12 @@ enum support_type {
   unknown
 
   @@schema("public")
+}
+
+enum roles {
+  admin
+  editor
+  user
+
+  @@schema("better_auth")
 }

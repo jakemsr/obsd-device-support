@@ -13,7 +13,8 @@ const getDeviceTypes = unstable_cache(
       },
     });
 
-    return deviceTypes.map((driver) => driver.dev_type);
+    return deviceTypes.map((driver) => driver.dev_type)
+      .sort((a, b) => a.localeCompare(b));
   },
   ['homepage-key-1'], // cache key
   {
@@ -32,7 +33,8 @@ const getBusTypes = unstable_cache(
       },
     });
 
-    return busTypes.map((device) => device.bus);
+    return busTypes.map((device) => device.bus)
+      .sort((a, b) => a.localeCompare(b));
   },
   ['homepage-key-2'], // cache key
   {
@@ -56,7 +58,6 @@ export default async function SearchFields() {
               type="text"
               id="search"
               name="search"
-              className="p-2 border border-gray-300 rounded"
               placeholder="Search a device name..."
               autoFocus
             />
@@ -66,7 +67,6 @@ export default async function SearchFields() {
             <select
               id="bus"
               name="bus"
-              className="p-2 border border-gray-300 rounded"
             >
               <option value="">Select Bus</option>
               {busTypes.map((busType) => (
@@ -82,7 +82,6 @@ export default async function SearchFields() {
             <select
               id="devType"
               name="devType"
-              className="p-2 border border-gray-300 rounded"
             >
               <option value="">Select Type</option>
               {deviceTypes.map((deviceType) => (

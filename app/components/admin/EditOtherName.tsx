@@ -32,12 +32,13 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
   const [deleteEntry, setDeleteEntry] = useState(false);
 
   const [apiResponse, setApiResponse] = useState<any>(null);
+  const [apiStatus, setApiStatus] = useState<any>(null);
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Send the POST request to the custom API endpoint
-    const response = await fetch(`/api/admin/fix_other_names/${other_name.id}/edit`, {
+    const response = await fetch(`/api/admin/fix_other_names`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,10 +51,19 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
           id: other_name.id.toString()
         }),
     });
+    if (!response.ok) {
+      setApiResponse({ error: "HTTP error!"});
+      setApiStatus(response.status);
+      if (!response.status) {
+        setApiStatus(500);
+      }
+    } else {
+      setApiStatus(response.status);
 
-    // Unpack the response from the API route
-    const data = await response.json();
-    setApiResponse(data);
+      // Unpack the response from the API route
+      const data = await response.json();
+      setApiResponse(data);
+    }
   };
 
 
@@ -80,7 +90,6 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
             name="vendor_name"
             value={vendorName}
             onChange={(e) => setVendorName(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1"
           />
         </label>
         <label>
@@ -90,7 +99,6 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
             name="device_name"
             value={deviceName}
             onChange={(e) => setDeviceName(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1"
           />
         </label>
         <label>
@@ -111,9 +119,24 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
       </form>
 
       {apiResponse ? (
-        <div className="mt-5 p-2">
-          <h3>Response from API Route:</h3>
-          <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
+        <div className="mt-2">
+          {apiStatus && apiStatus >= 200 && apiStatus < 300 ? (
+            <div className="font-bold">
+              {apiResponse.message}:&nbsp;
+              {apiResponse.vendor_name}:&nbsp;
+              {apiResponse.device_name}
+            </div>
+          ) : (
+            apiStatus && apiStatus >=300 && apiStatus < 400 ? (
+              <div className="text-yellow-600 font-bold">
+                redirect: {apiResponse.message}
+              </div>
+            ) : apiStatus && apiStatus >= 400 && apiStatus < 600 ? (
+              <div className="text-red-600 font-bold">
+                error: {apiResponse.error}: {apiResponse.details}
+              </div>
+            ) : null
+          )}
         </div>
       ) : (
         <div>

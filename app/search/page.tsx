@@ -41,10 +41,20 @@ export default async function Search({
           {
             other_device_names: {
               some: {
-                device_name: {
-                  contains: term,
-                  mode: "insensitive" as const,
-                },
+                OR: [
+                  {
+                    device_name: {
+                      contains: term,
+                      mode: "insensitive" as const,
+                    },
+                  },
+                  {
+                    vendor_name: {
+                      contains: term,
+                      mode: "insensitive" as const,
+                    },
+                  },
+                ],
               },
             },
           },
