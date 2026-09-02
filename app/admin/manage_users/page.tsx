@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import type { UserInfo } from "@/lib/local-types";
+import { User } from "@/app/generated/prisma/client";
 
 
 export default async function Page() {
@@ -33,7 +33,7 @@ export default async function Page() {
 
   const userCount = await prisma.user.count();
 
-  const userEntry = (user: UserInfo, index: number) => {
+  const userEntry = (user: User, index: number) => {
     return (
       <Link
         key={index}
