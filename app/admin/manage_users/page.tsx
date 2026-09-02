@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import type { UserInfo } from "@/lib/local-types";
 
 
 export default async function Page() {
@@ -25,29 +26,24 @@ export default async function Page() {
 
   const users = await prisma.user.findMany({
     orderBy: [
+      { role: "asc" },
       { email: "asc" },
     ],
   });
 
   const userCount = await prisma.user.count();
 
-  const userEntry = (user: {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
-    createdAt: Date;
-  }, index: number) => {
+  const userEntry = (user: UserInfo, index: number) => {
     return (
       <Link
         key={index}
         href={`/admin/manage_users/${user.id}`}
-        className="grid grid-cols-4 gap-4 text-link hover:underline"
+        className="grid grid-cols-2 gap-2 sm:grid-cols-9 sm:gap-4 text-link hover:underline border-t border-foreground"
       >
-        <div>{user.name}</div>
-        <div>{user.email}</div>
-        <div>{user.role}</div>
-        <div>{user.createdAt.toISOString()}</div>
+        <div className="col-auto sm:col-span-3">{user.email}</div>
+        <div className="col-auto sm:col-span-2">{user.firstName} {user.lastName}</div>
+        <div className="col-auto sm:col-span-1">{user.role}</div>
+        <div className="col-auto sm:col-span-3">{user.createdAt.toISOString()}</div>
       </Link>
     );
   };
@@ -61,11 +57,11 @@ export default async function Page() {
         There are {userCount} users in the system.
       </p>
       <div>
-        <div className="grid grid-cols-4 gap-4">
-          <div className="font-bold">Name</div>
-          <div className="font-bold">Email</div>
-          <div className="font-bold">Role</div>
-          <div className="font-bold">Created At</div>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-9 sm:gap-4">
+          <div className="font-bold col-auto sm:col-span-3">Email</div>
+          <div className="font-bold col-auto sm:col-span-2">Name</div>
+          <div className="font-bold col-auto sm:col-span-1">Role</div>
+          <div className="font-bold col-auto sm:col-span-3">Created At</div>
         </div>
         {users.map((user, index) => userEntry(user, index))}
 
