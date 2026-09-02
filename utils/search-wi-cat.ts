@@ -10,7 +10,7 @@ async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_
     select: {
       id: true,
       name: true,
-      dev_id: true,
+      product_id: true,
       vendors: {
         select: {
           name: true,
@@ -26,7 +26,7 @@ async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_
     device_id: device.id,
     vendor_usb_id: device.vendors.usb_id?.substring(2) || null, // remove the "0x" prefix if present
     vendor_name: device.vendors.name || null,
-    device_usb_id: device.dev_id?.substring(2) || null, // remove the "0x" prefix if present
+    device_usb_id: device.product_id?.substring(2) || null, // remove the "0x" prefix if present
     device_name: device.name || null,
   }));
 }
