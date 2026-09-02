@@ -1340,6 +1340,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'roles'
+ */
+export type EnumrolesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'roles'>
+    
+
+
+/**
+ * Reference to a field of type 'roles[]'
+ */
+export type ListEnumrolesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'roles[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>

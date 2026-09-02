@@ -4,6 +4,7 @@ import prisma from "./prisma";
 import { Resend } from "resend";
 import { VerificationEmail } from '@/emails/verification';
 import { PasswordResetEmail } from '@/emails/password-reset';
+import { roles } from '@/app/generated/prisma/enums'
 
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
@@ -71,7 +72,7 @@ export const auth = betterAuth({
         input: true,
       },
       role: {
-        type: ["user", "creator", "admin"],
+        type: Object.values(roles),
         required: true,
         defaultValue: "user",
         input: false,  // don't allow user to set role
