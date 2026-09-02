@@ -63,7 +63,12 @@ async function importVendors(filePath: string): Promise<void> {
       continue;
     }
 
-    if ((existing.pcidev ?? "") !== vendor.pcidev) {
+	// there may be more than one PCI vendor ID per vendor name,
+	// such is the case with 3com and D-Link
+
+	// fill in PCI vendor info if vendor name
+	// matches a USB vendor name
+    if ((existing.pcidev ?? "") === null) {
       await prisma.vendors.update({
         where: { id: existing.id },
         data: {
@@ -73,7 +78,19 @@ async function importVendors(filePath: string): Promise<void> {
       });
       updated += 1;
       continue;
-    }
+    } else if ((existing.pcidev ?? "") !== vendor.pcidev) {
+	  // create a new entry if there's a name match and no
+	  // empty PCI info (a second PCI ID for the vendor)
+      await prisma.vendors.create({
+        data: {
+          pcidev: vendor.pcidev,
+          pci_id: vendor.pci_id,
+          name: vendor.name,
+        },
+      });
+      created += 1;
+      continue;
+	}
 
     unchanged += 1;
 
