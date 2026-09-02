@@ -979,9 +979,10 @@ async function findDev(vendor_dev: string, device_dev: string, deviceDevsText: s
     const deviceDevId = match[1];
     const deviceName = match[2];
 // /*
+	const devField = driverConfig[currDriver].bus === "USB" ? "usbdev" : "pcidev";
     const vendor = await prisma.vendors.findFirst({
-      where: { [driverConfig[currDriver].bus === "USB" ? "usbdev" : "pcidev"]: vendor_dev },
-    });
+      where: { [devField]: vendor_dev, },
+	});
     if (vendor) {
       console.log(`${driverConfig[currDriver].bus} vendor found: ${vendor.id} ${vendor.name}`);
     } else {
