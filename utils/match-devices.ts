@@ -991,7 +991,7 @@ async function findDev(vendor_dev: string, device_dev: string, deviceDevsText: s
 
     const existing = await prisma.devices.findFirst({
       where: {
-        dev_id: deviceDevId,
+        product_id: deviceDevId,
         vendor_id: vendor.id,
         driver_id: driverId,
       },
@@ -999,7 +999,7 @@ async function findDev(vendor_dev: string, device_dev: string, deviceDevsText: s
     if (!existing) {
       await prisma.devices.create({
         data: {
-          dev_id: deviceDevId,
+          product_id: deviceDevId,
           devs_name: device_dev,
           name: deviceName,
           vendor_id: vendor.id,
@@ -1010,7 +1010,7 @@ async function findDev(vendor_dev: string, device_dev: string, deviceDevsText: s
       });
       console.log(`Device created: ${deviceDevId} ${deviceName}\n`);
     } else {
-      console.log(`Device already exists: ${existing.dev_id} ${existing.name}!!!\n`);
+      console.log(`Device already exists: ${existing.product_id} ${existing.name}!!!\n`);
     }
 // */
   } else {
