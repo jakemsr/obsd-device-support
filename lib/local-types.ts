@@ -1,5 +1,6 @@
 import type { Prisma } from "@/app/generated/prisma/client";
 
+
 export type FullDeviceInfo = Prisma.devicesGetPayload<{
   include: {
     vendors: true;
@@ -16,12 +17,3 @@ export type DeviceListEntryProps = {
   vid: string;
   pid: string;
 }
-
-export type UserInfo = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  createdAt: Date;
-};

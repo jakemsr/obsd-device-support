@@ -1,6 +1,8 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
+import EditUserButton from "@/app/components/admin/EditUserButton";
+import { User } from "@/app/generated/prisma/client";
 
 
 interface PageProps {
@@ -27,7 +29,7 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  const user = await prisma.user.findUnique({
+  const user: User | null = await prisma.user.findUnique({
     where: { id: id },
   });
 
@@ -41,18 +43,21 @@ export default async function Page({ params }: PageProps) {
       </p>
       {user ? (
         <div>
-          <form
-            className="grid grid-cols-2 gap-4 max-w-fit"
-          >
+          <div className="grid grid-cols-2 gap-2 max-w-fit">
             <div className="font-bold">Name</div>
-            <div>{user.name}</div>
+            <div>{user.firstName} {user.lastName}</div>
             <div className="font-bold">Email</div>
             <div>{user.email}</div>
             <div className="font-bold">Role</div>
             <div>{user.role}</div>
             <div className="font-bold">Created At</div>
             <div>{user.createdAt.toISOString()}</div>
-          </form>
+            <div className="font-bold">Updated At</div>
+            <div>{user.updatedAt.toISOString()}</div>
+          </div>
+          <div className="mt-4">
+            <EditUserButton user={user}/>
+          </div>
         </div>
       ) : (
         <p>User not found.</p>
