@@ -90,7 +90,6 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
             name="vendor_name"
             value={vendorName}
             onChange={(e) => setVendorName(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1"
           />
         </label>
         <label>
@@ -100,7 +99,6 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
             name="device_name"
             value={deviceName}
             onChange={(e) => setDeviceName(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1"
           />
         </label>
         <label>
