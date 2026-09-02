@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import NavDropDown from "./NavDropDown";
 import { authClient } from "@/lib/auth-client";
 import LoginModal from "./LoginModal";
 import { SignOut } from "./SignOutButton";
@@ -24,14 +25,14 @@ export default function Header() {
   } = authClient.useSession();
 
   return (
-    <header className="w-full grid grid-cols-7 text-sm sm:text-base py-4 px-4 sm:px-8">
-      <div className="flex items-center justify-start">
-        <Link href="/" className="text-link hover:underline">Home</Link>
+    <header className="w-full grid grid-cols-4 text-sm sm:text-base py-4 px-4 sm:px-8">
+      <div className="flex col-span-1 items-center justify-start">
+        <NavDropDown />
       </div>
-      <div className="flex col-span-5 items-center justify-center">
+      <div className="flex col-span-2 text-center justify-center">
         <span>OpenBSD Device Support Database</span>
       </div>
-      <div className="flex items-center justify-end">
+      <div className="flex col-span-1 items-center justify-end">
         {session ? (
           <SignOut />
         ) : (
