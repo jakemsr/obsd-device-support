@@ -39,19 +39,19 @@ export type IssuesSumAggregateOutputType = {
 export type IssuesMinAggregateOutputType = {
   id: bigint | null
   dev_id: bigint | null
-  issue: string | null
+  description: string | null
 }
 
 export type IssuesMaxAggregateOutputType = {
   id: bigint | null
   dev_id: bigint | null
-  issue: string | null
+  description: string | null
 }
 
 export type IssuesCountAggregateOutputType = {
   id: number
   dev_id: number
-  issue: number
+  description: number
   _all: number
 }
 
@@ -69,19 +69,19 @@ export type IssuesSumAggregateInputType = {
 export type IssuesMinAggregateInputType = {
   id?: true
   dev_id?: true
-  issue?: true
+  description?: true
 }
 
 export type IssuesMaxAggregateInputType = {
   id?: true
   dev_id?: true
-  issue?: true
+  description?: true
 }
 
 export type IssuesCountAggregateInputType = {
   id?: true
   dev_id?: true
-  issue?: true
+  description?: true
   _all?: true
 }
 
@@ -174,7 +174,7 @@ export type issuesGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type IssuesGroupByOutputType = {
   id: bigint
   dev_id: bigint
-  issue: string
+  description: string
   _count: IssuesCountAggregateOutputType | null
   _avg: IssuesAvgAggregateOutputType | null
   _sum: IssuesSumAggregateOutputType | null
@@ -203,14 +203,14 @@ export type issuesWhereInput = {
   NOT?: Prisma.issuesWhereInput | Prisma.issuesWhereInput[]
   id?: Prisma.BigIntFilter<"issues"> | bigint | number
   dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
-  issue?: Prisma.StringFilter<"issues"> | string
+  description?: Prisma.StringFilter<"issues"> | string
   devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }
 
 export type issuesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
-  issue?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   devices?: Prisma.devicesOrderByWithRelationInput
 }
 
@@ -220,14 +220,14 @@ export type issuesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.issuesWhereInput[]
   NOT?: Prisma.issuesWhereInput | Prisma.issuesWhereInput[]
   dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
-  issue?: Prisma.StringFilter<"issues"> | string
+  description?: Prisma.StringFilter<"issues"> | string
   devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }, "id">
 
 export type issuesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
-  issue?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   _count?: Prisma.issuesCountOrderByAggregateInput
   _avg?: Prisma.issuesAvgOrderByAggregateInput
   _max?: Prisma.issuesMaxOrderByAggregateInput
@@ -241,48 +241,48 @@ export type issuesScalarWhereWithAggregatesInput = {
   NOT?: Prisma.issuesScalarWhereWithAggregatesInput | Prisma.issuesScalarWhereWithAggregatesInput[]
   id?: Prisma.BigIntWithAggregatesFilter<"issues"> | bigint | number
   dev_id?: Prisma.BigIntWithAggregatesFilter<"issues"> | bigint | number
-  issue?: Prisma.StringWithAggregatesFilter<"issues"> | string
+  description?: Prisma.StringWithAggregatesFilter<"issues"> | string
 }
 
 export type issuesCreateInput = {
   id?: bigint | number
-  issue: string
+  description: string
   devices: Prisma.devicesCreateNestedOneWithoutIssuesInput
 }
 
 export type issuesUncheckedCreateInput = {
   id?: bigint | number
   dev_id: bigint | number
-  issue: string
+  description: string
 }
 
 export type issuesUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  issue?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   devices?: Prisma.devicesUpdateOneRequiredWithoutIssuesNestedInput
 }
 
 export type issuesUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   dev_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  issue?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type issuesCreateManyInput = {
   id?: bigint | number
   dev_id: bigint | number
-  issue: string
+  description: string
 }
 
 export type issuesUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  issue?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type issuesUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   dev_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  issue?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type IssuesListRelationFilter = {
@@ -298,7 +298,7 @@ export type issuesOrderByRelationAggregateInput = {
 export type issuesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
-  issue?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type issuesAvgOrderByAggregateInput = {
@@ -309,13 +309,13 @@ export type issuesAvgOrderByAggregateInput = {
 export type issuesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
-  issue?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type issuesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
-  issue?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type issuesSumOrderByAggregateInput = {
@@ -367,12 +367,12 @@ export type issuesUncheckedUpdateManyWithoutDevicesNestedInput = {
 
 export type issuesCreateWithoutDevicesInput = {
   id?: bigint | number
-  issue: string
+  description: string
 }
 
 export type issuesUncheckedCreateWithoutDevicesInput = {
   id?: bigint | number
-  issue: string
+  description: string
 }
 
 export type issuesCreateOrConnectWithoutDevicesInput = {
@@ -407,27 +407,27 @@ export type issuesScalarWhereInput = {
   NOT?: Prisma.issuesScalarWhereInput | Prisma.issuesScalarWhereInput[]
   id?: Prisma.BigIntFilter<"issues"> | bigint | number
   dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
-  issue?: Prisma.StringFilter<"issues"> | string
+  description?: Prisma.StringFilter<"issues"> | string
 }
 
 export type issuesCreateManyDevicesInput = {
   id?: bigint | number
-  issue: string
+  description: string
 }
 
 export type issuesUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  issue?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type issuesUncheckedUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  issue?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type issuesUncheckedUpdateManyWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  issue?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -435,31 +435,31 @@ export type issuesUncheckedUpdateManyWithoutDevicesInput = {
 export type issuesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dev_id?: boolean
-  issue?: boolean
+  description?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
 export type issuesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dev_id?: boolean
-  issue?: boolean
+  description?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
 export type issuesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dev_id?: boolean
-  issue?: boolean
+  description?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
 export type issuesSelectScalar = {
   id?: boolean
   dev_id?: boolean
-  issue?: boolean
+  description?: boolean
 }
 
-export type issuesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dev_id" | "issue", ExtArgs["result"]["issues"]>
+export type issuesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dev_id" | "description", ExtArgs["result"]["issues"]>
 export type issuesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }
@@ -478,7 +478,7 @@ export type $issuesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
     dev_id: bigint
-    issue: string
+    description: string
   }, ExtArgs["result"]["issues"]>
   composites: {}
 }
@@ -905,7 +905,7 @@ export interface Prisma__issuesClient<T, Null = never, ExtArgs extends runtime.T
 export interface issuesFieldRefs {
   readonly id: Prisma.FieldRef<"issues", 'BigInt'>
   readonly dev_id: Prisma.FieldRef<"issues", 'BigInt'>
-  readonly issue: Prisma.FieldRef<"issues", 'String'>
+  readonly description: Prisma.FieldRef<"issues", 'String'>
 }
     
 

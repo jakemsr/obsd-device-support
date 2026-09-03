@@ -1156,7 +1156,7 @@ export type DriversScalarFieldEnum = (typeof DriversScalarFieldEnum)[keyof typeo
 export const IssuesScalarFieldEnum = {
   id: 'id',
   dev_id: 'dev_id',
-  issue: 'issue'
+  description: 'description'
 } as const
 
 export type IssuesScalarFieldEnum = (typeof IssuesScalarFieldEnum)[keyof typeof IssuesScalarFieldEnum]
