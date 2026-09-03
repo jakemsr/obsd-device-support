@@ -5,6 +5,7 @@ export type FullDeviceInfo = Prisma.devicesGetPayload<{
   include: {
     vendors: true;
     drivers: true;
+    issues: true;
     other_device_names: true;
   },
 }>;
