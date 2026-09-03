@@ -4,12 +4,20 @@
   --background: #ffffff;
   --foreground: #171717;
   --link: oklch(48.8% 0.243 264.376);
+  --supported: oklch(52.7% 0.154 150.069);
+  --partial: oklch(68.1% 0.162 75.834);
+  --unsupported: oklch(57.7% 0.245 27.325);
+  --unknown: oklch(44.6% 0.03 256.802);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-link: var(--link);
+  --color-supported: var(--supported);
+  --color-partial: var(--partial);
+  --color-unsupported: var(--unsupported);
+  --color-unknown: var(--unknown);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -19,6 +27,10 @@
     --background: #0a0a0a;
     --foreground: #ededed;
     --link: oklch(70.7% 0.165 254.624);
+    --supported: oklch(87.1% 0.15 154.449);
+    --partial: oklch(90.5% 0.182 98.111);
+    --unsupported: oklch(80.8% 0.114 19.571);
+    --unknown: oklch(87.2% 0.01 258.338);
   }
 }
 
