@@ -5,11 +5,36 @@ import type { FullDeviceInfo } from "@/lib/local-types";
 
 export default async function DeviceCard({ id }: { id: string }) {
 
+  type Support = {
+    words: string;
+    color: string;
+  };
+
+  const support: { [key: string]: Support } = {
+    "supported": {
+      words: "Supported",
+      color: "text-supported",
+    },
+    "partial": {
+      words: "Partially Supported",
+      color: "text-partial"
+    },
+    "unsupported": {
+      words: "Unsupported",
+      color: "text-unsupported"
+    },
+    "unknown": {
+      words: "Unknown",
+      color: "text-unknown"
+    },
+  };
+
   const device: FullDeviceInfo | null = await prisma.devices.findUnique({
     where: { id: BigInt(id) },
     include: {
       vendors: true,
       drivers: true,
+      issues: true,
       other_device_names: true,
     },
   });
@@ -23,14 +48,14 @@ export default async function DeviceCard({ id }: { id: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 m-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 gap-x-16 p-4 m-4 max-w-fit">
       <div>
         <div className="grid grid-cols-2">
           <div className="font-bold">Vendor:</div>
           <div>{device.vendors?.name}</div>
         </div>
         <div className="grid grid-cols-2">
-          <div className="font-bold">Device:</div>
+          <div className="font-bold">Product:</div>
           <div>{device.name}</div>
         </div>
         <div className="grid grid-cols-2">
@@ -78,9 +103,36 @@ export default async function DeviceCard({ id }: { id: string }) {
         </div>
       </div>
 
+      <div className="col-span-1 sm:col-span-2">
+        <span className="font-bold">
+          Support Status:&nbsp;
+        </span>
+        <span className={`
+          ${support[device.support_status].color}
+        `}>
+          {support[device.support_status].words}
+        </span>
+      </div>
+
+      <div className="col-span-1 sm:col-span-2">
+        <p className="font-bold">
+          Known Issues:
+        </p>
+        <p>
+          {device.issues.length === 0 ? (
+            <span>No known issues</span>
+          ) : (
+          device.issues.map(issue => (
+            <div key={issue.id}>{issue.description}</div>
+          )))}
+        </p>
+      </div>
+
       {device.other_device_names.length > 0 && (
         <div className="col-span-1 sm:col-span-2">
-          <span className="font-bold">Products using this VID/PID: </span>
+          <p className="font-bold">
+            Products using this VID/PID:
+          </p>
           {device.other_device_names.map((otherName, index) => (
             <span
               key={otherName.id}
