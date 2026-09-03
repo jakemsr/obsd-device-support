@@ -2,8 +2,18 @@ import "dotenv/config";
 import { readFile } from "node:fs/promises";
 import prisma from "../lib/prisma";
 
+type DriverConfig = {
+  name: string
+  devType: string
+  bus: "PCI" | "USB"
+  filter: string
+  match: string
+  exceptions?: string[]
+  path: string
+  removeVendor: boolean
+}
 
-const driverConfig = {
+const driverConfig: Record<string, DriverConfig> = {
   acx:
   {
     name: "acx",
@@ -966,8 +976,8 @@ function extractDeviceFields(text: string): DeviceRecord[] {
           match[2].substring(match[1].length + 1) : match[2],
       };
     })
-    .filter(e => !driverConfig[currDriver].exceptions.includes(e.device_dev))
-    .filter((value): value is DeviceRecord => Boolean(value));
+    .filter((value): value is DeviceRecord => Boolean(value))
+    .filter(e => !driverConfig[currDriver].exceptions?.includes(e.device_dev));
 
 }
 
