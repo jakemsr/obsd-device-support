@@ -1,16 +1,21 @@
 import "dotenv/config";
 import prisma from "@/lib/prisma";
+import { createAuthClient } from "better-auth/client";
+import { support_type } from "@/app/generated/prisma/enums";
 
-// last driver added before last run: 13 uath
+const args = process.argv.slice(2);
+
+// last driver added before last run: 91 an, but ONLY USB
 
 // get vendor and device ids from public.devices table
 // where bus is USB
-async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_id: string | null; vendor_name: string | null; device_usb_id: string | null; device_name: string | null }[]> {
+async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_id: string | null; vendor_name: string | null; device_usb_id: string | null; device_name: string | null; support_status: string | null }[]> {
   const devices = await prisma.devices.findMany({
     select: {
       id: true,
       name: true,
       product_id: true,
+      support_status: true,
       vendors: {
         select: {
           name: true,
@@ -20,6 +25,7 @@ async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_
     },
     where: {
       bus: "USB",
+      driver_id: { gt: BigInt(13) },
     },
   });
   return devices.map(device => ({
@@ -28,6 +34,7 @@ async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_
     vendor_name: device.vendors.name || null,
     device_usb_id: device.product_id?.substring(2) || null, // remove the "0x" prefix if present
     device_name: device.name || null,
+    support_status: device.support_status || null,
   }));
 }
 
@@ -75,8 +82,54 @@ async function fetchData(vendorID: string, deviceID: string): Promise<any> {
 }
 
 async function main() {
+
+  const [email, password] = args;
+
+  const authClient = createAuthClient({
+    baseURL: "http://localhost:3000", // Your API URL
+    fetchOptions: {
+        headers: {
+            "Origin": "http://localhost:3000"
+        }
+    }
+  });
+
+  const {data, error} =  await authClient.signIn.email({
+        email: email,
+        password: password
+  });
+
+  if (error) {
+    console.error("Failed to sign in:", error);
+    return;
+  }
+
+  const user = data.user;
+
+  if (!user) {
+    console.error("No active user found.");
+    return;
+  }
+
+  // create report
+  const report = await prisma.reports.create({
+    data: {
+      user_id: user.id,
+    },
+  });
+
+  // create report_source
+  const reportSource = await prisma.report_sources.create({
+    data: {
+      report_id: report.id,
+      name: "wikidevi.wi-cat.ru",
+      source_type: "website",
+      url: "https://wikidevi.wi-cat.ru/index.php",
+    },
+  });
+
   const vendorAndDeviceIds = await getVendorAndDeviceIds();
-  for (const { device_id, vendor_usb_id, vendor_name, device_usb_id, device_name } of vendorAndDeviceIds) {
+  for (const { device_id, vendor_usb_id, vendor_name, device_usb_id, device_name, support_status } of vendorAndDeviceIds) {
     if (vendor_usb_id && device_usb_id) {
       console.log(`Fetching data for ${vendor_name} ${device_name}, ${vendor_usb_id}:${device_usb_id}`);
       try {
@@ -99,13 +152,27 @@ async function main() {
           entry.deviceID === device_usb_id
         );
         if (filtered.length > 0) {
+
+          // create reported_device
+          const reportedDevice = await prisma.reported_devices.create({
+            data: {
+              report_id: report.id,
+              bus: "USB",
+              vendor_id: vendor_usb_id,
+              product_id: device_usb_id,
+              support_status: support_status as support_type
+            },
+          });
+
           console.log(`Found ${filtered.length} matching entries:`);
           filtered.forEach(async (entry: any, index: number) => {
             console.log(`Adding ${entry.fulltext}`);
-            await prisma.other_device_names.create({
+
+            await prisma.reported_other_device_names.create({
               data: {
-                device_name: entry.fulltext,
-                device_id: device_id,
+                vendor_name: "",
+                product_name: entry.fulltext,
+                reported_device_id: reportedDevice.id,
               },
             });
           });
