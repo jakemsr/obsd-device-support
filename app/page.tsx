@@ -9,6 +9,9 @@ export default function Home() {
       <h1 className="text-xl sm:text-2xl md:text-4xl font-bold mb-8 font-sans">
         OpenBSD Device Support Database
       </h1>
+      <h2 className="text-lg sm:text-xl md:text-2xl mb-4 font-sans">
+        Device Name/Bus/Type Search
+      </h2>
 
       <Suspense fallback={<SearchFieldsSkeleton />}>
         <SearchFields />

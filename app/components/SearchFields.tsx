@@ -3,7 +3,6 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 
 
-// get device types from public.drivers table
 const getDeviceTypes = unstable_cache(
   async (): Promise<string[]> => {
     const deviceTypes = await prisma.drivers.findMany({
@@ -23,7 +22,6 @@ const getDeviceTypes = unstable_cache(
   }
 )
 
-// get unique bus types from public.devices table
 const getBusTypes = unstable_cache(
   async (): Promise<string[]> => {
     const busTypes = await prisma.devices.findMany({
@@ -53,7 +51,7 @@ export default async function SearchFields() {
       <div className="mt-4">
         <form action="/search" method="get" className="flex flex-col md:flex-row items-center gap-2">
           <div className="flex gap-2 items-center">
-            <label htmlFor="search">Search</label>
+            <label htmlFor="search">Name</label>
             <input
               type="text"
               id="search"
