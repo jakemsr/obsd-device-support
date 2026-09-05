@@ -22,6 +22,7 @@ export default async function SearchDevices({queryWhere, search}: SearchDevicesP
         vendors: true,
         drivers: true,
         other_device_names: true,
+        issues: true,
       },
     });
 
