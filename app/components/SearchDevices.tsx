@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import ListDevices from "./ListDevices";
+import { FullDeviceInfo } from "@/lib/local-types";
 import { Prisma } from "../generated/prisma/client";
 
 
@@ -10,7 +11,7 @@ interface SearchDevicesProps {
 
 export default async function SearchDevices({queryWhere, search}: SearchDevicesProps) {
 
-  const devices = await
+  const devices: FullDeviceInfo[] = await
     prisma.devices.findMany({
       where: queryWhere,
       orderBy: [
