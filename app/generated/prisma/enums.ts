@@ -19,6 +19,27 @@ export const support_type = {
 export type support_type = (typeof support_type)[keyof typeof support_type]
 
 
+export const report_status = {
+  pending: 'pending',
+  under_review: 'under_review',
+  resolved: 'resolved',
+  rejected: 'rejected'
+} as const
+
+export type report_status = (typeof report_status)[keyof typeof report_status]
+
+
+export const source_type = {
+  observation: 'observation',
+  website: 'website',
+  documentation: 'documentation',
+  hwinspect: 'hwinspect',
+  other: 'other'
+} as const
+
+export type source_type = (typeof source_type)[keyof typeof source_type]
+
+
 export const roles = {
   admin: 'admin',
   editor: 'editor',

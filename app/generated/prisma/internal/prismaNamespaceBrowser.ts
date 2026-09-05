@@ -56,6 +56,13 @@ export const ModelName = {
   issues: 'issues',
   vendors: 'vendors',
   other_device_names: 'other_device_names',
+  reports: 'reports',
+  report_sources: 'report_sources',
+  hwinspect_reports: 'hwinspect_reports',
+  form_reports: 'form_reports',
+  reported_devices: 'reported_devices',
+  reported_issues: 'reported_issues',
+  reported_other_device_names: 'reported_other_device_names',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -132,6 +139,88 @@ export const Other_device_namesScalarFieldEnum = {
 export type Other_device_namesScalarFieldEnum = (typeof Other_device_namesScalarFieldEnum)[keyof typeof Other_device_namesScalarFieldEnum]
 
 
+export const ReportsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ReportsScalarFieldEnum = (typeof ReportsScalarFieldEnum)[keyof typeof ReportsScalarFieldEnum]
+
+
+export const Report_sourcesScalarFieldEnum = {
+  id: 'id',
+  report_id: 'report_id',
+  name: 'name',
+  source_type: 'source_type',
+  url: 'url'
+} as const
+
+export type Report_sourcesScalarFieldEnum = (typeof Report_sourcesScalarFieldEnum)[keyof typeof Report_sourcesScalarFieldEnum]
+
+
+export const Hwinspect_reportsScalarFieldEnum = {
+  id: 'id',
+  report_source_id: 'report_source_id',
+  hwinspect_version: 'hwinspect_version',
+  openbsd_version: 'openbsd_version',
+  architecture: 'architecture',
+  collected_at: 'collected_at',
+  payload: 'payload',
+  payload_version: 'payload_version'
+} as const
+
+export type Hwinspect_reportsScalarFieldEnum = (typeof Hwinspect_reportsScalarFieldEnum)[keyof typeof Hwinspect_reportsScalarFieldEnum]
+
+
+export const Form_reportsScalarFieldEnum = {
+  id: 'id',
+  report_source_id: 'report_source_id',
+  url: 'url',
+  collected_at: 'collected_at',
+  payload: 'payload',
+  payload_version: 'payload_version'
+} as const
+
+export type Form_reportsScalarFieldEnum = (typeof Form_reportsScalarFieldEnum)[keyof typeof Form_reportsScalarFieldEnum]
+
+
+export const Reported_devicesScalarFieldEnum = {
+  id: 'id',
+  report_id: 'report_id',
+  bus: 'bus',
+  vendor_id: 'vendor_id',
+  product_id: 'product_id',
+  reported_vendor: 'reported_vendor',
+  reported_product: 'reported_product',
+  reported_driver: 'reported_driver',
+  support_status: 'support_status'
+} as const
+
+export type Reported_devicesScalarFieldEnum = (typeof Reported_devicesScalarFieldEnum)[keyof typeof Reported_devicesScalarFieldEnum]
+
+
+export const Reported_issuesScalarFieldEnum = {
+  id: 'id',
+  reported_device_id: 'reported_device_id',
+  description: 'description'
+} as const
+
+export type Reported_issuesScalarFieldEnum = (typeof Reported_issuesScalarFieldEnum)[keyof typeof Reported_issuesScalarFieldEnum]
+
+
+export const Reported_other_device_namesScalarFieldEnum = {
+  id: 'id',
+  reported_device_id: 'reported_device_id',
+  vendor_name: 'vendor_name',
+  product_name: 'product_name'
+} as const
+
+export type Reported_other_device_namesScalarFieldEnum = (typeof Reported_other_device_namesScalarFieldEnum)[keyof typeof Reported_other_device_namesScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -202,6 +291,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -216,4 +312,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

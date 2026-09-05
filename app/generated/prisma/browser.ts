@@ -46,6 +46,41 @@ export type vendors = Prisma.vendorsModel
  */
 export type other_device_names = Prisma.other_device_namesModel
 /**
+ * Model reports
+ * 
+ */
+export type reports = Prisma.reportsModel
+/**
+ * Model report_sources
+ * 
+ */
+export type report_sources = Prisma.report_sourcesModel
+/**
+ * Model hwinspect_reports
+ * 
+ */
+export type hwinspect_reports = Prisma.hwinspect_reportsModel
+/**
+ * Model form_reports
+ * 
+ */
+export type form_reports = Prisma.form_reportsModel
+/**
+ * Model reported_devices
+ * 
+ */
+export type reported_devices = Prisma.reported_devicesModel
+/**
+ * Model reported_issues
+ * 
+ */
+export type reported_issues = Prisma.reported_issuesModel
+/**
+ * Model reported_other_device_names
+ * 
+ */
+export type reported_other_device_names = Prisma.reported_other_device_namesModel
+/**
  * Model User
  * 
  */
