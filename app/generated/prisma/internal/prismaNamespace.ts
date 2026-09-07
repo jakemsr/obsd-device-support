@@ -409,6 +409,9 @@ export const ModelName = {
   reported_devices: 'reported_devices',
   reported_issues: 'reported_issues',
   reported_other_device_names: 'reported_other_device_names',
+  report_reviews: 'report_reviews',
+  reported_name_verifications: 'reported_name_verifications',
+  reported_name_verification_sources: 'reported_name_verification_sources',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -428,7 +431,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "devices" | "drivers" | "issues" | "vendors" | "other_device_names" | "reports" | "report_sources" | "hwinspect_reports" | "form_reports" | "reported_devices" | "reported_issues" | "reported_other_device_names" | "user" | "session" | "account" | "verification"
+    modelProps: "devices" | "drivers" | "issues" | "vendors" | "other_device_names" | "reports" | "report_sources" | "hwinspect_reports" | "form_reports" | "reported_devices" | "reported_issues" | "reported_other_device_names" | "report_reviews" | "reported_name_verifications" | "reported_name_verification_sources" | "user" | "session" | "account" | "verification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1320,6 +1323,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    report_reviews: {
+      payload: Prisma.$report_reviewsPayload<ExtArgs>
+      fields: Prisma.report_reviewsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.report_reviewsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.report_reviewsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>
+        }
+        findFirst: {
+          args: Prisma.report_reviewsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.report_reviewsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>
+        }
+        findMany: {
+          args: Prisma.report_reviewsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>[]
+        }
+        create: {
+          args: Prisma.report_reviewsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>
+        }
+        createMany: {
+          args: Prisma.report_reviewsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.report_reviewsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>[]
+        }
+        delete: {
+          args: Prisma.report_reviewsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>
+        }
+        update: {
+          args: Prisma.report_reviewsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>
+        }
+        deleteMany: {
+          args: Prisma.report_reviewsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.report_reviewsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.report_reviewsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>[]
+        }
+        upsert: {
+          args: Prisma.report_reviewsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$report_reviewsPayload>
+        }
+        aggregate: {
+          args: Prisma.Report_reviewsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReport_reviews>
+        }
+        groupBy: {
+          args: Prisma.report_reviewsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Report_reviewsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.report_reviewsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Report_reviewsCountAggregateOutputType> | number
+        }
+      }
+    }
+    reported_name_verifications: {
+      payload: Prisma.$reported_name_verificationsPayload<ExtArgs>
+      fields: Prisma.reported_name_verificationsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.reported_name_verificationsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.reported_name_verificationsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>
+        }
+        findFirst: {
+          args: Prisma.reported_name_verificationsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.reported_name_verificationsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>
+        }
+        findMany: {
+          args: Prisma.reported_name_verificationsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>[]
+        }
+        create: {
+          args: Prisma.reported_name_verificationsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>
+        }
+        createMany: {
+          args: Prisma.reported_name_verificationsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.reported_name_verificationsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>[]
+        }
+        delete: {
+          args: Prisma.reported_name_verificationsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>
+        }
+        update: {
+          args: Prisma.reported_name_verificationsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>
+        }
+        deleteMany: {
+          args: Prisma.reported_name_verificationsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.reported_name_verificationsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.reported_name_verificationsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>[]
+        }
+        upsert: {
+          args: Prisma.reported_name_verificationsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verificationsPayload>
+        }
+        aggregate: {
+          args: Prisma.Reported_name_verificationsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReported_name_verifications>
+        }
+        groupBy: {
+          args: Prisma.reported_name_verificationsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Reported_name_verificationsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.reported_name_verificationsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Reported_name_verificationsCountAggregateOutputType> | number
+        }
+      }
+    }
+    reported_name_verification_sources: {
+      payload: Prisma.$reported_name_verification_sourcesPayload<ExtArgs>
+      fields: Prisma.reported_name_verification_sourcesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.reported_name_verification_sourcesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.reported_name_verification_sourcesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>
+        }
+        findFirst: {
+          args: Prisma.reported_name_verification_sourcesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.reported_name_verification_sourcesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>
+        }
+        findMany: {
+          args: Prisma.reported_name_verification_sourcesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>[]
+        }
+        create: {
+          args: Prisma.reported_name_verification_sourcesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>
+        }
+        createMany: {
+          args: Prisma.reported_name_verification_sourcesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.reported_name_verification_sourcesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>[]
+        }
+        delete: {
+          args: Prisma.reported_name_verification_sourcesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>
+        }
+        update: {
+          args: Prisma.reported_name_verification_sourcesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>
+        }
+        deleteMany: {
+          args: Prisma.reported_name_verification_sourcesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.reported_name_verification_sourcesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.reported_name_verification_sourcesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>[]
+        }
+        upsert: {
+          args: Prisma.reported_name_verification_sourcesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$reported_name_verification_sourcesPayload>
+        }
+        aggregate: {
+          args: Prisma.Reported_name_verification_sourcesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReported_name_verification_sources>
+        }
+        groupBy: {
+          args: Prisma.reported_name_verification_sourcesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Reported_name_verification_sourcesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.reported_name_verification_sourcesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Reported_name_verification_sourcesCountAggregateOutputType> | number
+        }
+      }
+    }
     User: {
       payload: Prisma.$UserPayload<ExtArgs>
       fields: Prisma.UserFieldRefs
@@ -1663,7 +1888,9 @@ export const DevicesScalarFieldEnum = {
   devs_name: 'devs_name',
   product_id: 'product_id',
   driver_id: 'driver_id',
-  support_status: 'support_status'
+  support_status: 'support_status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type DevicesScalarFieldEnum = (typeof DevicesScalarFieldEnum)[keyof typeof DevicesScalarFieldEnum]
@@ -1672,7 +1899,9 @@ export type DevicesScalarFieldEnum = (typeof DevicesScalarFieldEnum)[keyof typeo
 export const DriversScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  dev_type: 'dev_type'
+  dev_type: 'dev_type',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type DriversScalarFieldEnum = (typeof DriversScalarFieldEnum)[keyof typeof DriversScalarFieldEnum]
@@ -1681,7 +1910,9 @@ export type DriversScalarFieldEnum = (typeof DriversScalarFieldEnum)[keyof typeo
 export const IssuesScalarFieldEnum = {
   id: 'id',
   dev_id: 'dev_id',
-  description: 'description'
+  description: 'description',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type IssuesScalarFieldEnum = (typeof IssuesScalarFieldEnum)[keyof typeof IssuesScalarFieldEnum]
@@ -1703,7 +1934,9 @@ export const Other_device_namesScalarFieldEnum = {
   id: 'id',
   device_name: 'device_name',
   device_id: 'device_id',
-  vendor_name: 'vendor_name'
+  vendor_name: 'vendor_name',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Other_device_namesScalarFieldEnum = (typeof Other_device_namesScalarFieldEnum)[keyof typeof Other_device_namesScalarFieldEnum]
@@ -1714,7 +1947,9 @@ export const ReportsScalarFieldEnum = {
   user_id: 'user_id',
   status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  withdrawn_at: 'withdrawn_at',
+  withdrawn_note: 'withdrawn_note'
 } as const
 
 export type ReportsScalarFieldEnum = (typeof ReportsScalarFieldEnum)[keyof typeof ReportsScalarFieldEnum]
@@ -1789,6 +2024,46 @@ export const Reported_other_device_namesScalarFieldEnum = {
 } as const
 
 export type Reported_other_device_namesScalarFieldEnum = (typeof Reported_other_device_namesScalarFieldEnum)[keyof typeof Reported_other_device_namesScalarFieldEnum]
+
+
+export const Report_reviewsScalarFieldEnum = {
+  id: 'id',
+  report_id: 'report_id',
+  reviewer_id: 'reviewer_id',
+  created_at: 'created_at',
+  completed_at: 'completed_at',
+  notes: 'notes'
+} as const
+
+export type Report_reviewsScalarFieldEnum = (typeof Report_reviewsScalarFieldEnum)[keyof typeof Report_reviewsScalarFieldEnum]
+
+
+export const Reported_name_verificationsScalarFieldEnum = {
+  id: 'id',
+  reported_other_name_id: 'reported_other_name_id',
+  search_provider: 'search_provider',
+  search_query: 'search_query',
+  model: 'model',
+  prompt_version: 'prompt_version',
+  created_at: 'created_at'
+} as const
+
+export type Reported_name_verificationsScalarFieldEnum = (typeof Reported_name_verificationsScalarFieldEnum)[keyof typeof Reported_name_verificationsScalarFieldEnum]
+
+
+export const Reported_name_verification_sourcesScalarFieldEnum = {
+  id: 'id',
+  verification_id: 'verification_id',
+  source_id: 'source_id',
+  url: 'url',
+  title: 'title',
+  hostname: 'hostname',
+  snippets: 'snippets',
+  assessment: 'assessment',
+  explanation: 'explanation'
+} as const
+
+export type Reported_name_verification_sourcesScalarFieldEnum = (typeof Reported_name_verification_sourcesScalarFieldEnum)[keyof typeof Reported_name_verification_sourcesScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -1942,20 +2217,6 @@ export type ListEnumsupport_typeFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'report_status'
- */
-export type Enumreport_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'report_status'>
-    
-
-
-/**
- * Reference to a field of type 'report_status[]'
- */
-export type ListEnumreport_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'report_status[]'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1966,6 +2227,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'report_status'
+ */
+export type Enumreport_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'report_status'>
+    
+
+
+/**
+ * Reference to a field of type 'report_status[]'
+ */
+export type ListEnumreport_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'report_status[]'>
     
 
 
@@ -2008,6 +2283,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'source_assessment'
+ */
+export type Enumsource_assessmentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'source_assessment'>
+    
+
+
+/**
+ * Reference to a field of type 'source_assessment[]'
+ */
+export type ListEnumsource_assessmentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'source_assessment[]'>
     
 
 
@@ -2208,6 +2497,9 @@ export type GlobalOmitConfig = {
   reported_devices?: Prisma.reported_devicesOmit
   reported_issues?: Prisma.reported_issuesOmit
   reported_other_device_names?: Prisma.reported_other_device_namesOmit
+  report_reviews?: Prisma.report_reviewsOmit
+  reported_name_verifications?: Prisma.reported_name_verificationsOmit
+  reported_name_verification_sources?: Prisma.reported_name_verification_sourcesOmit
   user?: Prisma.UserOmit
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit

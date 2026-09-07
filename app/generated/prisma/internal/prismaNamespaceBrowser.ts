@@ -63,6 +63,9 @@ export const ModelName = {
   reported_devices: 'reported_devices',
   reported_issues: 'reported_issues',
   reported_other_device_names: 'reported_other_device_names',
+  report_reviews: 'report_reviews',
+  reported_name_verifications: 'reported_name_verifications',
+  reported_name_verification_sources: 'reported_name_verification_sources',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -93,7 +96,9 @@ export const DevicesScalarFieldEnum = {
   devs_name: 'devs_name',
   product_id: 'product_id',
   driver_id: 'driver_id',
-  support_status: 'support_status'
+  support_status: 'support_status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type DevicesScalarFieldEnum = (typeof DevicesScalarFieldEnum)[keyof typeof DevicesScalarFieldEnum]
@@ -102,7 +107,9 @@ export type DevicesScalarFieldEnum = (typeof DevicesScalarFieldEnum)[keyof typeo
 export const DriversScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  dev_type: 'dev_type'
+  dev_type: 'dev_type',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type DriversScalarFieldEnum = (typeof DriversScalarFieldEnum)[keyof typeof DriversScalarFieldEnum]
@@ -111,7 +118,9 @@ export type DriversScalarFieldEnum = (typeof DriversScalarFieldEnum)[keyof typeo
 export const IssuesScalarFieldEnum = {
   id: 'id',
   dev_id: 'dev_id',
-  description: 'description'
+  description: 'description',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type IssuesScalarFieldEnum = (typeof IssuesScalarFieldEnum)[keyof typeof IssuesScalarFieldEnum]
@@ -133,7 +142,9 @@ export const Other_device_namesScalarFieldEnum = {
   id: 'id',
   device_name: 'device_name',
   device_id: 'device_id',
-  vendor_name: 'vendor_name'
+  vendor_name: 'vendor_name',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Other_device_namesScalarFieldEnum = (typeof Other_device_namesScalarFieldEnum)[keyof typeof Other_device_namesScalarFieldEnum]
@@ -144,7 +155,9 @@ export const ReportsScalarFieldEnum = {
   user_id: 'user_id',
   status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  withdrawn_at: 'withdrawn_at',
+  withdrawn_note: 'withdrawn_note'
 } as const
 
 export type ReportsScalarFieldEnum = (typeof ReportsScalarFieldEnum)[keyof typeof ReportsScalarFieldEnum]
@@ -219,6 +232,46 @@ export const Reported_other_device_namesScalarFieldEnum = {
 } as const
 
 export type Reported_other_device_namesScalarFieldEnum = (typeof Reported_other_device_namesScalarFieldEnum)[keyof typeof Reported_other_device_namesScalarFieldEnum]
+
+
+export const Report_reviewsScalarFieldEnum = {
+  id: 'id',
+  report_id: 'report_id',
+  reviewer_id: 'reviewer_id',
+  created_at: 'created_at',
+  completed_at: 'completed_at',
+  notes: 'notes'
+} as const
+
+export type Report_reviewsScalarFieldEnum = (typeof Report_reviewsScalarFieldEnum)[keyof typeof Report_reviewsScalarFieldEnum]
+
+
+export const Reported_name_verificationsScalarFieldEnum = {
+  id: 'id',
+  reported_other_name_id: 'reported_other_name_id',
+  search_provider: 'search_provider',
+  search_query: 'search_query',
+  model: 'model',
+  prompt_version: 'prompt_version',
+  created_at: 'created_at'
+} as const
+
+export type Reported_name_verificationsScalarFieldEnum = (typeof Reported_name_verificationsScalarFieldEnum)[keyof typeof Reported_name_verificationsScalarFieldEnum]
+
+
+export const Reported_name_verification_sourcesScalarFieldEnum = {
+  id: 'id',
+  verification_id: 'verification_id',
+  source_id: 'source_id',
+  url: 'url',
+  title: 'title',
+  hostname: 'hostname',
+  snippets: 'snippets',
+  assessment: 'assessment',
+  explanation: 'explanation'
+} as const
+
+export type Reported_name_verification_sourcesScalarFieldEnum = (typeof Reported_name_verification_sourcesScalarFieldEnum)[keyof typeof Reported_name_verification_sourcesScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

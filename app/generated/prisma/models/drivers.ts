@@ -38,18 +38,24 @@ export type DriversMinAggregateOutputType = {
   id: bigint | null
   name: string | null
   dev_type: string | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type DriversMaxAggregateOutputType = {
   id: bigint | null
   name: string | null
   dev_type: string | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type DriversCountAggregateOutputType = {
   id: number
   name: number
   dev_type: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
@@ -66,18 +72,24 @@ export type DriversMinAggregateInputType = {
   id?: true
   name?: true
   dev_type?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type DriversMaxAggregateInputType = {
   id?: true
   name?: true
   dev_type?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type DriversCountAggregateInputType = {
   id?: true
   name?: true
   dev_type?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -171,6 +183,8 @@ export type DriversGroupByOutputType = {
   id: bigint
   name: string
   dev_type: string
+  created_at: Date
+  updated_at: Date
   _count: DriversCountAggregateOutputType | null
   _avg: DriversAvgAggregateOutputType | null
   _sum: DriversSumAggregateOutputType | null
@@ -200,6 +214,8 @@ export type driversWhereInput = {
   id?: Prisma.BigIntFilter<"drivers"> | bigint | number
   name?: Prisma.StringFilter<"drivers"> | string
   dev_type?: Prisma.StringFilter<"drivers"> | string
+  created_at?: Prisma.DateTimeFilter<"drivers"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"drivers"> | Date | string
   devices?: Prisma.DevicesListRelationFilter
 }
 
@@ -207,6 +223,8 @@ export type driversOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   dev_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   devices?: Prisma.devicesOrderByRelationAggregateInput
 }
 
@@ -217,6 +235,8 @@ export type driversWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.driversWhereInput[]
   NOT?: Prisma.driversWhereInput | Prisma.driversWhereInput[]
   dev_type?: Prisma.StringFilter<"drivers"> | string
+  created_at?: Prisma.DateTimeFilter<"drivers"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"drivers"> | Date | string
   devices?: Prisma.DevicesListRelationFilter
 }, "id" | "name">
 
@@ -224,6 +244,8 @@ export type driversOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   dev_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.driversCountOrderByAggregateInput
   _avg?: Prisma.driversAvgOrderByAggregateInput
   _max?: Prisma.driversMaxOrderByAggregateInput
@@ -238,12 +260,16 @@ export type driversScalarWhereWithAggregatesInput = {
   id?: Prisma.BigIntWithAggregatesFilter<"drivers"> | bigint | number
   name?: Prisma.StringWithAggregatesFilter<"drivers"> | string
   dev_type?: Prisma.StringWithAggregatesFilter<"drivers"> | string
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"drivers"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"drivers"> | Date | string
 }
 
 export type driversCreateInput = {
   id?: bigint | number
   name: string
   dev_type: string
+  created_at?: Date | string
+  updated_at?: Date | string
   devices?: Prisma.devicesCreateNestedManyWithoutDriversInput
 }
 
@@ -251,6 +277,8 @@ export type driversUncheckedCreateInput = {
   id?: bigint | number
   name: string
   dev_type: string
+  created_at?: Date | string
+  updated_at?: Date | string
   devices?: Prisma.devicesUncheckedCreateNestedManyWithoutDriversInput
 }
 
@@ -258,6 +286,8 @@ export type driversUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dev_type?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   devices?: Prisma.devicesUpdateManyWithoutDriversNestedInput
 }
 
@@ -265,6 +295,8 @@ export type driversUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dev_type?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   devices?: Prisma.devicesUncheckedUpdateManyWithoutDriversNestedInput
 }
 
@@ -272,18 +304,24 @@ export type driversCreateManyInput = {
   id?: bigint | number
   name: string
   dev_type: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type driversUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dev_type?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type driversUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dev_type?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DriversScalarRelationFilter = {
@@ -295,6 +333,8 @@ export type driversCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   dev_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type driversAvgOrderByAggregateInput = {
@@ -305,12 +345,16 @@ export type driversMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   dev_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type driversMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   dev_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type driversSumOrderByAggregateInput = {
@@ -335,12 +379,16 @@ export type driversCreateWithoutDevicesInput = {
   id?: bigint | number
   name: string
   dev_type: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type driversUncheckedCreateWithoutDevicesInput = {
   id?: bigint | number
   name: string
   dev_type: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type driversCreateOrConnectWithoutDevicesInput = {
@@ -363,12 +411,16 @@ export type driversUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dev_type?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type driversUncheckedUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dev_type?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -406,6 +458,8 @@ export type driversSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   name?: boolean
   dev_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   devices?: boolean | Prisma.drivers$devicesArgs<ExtArgs>
   _count?: boolean | Prisma.DriversCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["drivers"]>
@@ -414,21 +468,27 @@ export type driversSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   name?: boolean
   dev_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["drivers"]>
 
 export type driversSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   dev_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["drivers"]>
 
 export type driversSelectScalar = {
   id?: boolean
   name?: boolean
   dev_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type driversOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dev_type", ExtArgs["result"]["drivers"]>
+export type driversOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dev_type" | "created_at" | "updated_at", ExtArgs["result"]["drivers"]>
 export type driversInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   devices?: boolean | Prisma.drivers$devicesArgs<ExtArgs>
   _count?: boolean | Prisma.DriversCountOutputTypeDefaultArgs<ExtArgs>
@@ -445,6 +505,8 @@ export type $driversPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: bigint
     name: string
     dev_type: string
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["drivers"]>
   composites: {}
 }
@@ -872,6 +934,8 @@ export interface driversFieldRefs {
   readonly id: Prisma.FieldRef<"drivers", 'BigInt'>
   readonly name: Prisma.FieldRef<"drivers", 'String'>
   readonly dev_type: Prisma.FieldRef<"drivers", 'String'>
+  readonly created_at: Prisma.FieldRef<"drivers", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"drivers", 'DateTime'>
 }
     
 

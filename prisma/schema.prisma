@@ -8,8 +8,6 @@ datasource db {
   schemas  = ["better_auth", "public"]
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model devices {
   id                 BigInt               @id @default(autoincrement())
   vendor_id          BigInt
@@ -19,6 +17,8 @@ model devices {
   product_id         String
   driver_id          BigInt
   support_status     support_type         @default(unknown)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
   drivers            drivers              @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   vendors            vendors              @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   issues             issues[]
@@ -28,29 +28,28 @@ model devices {
   @@schema("public")
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model drivers {
-  id       BigInt    @id @default(autoincrement())
-  name     String    @unique
-  dev_type String
-  devices  devices[]
+  id         BigInt    @id @default(autoincrement())
+  name       String    @unique
+  dev_type   String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  devices    devices[]
 
   @@schema("public")
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model issues {
-  id          BigInt  @id @default(autoincrement())
+  id          BigInt   @id @default(autoincrement())
   dev_id      BigInt
   description String
-  devices     devices @relation(fields: [dev_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  devices     devices  @relation(fields: [dev_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model vendors {
   id      BigInt    @id @default(autoincrement())
   name    String?   @default("")
@@ -65,75 +64,78 @@ model vendors {
   @@schema("public")
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model other_device_names {
-  id          BigInt  @id @default(autoincrement())
-  device_name String  @default("")
+  id          BigInt   @id @default(autoincrement())
+  device_name String   @default("")
   device_id   BigInt
-  vendor_name String  @default("")
-  devices     devices @relation(fields: [device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vendor_name String   @default("")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  devices     devices  @relation(fields: [device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([device_id])
   @@schema("public")
 }
 
 model reports {
-  id                          BigInt        @id @default(autoincrement())
-  user_id                     String
-  status                      report_status @default(pending)
-  created_at                  DateTime      @default(now())
-  updated_at                  DateTime      @updatedAt
-  user                        User          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sources                     report_sources[]
-  reported_devices            reported_devices[]
+  id               BigInt             @id @default(autoincrement())
+  user_id          String
+  status           report_status      @default(pending)
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  withdrawn_at     DateTime?
+  withdrawn_note   String?
+  reportReviews    report_reviews[]
+  sources          report_sources[]
+  reported_devices reported_devices[]
+  user             User               @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
 
 model report_sources {
-  id                BigInt      @id @default(autoincrement())
-  report_id         BigInt
-  name              String?
-  source_type       source_type
-  url               String?
-  report            reports @relation(fields: [report_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  hwinspect_report  hwinspect_reports?
-  form_report       form_reports?
+  id               BigInt             @id @default(autoincrement())
+  report_id        BigInt
+  name             String?
+  source_type      source_type
+  url              String?
+  form_report      form_reports?
+  hwinspect_report hwinspect_reports?
+  report           reports            @relation(fields: [report_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([report_id])
   @@schema("public")
 }
 
 model hwinspect_reports {
-  id                BigInt @id @default(autoincrement())
-  report_source_id  BigInt @unique
+  id                BigInt         @id @default(autoincrement())
+  report_source_id  BigInt         @unique
   hwinspect_version String
   openbsd_version   String?
   architecture      String?
   collected_at      DateTime?
   payload           Json
-  payload_version   Int @default(1)
+  payload_version   Int            @default(1)
   source            report_sources @relation(fields: [report_source_id], references: [id])
 
   @@schema("public")
 }
 
 model form_reports {
-  id                BigInt @id @default(autoincrement())
-  report_source_id  BigInt @unique
-  url               String
-  collected_at      DateTime?
-  payload           Json
-  payload_version   Int @default(1)
-  source            report_sources @relation(fields: [report_source_id], references: [id])
+  id               BigInt         @id @default(autoincrement())
+  report_source_id BigInt         @unique
+  url              String
+  collected_at     DateTime?
+  payload          Json
+  payload_version  Int            @default(1)
+  source           report_sources @relation(fields: [report_source_id], references: [id])
 
   @@schema("public")
 }
 
 model reported_devices {
-  id                          BigInt @id @default(autoincrement())
+  id                          BigInt                        @id @default(autoincrement())
   report_id                   BigInt
-  report                      reports @relation(fields: [report_id], references: [id])
   bus                         String
   vendor_id                   String
   product_id                  String
@@ -141,15 +143,16 @@ model reported_devices {
   reported_product            String?
   reported_driver             String?
   support_status              support_type
+  report                      reports                       @relation(fields: [report_id], references: [id])
   reported_issues             reported_issues[]
   reported_other_device_names reported_other_device_names[]
-  
+
   @@index([report_id])
   @@schema("public")
 }
 
 model reported_issues {
-  id                 BigInt @id @default(autoincrement())
+  id                 BigInt           @id @default(autoincrement())
   reported_device_id BigInt
   description        String
   reported_device    reported_devices @relation(fields: [reported_device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -159,30 +162,79 @@ model reported_issues {
 }
 
 model reported_other_device_names {
-  id                 BigInt @id @default(autoincrement())
-  reported_device_id BigInt
-  vendor_name        String
-  product_name       String
-  reported_device    reported_devices @relation(fields: [reported_device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                        BigInt                        @id @default(autoincrement())
+  reported_device_id        BigInt
+  vendor_name               String
+  product_name              String
+  reportedNameVerifications reported_name_verifications[]
+  reported_device           reported_devices              @relation(fields: [reported_device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([reported_device_id])
   @@schema("public")
 }
 
+model report_reviews {
+  id           BigInt    @id @default(autoincrement())
+  report_id    BigInt
+  reviewer_id  String
+  created_at   DateTime  @default(now())
+  completed_at DateTime?
+  notes        String?
+  report       reports   @relation(fields: [report_id], references: [id])
+  reviewer     User      @relation(fields: [reviewer_id], references: [id])
+
+  @@index([report_id])
+  @@index([reviewer_id])
+  @@schema("public")
+}
+
+model reported_name_verifications {
+  id                     BigInt                               @id @default(autoincrement())
+  reported_other_name_id BigInt
+  search_provider        String                               @default("brave")
+  search_query           String
+  model                  String
+  prompt_version         Int
+  created_at             DateTime                             @default(now())
+  sources                reported_name_verification_sources[]
+  reported_name          reported_other_device_names          @relation(fields: [reported_other_name_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([reported_other_name_id])
+  @@schema("public")
+}
+
+model reported_name_verification_sources {
+  id              BigInt                      @id @default(autoincrement())
+  verification_id BigInt
+  source_id       Int
+  url             String
+  title           String?
+  hostname        String?
+  snippets        Json
+  assessment      source_assessment
+  explanation     String
+  verification    reported_name_verifications @relation(fields: [verification_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([verification_id, source_id])
+  @@index([verification_id])
+  @@schema("public")
+}
+
 model User {
-  id            String    @id
-  name          String
-  email         String    @unique
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  firstName     String    @default("")
-  lastName      String    @default("")
-  role          roles     @default(user)
-  accounts      Account[]
-  sessions      Session[]
-  reports       reports[] 
+  id             String           @id
+  name           String
+  email          String           @unique
+  emailVerified  Boolean          @default(false)
+  image          String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  firstName      String           @default("")
+  lastName       String           @default("")
+  role           roles            @default(user)
+  accounts       Account[]
+  sessions       Session[]
+  report_reviews report_reviews[]
+  reports        reports[]
 
   @@map("user")
   @@schema("better_auth")
@@ -254,6 +306,7 @@ enum report_status {
   under_review
   resolved
   rejected
+  withdrawn
 
   @@schema("public")
 }
@@ -264,6 +317,14 @@ enum source_type {
   documentation
   hwinspect
   other
+
+  @@schema("public")
+}
+
+enum source_assessment {
+  supports
+  contradicts
+  insufficient
 
   @@schema("public")
 }

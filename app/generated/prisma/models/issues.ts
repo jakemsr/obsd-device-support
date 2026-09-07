@@ -40,18 +40,24 @@ export type IssuesMinAggregateOutputType = {
   id: bigint | null
   dev_id: bigint | null
   description: string | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type IssuesMaxAggregateOutputType = {
   id: bigint | null
   dev_id: bigint | null
   description: string | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type IssuesCountAggregateOutputType = {
   id: number
   dev_id: number
   description: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
@@ -70,18 +76,24 @@ export type IssuesMinAggregateInputType = {
   id?: true
   dev_id?: true
   description?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type IssuesMaxAggregateInputType = {
   id?: true
   dev_id?: true
   description?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type IssuesCountAggregateInputType = {
   id?: true
   dev_id?: true
   description?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -175,6 +187,8 @@ export type IssuesGroupByOutputType = {
   id: bigint
   dev_id: bigint
   description: string
+  created_at: Date
+  updated_at: Date
   _count: IssuesCountAggregateOutputType | null
   _avg: IssuesAvgAggregateOutputType | null
   _sum: IssuesSumAggregateOutputType | null
@@ -204,6 +218,8 @@ export type issuesWhereInput = {
   id?: Prisma.BigIntFilter<"issues"> | bigint | number
   dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
   description?: Prisma.StringFilter<"issues"> | string
+  created_at?: Prisma.DateTimeFilter<"issues"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"issues"> | Date | string
   devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }
 
@@ -211,6 +227,8 @@ export type issuesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   devices?: Prisma.devicesOrderByWithRelationInput
 }
 
@@ -221,6 +239,8 @@ export type issuesWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.issuesWhereInput | Prisma.issuesWhereInput[]
   dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
   description?: Prisma.StringFilter<"issues"> | string
+  created_at?: Prisma.DateTimeFilter<"issues"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"issues"> | Date | string
   devices?: Prisma.XOR<Prisma.DevicesScalarRelationFilter, Prisma.devicesWhereInput>
 }, "id">
 
@@ -228,6 +248,8 @@ export type issuesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.issuesCountOrderByAggregateInput
   _avg?: Prisma.issuesAvgOrderByAggregateInput
   _max?: Prisma.issuesMaxOrderByAggregateInput
@@ -242,11 +264,15 @@ export type issuesScalarWhereWithAggregatesInput = {
   id?: Prisma.BigIntWithAggregatesFilter<"issues"> | bigint | number
   dev_id?: Prisma.BigIntWithAggregatesFilter<"issues"> | bigint | number
   description?: Prisma.StringWithAggregatesFilter<"issues"> | string
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"issues"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"issues"> | Date | string
 }
 
 export type issuesCreateInput = {
   id?: bigint | number
   description: string
+  created_at?: Date | string
+  updated_at?: Date | string
   devices: Prisma.devicesCreateNestedOneWithoutIssuesInput
 }
 
@@ -254,11 +280,15 @@ export type issuesUncheckedCreateInput = {
   id?: bigint | number
   dev_id: bigint | number
   description: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type issuesUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   devices?: Prisma.devicesUpdateOneRequiredWithoutIssuesNestedInput
 }
 
@@ -266,23 +296,31 @@ export type issuesUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   dev_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type issuesCreateManyInput = {
   id?: bigint | number
   dev_id: bigint | number
   description: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type issuesUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type issuesUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   dev_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type IssuesListRelationFilter = {
@@ -299,6 +337,8 @@ export type issuesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type issuesAvgOrderByAggregateInput = {
@@ -310,12 +350,16 @@ export type issuesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type issuesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dev_id?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type issuesSumOrderByAggregateInput = {
@@ -368,11 +412,15 @@ export type issuesUncheckedUpdateManyWithoutDevicesNestedInput = {
 export type issuesCreateWithoutDevicesInput = {
   id?: bigint | number
   description: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type issuesUncheckedCreateWithoutDevicesInput = {
   id?: bigint | number
   description: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type issuesCreateOrConnectWithoutDevicesInput = {
@@ -408,26 +456,36 @@ export type issuesScalarWhereInput = {
   id?: Prisma.BigIntFilter<"issues"> | bigint | number
   dev_id?: Prisma.BigIntFilter<"issues"> | bigint | number
   description?: Prisma.StringFilter<"issues"> | string
+  created_at?: Prisma.DateTimeFilter<"issues"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"issues"> | Date | string
 }
 
 export type issuesCreateManyDevicesInput = {
   id?: bigint | number
   description: string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type issuesUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type issuesUncheckedUpdateWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type issuesUncheckedUpdateManyWithoutDevicesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -436,6 +494,8 @@ export type issuesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   dev_id?: boolean
   description?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
@@ -443,6 +503,8 @@ export type issuesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   dev_id?: boolean
   description?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
@@ -450,6 +512,8 @@ export type issuesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   dev_id?: boolean
   description?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["issues"]>
 
@@ -457,9 +521,11 @@ export type issuesSelectScalar = {
   id?: boolean
   dev_id?: boolean
   description?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type issuesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dev_id" | "description", ExtArgs["result"]["issues"]>
+export type issuesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dev_id" | "description" | "created_at" | "updated_at", ExtArgs["result"]["issues"]>
 export type issuesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   devices?: boolean | Prisma.devicesDefaultArgs<ExtArgs>
 }
@@ -479,6 +545,8 @@ export type $issuesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: bigint
     dev_id: bigint
     description: string
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["issues"]>
   composites: {}
 }
@@ -906,6 +974,8 @@ export interface issuesFieldRefs {
   readonly id: Prisma.FieldRef<"issues", 'BigInt'>
   readonly dev_id: Prisma.FieldRef<"issues", 'BigInt'>
   readonly description: Prisma.FieldRef<"issues", 'String'>
+  readonly created_at: Prisma.FieldRef<"issues", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"issues", 'DateTime'>
 }
     
 

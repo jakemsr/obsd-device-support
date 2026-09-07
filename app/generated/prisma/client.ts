@@ -105,6 +105,21 @@ export type reported_issues = Prisma.reported_issuesModel
  */
 export type reported_other_device_names = Prisma.reported_other_device_namesModel
 /**
+ * Model report_reviews
+ * 
+ */
+export type report_reviews = Prisma.report_reviewsModel
+/**
+ * Model reported_name_verifications
+ * 
+ */
+export type reported_name_verifications = Prisma.reported_name_verificationsModel
+/**
+ * Model reported_name_verification_sources
+ * 
+ */
+export type reported_name_verification_sources = Prisma.reported_name_verification_sourcesModel
+/**
  * Model User
  * 
  */

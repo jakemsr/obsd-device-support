@@ -460,10 +460,6 @@ export type hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.hwinspect_reportsUpdateToOneWithWhereWithoutSourceInput, Prisma.hwinspect_reportsUpdateWithoutSourceInput>, Prisma.hwinspect_reportsUncheckedUpdateWithoutSourceInput>
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number

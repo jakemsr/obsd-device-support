@@ -40,6 +40,8 @@ export type ReportsMinAggregateOutputType = {
   status: $Enums.report_status | null
   created_at: Date | null
   updated_at: Date | null
+  withdrawn_at: Date | null
+  withdrawn_note: string | null
 }
 
 export type ReportsMaxAggregateOutputType = {
@@ -48,6 +50,8 @@ export type ReportsMaxAggregateOutputType = {
   status: $Enums.report_status | null
   created_at: Date | null
   updated_at: Date | null
+  withdrawn_at: Date | null
+  withdrawn_note: string | null
 }
 
 export type ReportsCountAggregateOutputType = {
@@ -56,6 +60,8 @@ export type ReportsCountAggregateOutputType = {
   status: number
   created_at: number
   updated_at: number
+  withdrawn_at: number
+  withdrawn_note: number
   _all: number
 }
 
@@ -74,6 +80,8 @@ export type ReportsMinAggregateInputType = {
   status?: true
   created_at?: true
   updated_at?: true
+  withdrawn_at?: true
+  withdrawn_note?: true
 }
 
 export type ReportsMaxAggregateInputType = {
@@ -82,6 +90,8 @@ export type ReportsMaxAggregateInputType = {
   status?: true
   created_at?: true
   updated_at?: true
+  withdrawn_at?: true
+  withdrawn_note?: true
 }
 
 export type ReportsCountAggregateInputType = {
@@ -90,6 +100,8 @@ export type ReportsCountAggregateInputType = {
   status?: true
   created_at?: true
   updated_at?: true
+  withdrawn_at?: true
+  withdrawn_note?: true
   _all?: true
 }
 
@@ -185,6 +197,8 @@ export type ReportsGroupByOutputType = {
   status: $Enums.report_status
   created_at: Date
   updated_at: Date
+  withdrawn_at: Date | null
+  withdrawn_note: string | null
   _count: ReportsCountAggregateOutputType | null
   _avg: ReportsAvgAggregateOutputType | null
   _sum: ReportsSumAggregateOutputType | null
@@ -216,9 +230,12 @@ export type reportsWhereInput = {
   status?: Prisma.Enumreport_statusFilter<"reports"> | $Enums.report_status
   created_at?: Prisma.DateTimeFilter<"reports"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"reports"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  withdrawn_at?: Prisma.DateTimeNullableFilter<"reports"> | Date | string | null
+  withdrawn_note?: Prisma.StringNullableFilter<"reports"> | string | null
+  reportReviews?: Prisma.Report_reviewsListRelationFilter
   sources?: Prisma.Report_sourcesListRelationFilter
   reported_devices?: Prisma.Reported_devicesListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type reportsOrderByWithRelationInput = {
@@ -227,9 +244,12 @@ export type reportsOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
+  withdrawn_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  withdrawn_note?: Prisma.SortOrderInput | Prisma.SortOrder
+  reportReviews?: Prisma.report_reviewsOrderByRelationAggregateInput
   sources?: Prisma.report_sourcesOrderByRelationAggregateInput
   reported_devices?: Prisma.reported_devicesOrderByRelationAggregateInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type reportsWhereUniqueInput = Prisma.AtLeast<{
@@ -241,9 +261,12 @@ export type reportsWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.Enumreport_statusFilter<"reports"> | $Enums.report_status
   created_at?: Prisma.DateTimeFilter<"reports"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"reports"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  withdrawn_at?: Prisma.DateTimeNullableFilter<"reports"> | Date | string | null
+  withdrawn_note?: Prisma.StringNullableFilter<"reports"> | string | null
+  reportReviews?: Prisma.Report_reviewsListRelationFilter
   sources?: Prisma.Report_sourcesListRelationFilter
   reported_devices?: Prisma.Reported_devicesListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type reportsOrderByWithAggregationInput = {
@@ -252,6 +275,8 @@ export type reportsOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  withdrawn_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  withdrawn_note?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.reportsCountOrderByAggregateInput
   _avg?: Prisma.reportsAvgOrderByAggregateInput
   _max?: Prisma.reportsMaxOrderByAggregateInput
@@ -268,6 +293,8 @@ export type reportsScalarWhereWithAggregatesInput = {
   status?: Prisma.Enumreport_statusWithAggregatesFilter<"reports"> | $Enums.report_status
   created_at?: Prisma.DateTimeWithAggregatesFilter<"reports"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"reports"> | Date | string
+  withdrawn_at?: Prisma.DateTimeNullableWithAggregatesFilter<"reports"> | Date | string | null
+  withdrawn_note?: Prisma.StringNullableWithAggregatesFilter<"reports"> | string | null
 }
 
 export type reportsCreateInput = {
@@ -275,9 +302,12 @@ export type reportsCreateInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutReportsInput
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
+  user: Prisma.UserCreateNestedOneWithoutReportsInput
 }
 
 export type reportsUncheckedCreateInput = {
@@ -286,6 +316,9 @@ export type reportsUncheckedCreateInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
 }
@@ -295,9 +328,12 @@ export type reportsUpdateInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
 }
 
 export type reportsUncheckedUpdateInput = {
@@ -306,6 +342,9 @@ export type reportsUncheckedUpdateInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
 }
@@ -316,6 +355,8 @@ export type reportsCreateManyInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
 }
 
 export type reportsUpdateManyMutationInput = {
@@ -323,6 +364,8 @@ export type reportsUpdateManyMutationInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type reportsUncheckedUpdateManyInput = {
@@ -331,6 +374,8 @@ export type reportsUncheckedUpdateManyInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type reportsCountOrderByAggregateInput = {
@@ -339,6 +384,8 @@ export type reportsCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  withdrawn_at?: Prisma.SortOrder
+  withdrawn_note?: Prisma.SortOrder
 }
 
 export type reportsAvgOrderByAggregateInput = {
@@ -351,6 +398,8 @@ export type reportsMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  withdrawn_at?: Prisma.SortOrder
+  withdrawn_note?: Prisma.SortOrder
 }
 
 export type reportsMinOrderByAggregateInput = {
@@ -359,6 +408,8 @@ export type reportsMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  withdrawn_at?: Prisma.SortOrder
+  withdrawn_note?: Prisma.SortOrder
 }
 
 export type reportsSumOrderByAggregateInput = {
@@ -384,8 +435,8 @@ export type Enumreport_statusFieldUpdateOperationsInput = {
   set?: $Enums.report_status
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type reportsCreateNestedOneWithoutSourcesInput = {
@@ -414,6 +465,20 @@ export type reportsUpdateOneRequiredWithoutReported_devicesNestedInput = {
   upsert?: Prisma.reportsUpsertWithoutReported_devicesInput
   connect?: Prisma.reportsWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.reportsUpdateToOneWithWhereWithoutReported_devicesInput, Prisma.reportsUpdateWithoutReported_devicesInput>, Prisma.reportsUncheckedUpdateWithoutReported_devicesInput>
+}
+
+export type reportsCreateNestedOneWithoutReportReviewsInput = {
+  create?: Prisma.XOR<Prisma.reportsCreateWithoutReportReviewsInput, Prisma.reportsUncheckedCreateWithoutReportReviewsInput>
+  connectOrCreate?: Prisma.reportsCreateOrConnectWithoutReportReviewsInput
+  connect?: Prisma.reportsWhereUniqueInput
+}
+
+export type reportsUpdateOneRequiredWithoutReportReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.reportsCreateWithoutReportReviewsInput, Prisma.reportsUncheckedCreateWithoutReportReviewsInput>
+  connectOrCreate?: Prisma.reportsCreateOrConnectWithoutReportReviewsInput
+  upsert?: Prisma.reportsUpsertWithoutReportReviewsInput
+  connect?: Prisma.reportsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.reportsUpdateToOneWithWhereWithoutReportReviewsInput, Prisma.reportsUpdateWithoutReportReviewsInput>, Prisma.reportsUncheckedUpdateWithoutReportReviewsInput>
 }
 
 export type reportsCreateNestedManyWithoutUserInput = {
@@ -463,8 +528,11 @@ export type reportsCreateWithoutSourcesInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutReportsInput
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
+  user: Prisma.UserCreateNestedOneWithoutReportsInput
 }
 
 export type reportsUncheckedCreateWithoutSourcesInput = {
@@ -473,6 +541,9 @@ export type reportsUncheckedCreateWithoutSourcesInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
 }
 
@@ -497,8 +568,11 @@ export type reportsUpdateWithoutSourcesInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
 }
 
 export type reportsUncheckedUpdateWithoutSourcesInput = {
@@ -507,6 +581,9 @@ export type reportsUncheckedUpdateWithoutSourcesInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
 }
 
@@ -515,8 +592,11 @@ export type reportsCreateWithoutReported_devicesInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutReportsInput
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
+  user: Prisma.UserCreateNestedOneWithoutReportsInput
 }
 
 export type reportsUncheckedCreateWithoutReported_devicesInput = {
@@ -525,6 +605,9 @@ export type reportsUncheckedCreateWithoutReported_devicesInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
 }
 
@@ -549,8 +632,11 @@ export type reportsUpdateWithoutReported_devicesInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
 }
 
 export type reportsUncheckedUpdateWithoutReported_devicesInput = {
@@ -559,7 +645,74 @@ export type reportsUncheckedUpdateWithoutReported_devicesInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
+}
+
+export type reportsCreateWithoutReportReviewsInput = {
+  id?: bigint | number
+  status?: $Enums.report_status
+  created_at?: Date | string
+  updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
+  reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
+  user: Prisma.UserCreateNestedOneWithoutReportsInput
+}
+
+export type reportsUncheckedCreateWithoutReportReviewsInput = {
+  id?: bigint | number
+  user_id: string
+  status?: $Enums.report_status
+  created_at?: Date | string
+  updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
+  reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
+}
+
+export type reportsCreateOrConnectWithoutReportReviewsInput = {
+  where: Prisma.reportsWhereUniqueInput
+  create: Prisma.XOR<Prisma.reportsCreateWithoutReportReviewsInput, Prisma.reportsUncheckedCreateWithoutReportReviewsInput>
+}
+
+export type reportsUpsertWithoutReportReviewsInput = {
+  update: Prisma.XOR<Prisma.reportsUpdateWithoutReportReviewsInput, Prisma.reportsUncheckedUpdateWithoutReportReviewsInput>
+  create: Prisma.XOR<Prisma.reportsCreateWithoutReportReviewsInput, Prisma.reportsUncheckedCreateWithoutReportReviewsInput>
+  where?: Prisma.reportsWhereInput
+}
+
+export type reportsUpdateToOneWithWhereWithoutReportReviewsInput = {
+  where?: Prisma.reportsWhereInput
+  data: Prisma.XOR<Prisma.reportsUpdateWithoutReportReviewsInput, Prisma.reportsUncheckedUpdateWithoutReportReviewsInput>
+}
+
+export type reportsUpdateWithoutReportReviewsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
+  reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
+}
+
+export type reportsUncheckedUpdateWithoutReportReviewsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
+  reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
 }
 
 export type reportsCreateWithoutUserInput = {
@@ -567,6 +720,9 @@ export type reportsCreateWithoutUserInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
 }
@@ -576,6 +732,9 @@ export type reportsUncheckedCreateWithoutUserInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
+  reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
 }
@@ -615,6 +774,8 @@ export type reportsScalarWhereInput = {
   status?: Prisma.Enumreport_statusFilter<"reports"> | $Enums.report_status
   created_at?: Prisma.DateTimeFilter<"reports"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"reports"> | Date | string
+  withdrawn_at?: Prisma.DateTimeNullableFilter<"reports"> | Date | string | null
+  withdrawn_note?: Prisma.StringNullableFilter<"reports"> | string | null
 }
 
 export type reportsCreateManyUserInput = {
@@ -622,6 +783,8 @@ export type reportsCreateManyUserInput = {
   status?: $Enums.report_status
   created_at?: Date | string
   updated_at?: Date | string
+  withdrawn_at?: Date | string | null
+  withdrawn_note?: string | null
 }
 
 export type reportsUpdateWithoutUserInput = {
@@ -629,6 +792,9 @@ export type reportsUpdateWithoutUserInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
 }
@@ -638,6 +804,9 @@ export type reportsUncheckedUpdateWithoutUserInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
 }
@@ -647,6 +816,8 @@ export type reportsUncheckedUpdateManyWithoutUserInput = {
   status?: Prisma.Enumreport_statusFieldUpdateOperationsInput | $Enums.report_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -655,11 +826,13 @@ export type reportsUncheckedUpdateManyWithoutUserInput = {
  */
 
 export type ReportsCountOutputType = {
+  reportReviews: number
   sources: number
   reported_devices: number
 }
 
 export type ReportsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reportReviews?: boolean | ReportsCountOutputTypeCountReportReviewsArgs
   sources?: boolean | ReportsCountOutputTypeCountSourcesArgs
   reported_devices?: boolean | ReportsCountOutputTypeCountReported_devicesArgs
 }
@@ -672,6 +845,13 @@ export type ReportsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ReportsCountOutputType
    */
   select?: Prisma.ReportsCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ReportsCountOutputType without action
+ */
+export type ReportsCountOutputTypeCountReportReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.report_reviewsWhereInput
 }
 
 /**
@@ -695,9 +875,12 @@ export type reportsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  withdrawn_at?: boolean
+  withdrawn_note?: boolean
+  reportReviews?: boolean | Prisma.reports$reportReviewsArgs<ExtArgs>
   sources?: boolean | Prisma.reports$sourcesArgs<ExtArgs>
   reported_devices?: boolean | Prisma.reports$reported_devicesArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ReportsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reports"]>
 
@@ -707,6 +890,8 @@ export type reportsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
+  withdrawn_at?: boolean
+  withdrawn_note?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reports"]>
 
@@ -716,6 +901,8 @@ export type reportsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
+  withdrawn_at?: boolean
+  withdrawn_note?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reports"]>
 
@@ -725,13 +912,16 @@ export type reportsSelectScalar = {
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
+  withdrawn_at?: boolean
+  withdrawn_note?: boolean
 }
 
-export type reportsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "status" | "created_at" | "updated_at", ExtArgs["result"]["reports"]>
+export type reportsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "status" | "created_at" | "updated_at" | "withdrawn_at" | "withdrawn_note", ExtArgs["result"]["reports"]>
 export type reportsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reportReviews?: boolean | Prisma.reports$reportReviewsArgs<ExtArgs>
   sources?: boolean | Prisma.reports$sourcesArgs<ExtArgs>
   reported_devices?: boolean | Prisma.reports$reported_devicesArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ReportsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type reportsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -744,9 +934,10 @@ export type reportsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $reportsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "reports"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
+    reportReviews: Prisma.$report_reviewsPayload<ExtArgs>[]
     sources: Prisma.$report_sourcesPayload<ExtArgs>[]
     reported_devices: Prisma.$reported_devicesPayload<ExtArgs>[]
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -754,6 +945,8 @@ export type $reportsPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     status: $Enums.report_status
     created_at: Date
     updated_at: Date
+    withdrawn_at: Date | null
+    withdrawn_note: string | null
   }, ExtArgs["result"]["reports"]>
   composites: {}
 }
@@ -1148,9 +1341,10 @@ readonly fields: reportsFieldRefs;
  */
 export interface Prisma__reportsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  reportReviews<T extends Prisma.reports$reportReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reports$reportReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$report_reviewsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sources<T extends Prisma.reports$sourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reports$sourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$report_sourcesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reported_devices<T extends Prisma.reports$reported_devicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reports$reported_devicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$reported_devicesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1185,6 +1379,8 @@ export interface reportsFieldRefs {
   readonly status: Prisma.FieldRef<"reports", 'report_status'>
   readonly created_at: Prisma.FieldRef<"reports", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"reports", 'DateTime'>
+  readonly withdrawn_at: Prisma.FieldRef<"reports", 'DateTime'>
+  readonly withdrawn_note: Prisma.FieldRef<"reports", 'String'>
 }
     
 
@@ -1583,6 +1779,30 @@ export type reportsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many reports to delete.
    */
   limit?: number
+}
+
+/**
+ * reports.reportReviews
+ */
+export type reports$reportReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the report_reviews
+   */
+  select?: Prisma.report_reviewsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the report_reviews
+   */
+  omit?: Prisma.report_reviewsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.report_reviewsInclude<ExtArgs> | null
+  where?: Prisma.report_reviewsWhereInput
+  orderBy?: Prisma.report_reviewsOrderByWithRelationInput | Prisma.report_reviewsOrderByWithRelationInput[]
+  cursor?: Prisma.report_reviewsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Report_reviewsScalarFieldEnum | Prisma.Report_reviewsScalarFieldEnum[]
 }
 
 /**

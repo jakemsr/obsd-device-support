@@ -220,9 +220,9 @@ export type report_sourcesWhereInput = {
   name?: Prisma.StringNullableFilter<"report_sources"> | string | null
   source_type?: Prisma.Enumsource_typeFilter<"report_sources"> | $Enums.source_type
   url?: Prisma.StringNullableFilter<"report_sources"> | string | null
-  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
-  hwinspect_report?: Prisma.XOR<Prisma.Hwinspect_reportsNullableScalarRelationFilter, Prisma.hwinspect_reportsWhereInput> | null
   form_report?: Prisma.XOR<Prisma.Form_reportsNullableScalarRelationFilter, Prisma.form_reportsWhereInput> | null
+  hwinspect_report?: Prisma.XOR<Prisma.Hwinspect_reportsNullableScalarRelationFilter, Prisma.hwinspect_reportsWhereInput> | null
+  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
 }
 
 export type report_sourcesOrderByWithRelationInput = {
@@ -231,9 +231,9 @@ export type report_sourcesOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   source_type?: Prisma.SortOrder
   url?: Prisma.SortOrderInput | Prisma.SortOrder
-  report?: Prisma.reportsOrderByWithRelationInput
-  hwinspect_report?: Prisma.hwinspect_reportsOrderByWithRelationInput
   form_report?: Prisma.form_reportsOrderByWithRelationInput
+  hwinspect_report?: Prisma.hwinspect_reportsOrderByWithRelationInput
+  report?: Prisma.reportsOrderByWithRelationInput
 }
 
 export type report_sourcesWhereUniqueInput = Prisma.AtLeast<{
@@ -245,9 +245,9 @@ export type report_sourcesWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"report_sources"> | string | null
   source_type?: Prisma.Enumsource_typeFilter<"report_sources"> | $Enums.source_type
   url?: Prisma.StringNullableFilter<"report_sources"> | string | null
-  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
-  hwinspect_report?: Prisma.XOR<Prisma.Hwinspect_reportsNullableScalarRelationFilter, Prisma.hwinspect_reportsWhereInput> | null
   form_report?: Prisma.XOR<Prisma.Form_reportsNullableScalarRelationFilter, Prisma.form_reportsWhereInput> | null
+  hwinspect_report?: Prisma.XOR<Prisma.Hwinspect_reportsNullableScalarRelationFilter, Prisma.hwinspect_reportsWhereInput> | null
+  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
 }, "id">
 
 export type report_sourcesOrderByWithAggregationInput = {
@@ -279,9 +279,9 @@ export type report_sourcesCreateInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
-  hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
+  hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateInput = {
@@ -290,8 +290,8 @@ export type report_sourcesUncheckedCreateInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
   form_report?: Prisma.form_reportsUncheckedCreateNestedOneWithoutSourceInput
+  hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
 }
 
 export type report_sourcesUpdateInput = {
@@ -299,9 +299,9 @@ export type report_sourcesUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
-  hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
+  hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateInput = {
@@ -310,8 +310,8 @@ export type report_sourcesUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
   form_report?: Prisma.form_reportsUncheckedUpdateOneWithoutSourceNestedInput
+  hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
 }
 
 export type report_sourcesCreateManyInput = {
@@ -465,8 +465,8 @@ export type report_sourcesCreateWithoutReportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
+  hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
 }
 
 export type report_sourcesUncheckedCreateWithoutReportInput = {
@@ -474,8 +474,8 @@ export type report_sourcesUncheckedCreateWithoutReportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
   form_report?: Prisma.form_reportsUncheckedCreateNestedOneWithoutSourceInput
+  hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
 }
 
 export type report_sourcesCreateOrConnectWithoutReportInput = {
@@ -520,8 +520,8 @@ export type report_sourcesCreateWithoutHwinspect_reportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateWithoutHwinspect_reportInput = {
@@ -554,8 +554,8 @@ export type report_sourcesUpdateWithoutHwinspect_reportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateWithoutHwinspect_reportInput = {
@@ -572,8 +572,8 @@ export type report_sourcesCreateWithoutForm_reportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
   hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateWithoutForm_reportInput = {
@@ -606,8 +606,8 @@ export type report_sourcesUpdateWithoutForm_reportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateWithoutForm_reportInput = {
@@ -631,8 +631,8 @@ export type report_sourcesUpdateWithoutReportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
+  hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
 }
 
 export type report_sourcesUncheckedUpdateWithoutReportInput = {
@@ -640,8 +640,8 @@ export type report_sourcesUncheckedUpdateWithoutReportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
   form_report?: Prisma.form_reportsUncheckedUpdateOneWithoutSourceNestedInput
+  hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
 }
 
 export type report_sourcesUncheckedUpdateManyWithoutReportInput = {
@@ -659,9 +659,9 @@ export type report_sourcesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   name?: boolean
   source_type?: boolean
   url?: boolean
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
-  hwinspect_report?: boolean | Prisma.report_sources$hwinspect_reportArgs<ExtArgs>
   form_report?: boolean | Prisma.report_sources$form_reportArgs<ExtArgs>
+  hwinspect_report?: boolean | Prisma.report_sources$hwinspect_reportArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["report_sources"]>
 
 export type report_sourcesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -692,9 +692,9 @@ export type report_sourcesSelectScalar = {
 
 export type report_sourcesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "report_id" | "name" | "source_type" | "url", ExtArgs["result"]["report_sources"]>
 export type report_sourcesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
-  hwinspect_report?: boolean | Prisma.report_sources$hwinspect_reportArgs<ExtArgs>
   form_report?: boolean | Prisma.report_sources$form_reportArgs<ExtArgs>
+  hwinspect_report?: boolean | Prisma.report_sources$hwinspect_reportArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
 }
 export type report_sourcesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
@@ -706,9 +706,9 @@ export type report_sourcesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Typ
 export type $report_sourcesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "report_sources"
   objects: {
-    report: Prisma.$reportsPayload<ExtArgs>
-    hwinspect_report: Prisma.$hwinspect_reportsPayload<ExtArgs> | null
     form_report: Prisma.$form_reportsPayload<ExtArgs> | null
+    hwinspect_report: Prisma.$hwinspect_reportsPayload<ExtArgs> | null
+    report: Prisma.$reportsPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1110,9 +1110,9 @@ readonly fields: report_sourcesFieldRefs;
  */
 export interface Prisma__report_sourcesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  report<T extends Prisma.reportsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reportsDefaultArgs<ExtArgs>>): Prisma.Prisma__reportsClient<runtime.Types.Result.GetResult<Prisma.$reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  hwinspect_report<T extends Prisma.report_sources$hwinspect_reportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.report_sources$hwinspect_reportArgs<ExtArgs>>): Prisma.Prisma__hwinspect_reportsClient<runtime.Types.Result.GetResult<Prisma.$hwinspect_reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   form_report<T extends Prisma.report_sources$form_reportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.report_sources$form_reportArgs<ExtArgs>>): Prisma.Prisma__form_reportsClient<runtime.Types.Result.GetResult<Prisma.$form_reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  hwinspect_report<T extends Prisma.report_sources$hwinspect_reportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.report_sources$hwinspect_reportArgs<ExtArgs>>): Prisma.Prisma__hwinspect_reportsClient<runtime.Types.Result.GetResult<Prisma.$hwinspect_reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  report<T extends Prisma.reportsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reportsDefaultArgs<ExtArgs>>): Prisma.Prisma__reportsClient<runtime.Types.Result.GetResult<Prisma.$reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1548,25 +1548,6 @@ export type report_sourcesDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * report_sources.hwinspect_report
- */
-export type report_sources$hwinspect_reportArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the hwinspect_reports
-   */
-  select?: Prisma.hwinspect_reportsSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the hwinspect_reports
-   */
-  omit?: Prisma.hwinspect_reportsOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.hwinspect_reportsInclude<ExtArgs> | null
-  where?: Prisma.hwinspect_reportsWhereInput
-}
-
-/**
  * report_sources.form_report
  */
 export type report_sources$form_reportArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1583,6 +1564,25 @@ export type report_sources$form_reportArgs<ExtArgs extends runtime.Types.Extensi
    */
   include?: Prisma.form_reportsInclude<ExtArgs> | null
   where?: Prisma.form_reportsWhereInput
+}
+
+/**
+ * report_sources.hwinspect_report
+ */
+export type report_sources$hwinspect_reportArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the hwinspect_reports
+   */
+  select?: Prisma.hwinspect_reportsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the hwinspect_reports
+   */
+  omit?: Prisma.hwinspect_reportsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.hwinspect_reportsInclude<ExtArgs> | null
+  where?: Prisma.hwinspect_reportsWhereInput
 }
 
 /**

@@ -23,7 +23,8 @@ export const report_status = {
   pending: 'pending',
   under_review: 'under_review',
   resolved: 'resolved',
-  rejected: 'rejected'
+  rejected: 'rejected',
+  withdrawn: 'withdrawn'
 } as const
 
 export type report_status = (typeof report_status)[keyof typeof report_status]
@@ -38,6 +39,15 @@ export const source_type = {
 } as const
 
 export type source_type = (typeof source_type)[keyof typeof source_type]
+
+
+export const source_assessment = {
+  supports: 'supports',
+  contradicts: 'contradicts',
+  insufficient: 'insufficient'
+} as const
+
+export type source_assessment = (typeof source_assessment)[keyof typeof source_assessment]
 
 
 export const roles = {

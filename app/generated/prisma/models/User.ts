@@ -224,6 +224,7 @@ export type UserWhereInput = {
   role?: Prisma.EnumrolesFilter<"User"> | $Enums.roles
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
+  report_reviews?: Prisma.Report_reviewsListRelationFilter
   reports?: Prisma.ReportsListRelationFilter
 }
 
@@ -240,6 +241,7 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
+  report_reviews?: Prisma.report_reviewsOrderByRelationAggregateInput
   reports?: Prisma.reportsOrderByRelationAggregateInput
 }
 
@@ -259,6 +261,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumrolesFilter<"User"> | $Enums.roles
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
+  report_reviews?: Prisma.Report_reviewsListRelationFilter
   reports?: Prisma.ReportsListRelationFilter
 }, "id" | "email">
 
@@ -307,6 +310,7 @@ export type UserCreateInput = {
   role?: $Enums.roles
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsCreateNestedManyWithoutReviewerInput
   reports?: Prisma.reportsCreateNestedManyWithoutUserInput
 }
 
@@ -323,6 +327,7 @@ export type UserUncheckedCreateInput = {
   role?: $Enums.roles
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReviewerInput
   reports?: Prisma.reportsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -339,6 +344,7 @@ export type UserUpdateInput = {
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUpdateManyWithoutReviewerNestedInput
   reports?: Prisma.reportsUpdateManyWithoutUserNestedInput
 }
 
@@ -355,6 +361,7 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReviewerNestedInput
   reports?: Prisma.reportsUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -455,6 +462,20 @@ export type UserUpdateOneRequiredWithoutReportsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReportsInput, Prisma.UserUpdateWithoutReportsInput>, Prisma.UserUncheckedUpdateWithoutReportsInput>
 }
 
+export type UserCreateNestedOneWithoutReport_reviewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReport_reviewsInput, Prisma.UserUncheckedCreateWithoutReport_reviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReport_reviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutReport_reviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReport_reviewsInput, Prisma.UserUncheckedCreateWithoutReport_reviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReport_reviewsInput
+  upsert?: Prisma.UserUpsertWithoutReport_reviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReport_reviewsInput, Prisma.UserUpdateWithoutReport_reviewsInput>, Prisma.UserUncheckedUpdateWithoutReport_reviewsInput>
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -504,6 +525,7 @@ export type UserCreateWithoutReportsInput = {
   role?: $Enums.roles
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsCreateNestedManyWithoutReviewerInput
 }
 
 export type UserUncheckedCreateWithoutReportsInput = {
@@ -519,6 +541,7 @@ export type UserUncheckedCreateWithoutReportsInput = {
   role?: $Enums.roles
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReviewerInput
 }
 
 export type UserCreateOrConnectWithoutReportsInput = {
@@ -550,6 +573,7 @@ export type UserUpdateWithoutReportsInput = {
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUpdateManyWithoutReviewerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportsInput = {
@@ -565,6 +589,87 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReviewerNestedInput
+}
+
+export type UserCreateWithoutReport_reviewsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  firstName?: string
+  lastName?: string
+  role?: $Enums.roles
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  reports?: Prisma.reportsCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReport_reviewsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  firstName?: string
+  lastName?: string
+  role?: $Enums.roles
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  reports?: Prisma.reportsUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReport_reviewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReport_reviewsInput, Prisma.UserUncheckedCreateWithoutReport_reviewsInput>
+}
+
+export type UserUpsertWithoutReport_reviewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReport_reviewsInput, Prisma.UserUncheckedUpdateWithoutReport_reviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReport_reviewsInput, Prisma.UserUncheckedCreateWithoutReport_reviewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReport_reviewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReport_reviewsInput, Prisma.UserUncheckedUpdateWithoutReport_reviewsInput>
+}
+
+export type UserUpdateWithoutReport_reviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  reports?: Prisma.reportsUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReport_reviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  reports?: Prisma.reportsUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -579,6 +684,7 @@ export type UserCreateWithoutSessionsInput = {
   lastName?: string
   role?: $Enums.roles
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsCreateNestedManyWithoutReviewerInput
   reports?: Prisma.reportsCreateNestedManyWithoutUserInput
 }
 
@@ -594,6 +700,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   lastName?: string
   role?: $Enums.roles
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReviewerInput
   reports?: Prisma.reportsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -625,6 +732,7 @@ export type UserUpdateWithoutSessionsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUpdateManyWithoutReviewerNestedInput
   reports?: Prisma.reportsUpdateManyWithoutUserNestedInput
 }
 
@@ -640,6 +748,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReviewerNestedInput
   reports?: Prisma.reportsUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -655,6 +764,7 @@ export type UserCreateWithoutAccountsInput = {
   lastName?: string
   role?: $Enums.roles
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsCreateNestedManyWithoutReviewerInput
   reports?: Prisma.reportsCreateNestedManyWithoutUserInput
 }
 
@@ -670,6 +780,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   lastName?: string
   role?: $Enums.roles
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  report_reviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReviewerInput
   reports?: Prisma.reportsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -701,6 +812,7 @@ export type UserUpdateWithoutAccountsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUpdateManyWithoutReviewerNestedInput
   reports?: Prisma.reportsUpdateManyWithoutUserNestedInput
 }
 
@@ -716,6 +828,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumrolesFieldUpdateOperationsInput | $Enums.roles
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  report_reviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReviewerNestedInput
   reports?: Prisma.reportsUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -727,12 +840,14 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   accounts: number
   sessions: number
+  report_reviews: number
   reports: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  report_reviews?: boolean | UserCountOutputTypeCountReport_reviewsArgs
   reports?: boolean | UserCountOutputTypeCountReportsArgs
 }
 
@@ -763,6 +878,13 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountReport_reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.report_reviewsWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.reportsWhereInput
 }
@@ -781,6 +903,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  report_reviews?: boolean | Prisma.User$report_reviewsArgs<ExtArgs>
   reports?: boolean | Prisma.User$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -828,6 +951,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  report_reviews?: boolean | Prisma.User$report_reviewsArgs<ExtArgs>
   reports?: boolean | Prisma.User$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -839,6 +963,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
+    report_reviews: Prisma.$report_reviewsPayload<ExtArgs>[]
     reports: Prisma.$reportsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1248,6 +1373,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  report_reviews<T extends Prisma.User$report_reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$report_reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$report_reviewsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.User$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$reportsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1726,6 +1852,30 @@ export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * User.report_reviews
+ */
+export type User$report_reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the report_reviews
+   */
+  select?: Prisma.report_reviewsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the report_reviews
+   */
+  omit?: Prisma.report_reviewsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.report_reviewsInclude<ExtArgs> | null
+  where?: Prisma.report_reviewsWhereInput
+  orderBy?: Prisma.report_reviewsOrderByWithRelationInput | Prisma.report_reviewsOrderByWithRelationInput[]
+  cursor?: Prisma.report_reviewsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Report_reviewsScalarFieldEnum | Prisma.Report_reviewsScalarFieldEnum[]
 }
 
 /**
