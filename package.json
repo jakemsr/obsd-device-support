@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "verify:device-names": "tsx utils/verify-device-names.ts",
     "import:vendors-pci": "tsx utils/import-vendors-pci.ts",
     "import:devices": "tsx utils/match-devices.ts",
     "import:wicat": "tsx utils/search-wi-cat.ts"
@@ -16,6 +17,7 @@
     "@prisma/client": "^7.9.1",
     "better-auth": "^1.7.1",
     "next": "^16.3.4",
+    "openai": "^7.10.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-email": "^6.9.2",
