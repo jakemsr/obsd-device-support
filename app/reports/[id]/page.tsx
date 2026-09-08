@@ -1,9 +1,9 @@
+import { Suspense } from "react";
+import Link from "next/link";
 import { Prisma } from "@/app/generated/prisma/client";
 import { FullDeviceInfo } from "@/lib/local-types";
 import prisma from "@/lib/prisma";
 
-
-const matchMap = new Map<BigInt, FullDeviceInfo[]>();
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
   include: {
@@ -12,7 +12,7 @@ type SourceWithReports = Prisma.report_sourcesGetPayload<{
   };
 }>;
 
-const sourceDisplay = (source: SourceWithReports) => {
+const SourceDisplay = ({source}: {source: SourceWithReports}) => {
   return (
     <div>
       <div>
@@ -84,10 +84,9 @@ type FullReportedDevice = Prisma.reported_devicesGetPayload<{
   };
 }>;
 
-
-const deviceDisplay = (device: FullReportedDevice) => {
+const DeviceDisplay = ({device, matchedDevices}: {device: FullReportedDevice, matchedDevices?: FullDeviceInfo[]}) => {
   return (
-    <div className="my-2 grid grid-cols-2">
+    <div className="my-2 grid grid-cols-1 sm:grid-cols-2 gap-y-6">
       <div>
         <div>
           Bus: {device.bus}
@@ -137,48 +136,124 @@ const deviceDisplay = (device: FullReportedDevice) => {
           </div>
         )}
       </div>
+
       <div>
-        Matched Devices:
-        {matchMap.get(device.id)?.map(matchedDevice => (
-          <div key={matchedDevice.id} className="px-4 mt-2">
-            <div>
-              Vendor:{matchedDevice.vendors.name}
-            </div>
-            <div>
-              Product: {matchedDevice.name}
-            </div>
-            <div>
-              Driver: {matchedDevice.drivers.name}
-            </div>
-            <div>
-              Issues: {matchedDevice.issues.map(issue => (
-                <div key={issue.id}>
-                  {issue.description}
+        {matchedDevices && matchedDevices.length > 0 ? (
+          <>
+            VID/PID Matches Existing Devices:
+            {matchedDevices.map(matchedDevice => (
+              <div key={matchedDevice.id} className="px-4 mt-2">
+                <div>
+                  Vendor: {matchedDevice.vendors.name}
                 </div>
-              ))}
-            </div>
-            <div>
-              Other Device Names: {matchedDevice.other_device_names.map(name => (
-                <div key={name.id}>
-                  {name.vendor_name} {name.device_name}
+                <div>
+                  Product: {matchedDevice.name}
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
+                <div>
+                  Driver: {matchedDevice.drivers.name}
+                </div>
+
+                {matchedDevice.issues.length > 0 ? (
+                  <div>
+                    Issues: {matchedDevice.issues.map(issue => (
+                      <div className="px-4" key={issue.id}>
+                        {issue.description}
+                      </div>
+                    ))}
+                  </div>
+                ) : <div>No known issues</div>}
+
+                {matchedDevice.other_device_names.length > 0 ? (
+                  <div>
+                    Other Device Names: {matchedDevice.other_device_names.map(name => (
+                      <div className="px-4" key={name.id}>
+                        {name.vendor_name} {name.device_name}
+                      </div>
+                    ))}
+                  </div>
+                ) : <div>No other device names</div>}
+
+              </div>
+            ))}
+          </>
+        ) : "No matching devices"}
       </div>
     </div>
   );
 }
 
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
+type FullReport = Prisma.reportsGetPayload<{
+  include: {
+    sources: {
+      include: {
+        hwinspect_report: true;
+        form_report: true;
+      };
+    };
+    reported_devices: {
+      include: {
+        reported_issues: true;
+        reported_other_device_names: true;
+      };
+    };
+  };
+}>;
 
-  const { id } = await params;
+const ShowDevices = async ({report}: {report: FullReport}) => {
+
+  const matchMap = new Map<bigint, FullDeviceInfo[]>();
+
+  const matchedEntries = await Promise.all(
+    report.reported_devices.map(async (device) => {
+      const devices: FullDeviceInfo[] = await prisma.devices.findMany({
+        where: {
+          product_id: "0x" + device.product_id,
+          bus: device.bus,
+          vendors: {
+            [device.bus === "PCI" ? "pci_id" : "usb_id"]: "0x" + device.vendor_id,
+          },
+        },
+        include: {
+          vendors: true,
+          drivers: true,
+          issues: true,
+          other_device_names: true,
+        },
+        orderBy: { name: "asc" },
+      });
+
+      return [device.id, devices] as const;
+    })
+  );
+
+  for (const [deviceId, devices] of matchedEntries) {
+    matchMap.set(deviceId, devices);
+  }
+
+  return (
+    <>
+      {
+        report.reported_devices.length > 0 && (
+          <div className="mt-4">
+            Reported Devices:
+            {report.reported_devices.map(device => (
+              <div
+                className="px-4 border-t"
+                key={device.id}
+              >
+                <DeviceDisplay device={device} matchedDevices={matchMap.get(device.id)} />
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </>
+  );
+}
+
+
+const ReportDisplay = async ({ id }: { id: string }) => {
 
   const report = await prisma.reports.findUnique({
     where: {
@@ -200,83 +275,71 @@ export default async function Page({
     }
   });
 
-  if (!report) {
-    return (
-      <div>
-        Report not found
-      </div>
-    );
-  }
+  return (
+    <>
+      {!report && <div>Report {id} not found!</div>}
+      {report && (
+        <div className="px-4 mt-4">
+          <div>
+            Status: {report.status}
+          </div>
+          <div>
+            Created At: {report.created_at.toLocaleString()}
+          </div>
+          <div>
+            Updated At: {report.updated_at.toLocaleString()}
+          </div>
 
-  report.reported_devices.forEach(async device => {
+          {report.sources.length > 0 && (
+            <div className="mt-4">
+              Sources:
+              {report.sources.map(source => (
+                <div
+                  className="px-4 border-t"
+                  key={source.id}
+                >
+                  <SourceDisplay source={source} />
+                </div>
+              ))}
+            </div>
+          )}
 
-    const devices: FullDeviceInfo[] = await prisma.devices.findMany({
-      where: {
-        product_id: "0x" + device.product_id,
-        bus: device.bus,
-        vendors: {
-          [device.bus === "PCI" ? "pci_id" : "usb_id"]: "0x" + device.vendor_id,
-        },
-      },
-      include: {
-        vendors: true,
-        drivers: true,
-        issues: true,
-        other_device_names: true,
-      },
-      orderBy: { name: "asc" },
-    });
+          <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
+            <ShowDevices report={report} />
+          </Suspense>
 
-    matchMap.set(device.id, devices);
-  });
+        </div>
+      )}
+    </>
+  )
+}
 
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+
+  const { id } = await params;
 
   return (
     <div className="px-4">
+      <div className="mb-4">
+        <Link
+          href="/reports"
+          className="text-link hover:underline"
+        >
+          &larr; Back to reports
+        </Link>
+      </div>
       <div>
-        Report ID {report.id}
-      </div>
-      <div className="px-4 mt-4">
-        <div>
-          Status: {report.status}
-        </div>
-        <div>
-          Created At: {report.created_at.toLocaleString()}
-        </div>
-        <div>
-          Updated At: {report.updated_at.toLocaleString()}
-        </div>
-
-        {report.sources.length > 0 && (
-          <div className="mt-4">
-            Sources:
-            {report.sources.map(source => (
-              <div
-                className="px-4 border-t"
-                key={source.id}
-              >
-                {sourceDisplay(source)}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {report.reported_devices.length > 0 && (
-          <div className="mt-4">
-            Reported Devices:
-            {report.reported_devices.map(device => (
-              <div
-                className="px-4 border-t"
-                key={device.id}>
-                {deviceDisplay(device)}
-              </div>
-            ))}
-          </div>
-        )}
+        Report ID {id}
       </div>
 
-      <div>
-      </div>
+      <Suspense fallback={<div className="px-4 mt-2">Loading report...</div>}>
+        <ReportDisplay id={id} />
+      </Suspense>
     </div>
   );
 }

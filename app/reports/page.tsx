@@ -1,7 +1,9 @@
-import { auth } from "@/lib/auth";
+import { Suspense } from "react";
 import { headers } from "next/headers";
-import Link from "next/link";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import type { ReportWithRelations } from "@/lib/local-types";
+import ListReports from "@/app/components/reports/ListReports";
 
 
 export default async function Page() {
@@ -25,7 +27,7 @@ export default async function Page() {
 
   const user = session.user;
 
-  const reports = await prisma.reports.findMany({
+  const reportsPromise: Promise<ReportWithRelations[]> = prisma.reports.findMany({
     where: {
       user_id: user.id
     },
@@ -34,38 +36,15 @@ export default async function Page() {
       reported_devices: true
     }
   });
+
   return (
-    <div className="m-4">
-      <h1>
-        Reports
+    <div className="w-full flex flex-col items-center">
+      <h1 className="text-2xl font-bold mb-4 text-center">
+        Your Reports
       </h1>
-      <p>
-        This is the reports page.
-      </p>
-      <div>
-        {reports.map(report => (
-          <Link key={report.id} href={`/reports/${report.id}`}>
-            <div>
-              ID: {report.id} 
-            </div>
-            <div>
-              Status: {report.status}
-            </div>
-            <div>
-              Created At: {report.created_at.toLocaleString()}
-            </div>
-            <div>
-              Updated At: {report.updated_at.toLocaleString()}
-            </div>
-            <div>
-              Sources: {report.sources.map(source => source.name).join(", ")}
-            </div>
-            <div>
-              Reported Devices: {report.reported_devices.map(device => `${device.vendor_id}:${device.product_id}`).join(", ")}
-            </div>
-          </Link>
-        ))}
-      </div>
+      <Suspense fallback={<div>Loading reports...</div>}>
+        <ListReports reportsPromise={reportsPromise}/>
+      </Suspense>
     </div>
-  );
+  )
 }

@@ -18,3 +18,10 @@ export type DeviceListEntryProps = {
   vid: string;
   pid: string;
 }
+
+export type ReportWithRelations = Prisma.reportsGetPayload<{
+  include: {
+    sources: true;
+    reported_devices: true;
+  };
+}>;
