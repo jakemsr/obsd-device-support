@@ -27,6 +27,10 @@ export default async function DeviceCard({ id }: { id: string }) {
       words: "Unknown",
       color: "text-unknown"
     },
+    "likely": {
+      words: "Likely Supported",
+      color: "text-likely"
+    },
   };
 
   const device: FullDeviceInfo | null = await prisma.devices.findUnique({

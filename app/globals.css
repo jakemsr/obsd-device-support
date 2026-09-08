@@ -8,6 +8,7 @@
   --partial: oklch(68.1% 0.162 75.834);
   --unsupported: oklch(57.7% 0.245 27.325);
   --unknown: oklch(44.6% 0.03 256.802);
+  --likely: oklch(53.2% 0.157 131.589);
 }
 
 @theme inline {
@@ -18,6 +19,7 @@
   --color-partial: var(--partial);
   --color-unsupported: var(--unsupported);
   --color-unknown: var(--unknown);
+  --color-likely: var(--likely);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -31,6 +33,7 @@
     --partial: oklch(90.5% 0.182 98.111);
     --unsupported: oklch(80.8% 0.114 19.571);
     --unknown: oklch(87.2% 0.01 258.338);
+    --likely: oklch(89.7% 0.196 126.665);
   }
 }
 

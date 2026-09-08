@@ -13,7 +13,8 @@ export const support_type = {
   supported: 'supported',
   partial: 'partial',
   unsupported: 'unsupported',
-  unknown: 'unknown'
+  unknown: 'unknown',
+  likely: 'likely'
 } as const
 
 export type support_type = (typeof support_type)[keyof typeof support_type]

@@ -297,6 +297,7 @@ enum support_type {
   partial
   unsupported
   unknown
+  likely
 
   @@schema("public")
 }
