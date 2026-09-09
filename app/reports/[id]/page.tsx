@@ -14,7 +14,7 @@ type SourceWithReports = Prisma.report_sourcesGetPayload<{
   };
 }>;
 
-const SourceDisplay = ({source}: {source: SourceWithReports}) => {
+const SourceDisplay = ({ source }: { source: SourceWithReports }) => {
   return (
     <div>
       <div>
@@ -86,7 +86,7 @@ type FullReportedDevice = Prisma.reported_devicesGetPayload<{
   };
 }>;
 
-const DeviceDisplay = ({device, matchedDevices}: {device: FullReportedDevice, matchedDevices?: FullDeviceInfo[]}) => {
+const DeviceDisplay = ({ device, matchedDevices }: { device: FullReportedDevice, matchedDevices?: FullDeviceInfo[] }) => {
   return (
     <div className="my-2 grid grid-cols-1 sm:grid-cols-2 gap-y-6">
       <div>
@@ -202,7 +202,7 @@ type FullReport = Prisma.reportsGetPayload<{
   };
 }>;
 
-const ShowDevices = async ({report}: {report: FullReport}) => {
+const ShowDevices = async ({ report }: { report: FullReport }) => {
 
   const matchMap = new Map<bigint, FullDeviceInfo[]>();
 
@@ -300,36 +300,36 @@ const ReportDisplay = async ({ id }: { id: string }) => {
   }
 
   return (
-        <div className="px-4 mt-4">
-          <div>
-            Status: {report.status}
-          </div>
-          <div>
-            Created At: {report.created_at.toLocaleString()}
-          </div>
-          <div>
-            Updated At: {report.updated_at.toLocaleString()}
-          </div>
+    <div className="px-4 mt-4">
+      <div>
+        Status: {report.status}
+      </div>
+      <div>
+        Created At: {report.created_at.toLocaleString()}
+      </div>
+      <div>
+        Updated At: {report.updated_at.toLocaleString()}
+      </div>
 
-          {report.sources.length > 0 && (
-            <div className="mt-4">
-              Sources:
-              {report.sources.map(source => (
-                <div
-                  className="px-4 border-t"
-                  key={source.id}
-                >
-                  <SourceDisplay source={source} />
-                </div>
-              ))}
+      {report.sources.length > 0 && (
+        <div className="mt-4">
+          Sources:
+          {report.sources.map(source => (
+            <div
+              className="px-4 border-t"
+              key={source.id}
+            >
+              <SourceDisplay source={source} />
             </div>
-          )}
-
-          <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
-            <ShowDevices report={report} />
-          </Suspense>
-
+          ))}
         </div>
+      )}
+
+      <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
+        <ShowDevices report={report} />
+      </Suspense>
+
+    </div>
   )
 }
 
