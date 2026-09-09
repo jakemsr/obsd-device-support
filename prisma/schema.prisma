@@ -142,7 +142,7 @@ model reported_devices {
   reported_vendor             String?
   reported_product            String?
   reported_driver             String?
-  support_status              support_type
+  support_status              support_type?
   report                      reports                       @relation(fields: [report_id], references: [id])
   reported_issues             reported_issues[]
   reported_other_device_names reported_other_device_names[]
