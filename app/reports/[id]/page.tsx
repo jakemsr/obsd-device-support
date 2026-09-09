@@ -1,8 +1,10 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { Prisma } from "@/app/generated/prisma/client";
 import { FullDeviceInfo } from "@/lib/local-types";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
@@ -275,10 +277,29 @@ const ReportDisplay = async ({ id }: { id: string }) => {
     }
   });
 
+  if (!report) {
+    return (
+      <div className="px-4 mt-4">
+        Report {id} not found!
+      </div>
+    );
+  }
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+
+  if (!session || !session.user ||
+    !(session.user.id === report.user_id || session.user.role === "editor")) {
+    return (
+      <div className="px-4 mt-4">
+        You must be logged in to view this report, or you do not have permission to view it.
+      </div>
+    );
+  }
+
   return (
-    <>
-      {!report && <div>Report {id} not found!</div>}
-      {report && (
         <div className="px-4 mt-4">
           <div>
             Status: {report.status}
@@ -309,8 +330,6 @@ const ReportDisplay = async ({ id }: { id: string }) => {
           </Suspense>
 
         </div>
-      )}
-    </>
   )
 }
 
