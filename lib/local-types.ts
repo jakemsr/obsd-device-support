@@ -31,3 +31,20 @@ export type ReportWithRelations = Prisma.reportsGetPayload<{
     reported_devices: true;
   };
 }>;
+
+export type FullReport = Prisma.reportsGetPayload<{
+  include: {
+    sources: {
+      include: {
+        hwinspect_report: true;
+        form_report: true;
+      };
+    };
+    reported_devices: {
+      include: {
+        reported_issues: true;
+        reported_other_device_names: true;
+      };
+    };
+  };
+}>;
