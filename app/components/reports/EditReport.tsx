@@ -1,10 +1,10 @@
-import { Suspense } from "react";
-import Link from "next/link";
-import { headers } from "next/headers";
+"use client";
+
+import { Suspense, use, useEffect, useState } from "react";
 import { Prisma } from "@/app/generated/prisma/client";
-import { FullDeviceInfo, FullReport } from "@/lib/local-types";
-import prisma from "@/lib/prisma";
-import { auth } from "@/lib/auth";
+import { AuthSessionPromise, FullReport, FullDeviceInfo } from "@/lib/local-types";
+import { report_status } from "@/app/generated/prisma/enums";
+//import prisma from "@/lib/prisma";
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
@@ -85,6 +85,7 @@ const SourceDisplay = ({ index, source }: { index: number, source: SourceWithRep
     </div>
   );
 }
+
 
 type FullReportedDevice = Prisma.reported_devicesGetPayload<{
   include: {
@@ -191,9 +192,9 @@ const DeviceDisplay = ({ device, matchedDevices }: { device: FullReportedDevice,
   );
 }
 
+const ShowDevices = ({ report }: { report: FullReport }) => {
 
-const ShowDevices = async ({ report }: { report: FullReport }) => {
-
+  /*
   const matchMap = new Map<bigint, FullDeviceInfo[]>();
 
   const matchedEntries = await Promise.all(
@@ -222,6 +223,7 @@ const ShowDevices = async ({ report }: { report: FullReport }) => {
   for (const [deviceId, devices] of matchedEntries) {
     matchMap.set(deviceId, devices);
   }
+  */
 
   return (
     <>
@@ -234,7 +236,7 @@ const ShowDevices = async ({ report }: { report: FullReport }) => {
                 className="px-4 border-t"
                 key={device.id}
               >
-                <DeviceDisplay device={device} matchedDevices={matchMap.get(device.id)} />
+                <DeviceDisplay device={device} matchedDevices={[]} />
               </div>
             ))}
           </div>
@@ -245,59 +247,53 @@ const ShowDevices = async ({ report }: { report: FullReport }) => {
 }
 
 
-const ReportDisplay = async ({ id }: { id: string }) => {
+interface EditReportProps {
+  reportPromise: Promise<FullReport | null>;
+  sessionPromise: AuthSessionPromise;
+}
 
-  const report: FullReport | null = await prisma.reports.findUnique({
-    where: {
-      id: BigInt(id),
-    },
-    include: {
-      sources: {
-        where: {
-          status: "current",
-        },
-        include: {
-          hwinspect_report: true,
-          form_report: true,
-        },
-      },
-      reported_devices: {
-        include: {
-          reported_issues: true,
-          reported_other_device_names: true,
-        }
-      }
-    }
-  });
+export default function EditReport({ reportPromise, sessionPromise }: EditReportProps) {
+  const report = use(reportPromise);
+  const session = use(sessionPromise);
 
   if (!report) {
-    return (
-      <div className="px-4 mt-4">
-        Report {id} not found!
-      </div>
-    );
+    return <div>Report not found</div>;
   }
-
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
 
   if (!session || !session.user ||
-    !(session.user.id === report.user_id || session.user.role === "editor")) {
-    return (
-      <div className="px-4 mt-4">
-        You must be logged in to view this report, or you do not have permission to view it.
-      </div>
-    );
+    !(session.user.role === "editor" || session.user.id === report.user_id)) {
+    return <div>User not authenticated</div>;
   }
 
+
+  const statusOptions = Object.values(report_status).map((value) => ({
+    value,
+    label: value.replace(/_/g, " "),
+  }));
+
+  const filteredStatusOptions =
+    session.user.role !== "editor"
+      ? statusOptions.filter(
+        (option) =>
+          option.value === report_status.pending ||
+          option.value === report_status.withdrawn
+      )
+      : statusOptions;
+
+
   return (
-    <div className="px-4 mt-4">
-      <div className="flex gap-4">
-        <div>
+    <>
+      <form>
+        <div className="px-4 mt-4">
           <div>
             Status: {report.status}
+            <select name="status" defaultValue={report.status}>
+              {filteredStatusOptions.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             Created At: {report.created_at.toLocaleString()}
@@ -306,61 +302,28 @@ const ReportDisplay = async ({ id }: { id: string }) => {
             Updated At: {report.updated_at.toLocaleString()}
           </div>
         </div>
-        <div>
-          <Link href={`/reports/${id}/edit`} className="text-link hover:underline">
-            Edit Report
-          </Link>
-        </div>
-      </div>
-
-      {report.sources.length > 0 && (
-        <div className="mt-4">
-          Sources:
-          {report.sources.map((source, index) => (
-            <div
-              className="px-4 border-t"
-              key={source.id}
-            >
-              <SourceDisplay index={index} source={source} />
+        <>
+          {report.sources.length > 0 && (
+            <div className="mt-4">
+              Sources:
+              {report.sources.map((source, index) => (
+                <div
+                  className="px-4 border-t"
+                  key={source.id}
+                >
+                  <SourceDisplay index={index} source={source} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-
-      <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
-        <ShowDevices report={report} />
-      </Suspense>
-
-    </div>
-  )
-}
-
-
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
-
-  const { id } = await params;
-
-  return (
-    <div className="px-4">
-      <div className="mb-4">
-        <Link
-          href="/reports"
-          className="text-link hover:underline"
-        >
-          &larr; Back to reports
-        </Link>
-      </div>
-      <div>
-        Report ID {id}
-      </div>
-
-      <Suspense fallback={<div className="px-4 mt-2">Loading report...</div>}>
-        <ReportDisplay id={id} />
-      </Suspense>
-    </div>
+          )}
+        </>
+        <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
+          <ShowDevices report={report} />
+        </Suspense>
+        <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+          Save
+        </button>
+      </form>
+    </>
   );
 }

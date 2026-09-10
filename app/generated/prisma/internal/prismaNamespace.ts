@@ -1960,7 +1960,10 @@ export const Report_sourcesScalarFieldEnum = {
   report_id: 'report_id',
   name: 'name',
   source_type: 'source_type',
-  url: 'url'
+  url: 'url',
+  status: 'status',
+  status_updated_at: 'status_updated_at',
+  superseded_by_id: 'superseded_by_id'
 } as const
 
 export type Report_sourcesScalarFieldEnum = (typeof Report_sourcesScalarFieldEnum)[keyof typeof Report_sourcesScalarFieldEnum]
@@ -2255,6 +2258,20 @@ export type Enumsource_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'source_type[]'
  */
 export type ListEnumsource_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'source_type[]'>
+    
+
+
+/**
+ * Reference to a field of type 'report_source_status'
+ */
+export type Enumreport_source_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'report_source_status'>
+    
+
+
+/**
+ * Reference to a field of type 'report_source_status[]'
+ */
+export type ListEnumreport_source_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'report_source_status[]'>
     
 
 

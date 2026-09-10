@@ -168,7 +168,10 @@ export const Report_sourcesScalarFieldEnum = {
   report_id: 'report_id',
   name: 'name',
   source_type: 'source_type',
-  url: 'url'
+  url: 'url',
+  status: 'status',
+  status_updated_at: 'status_updated_at',
+  superseded_by_id: 'superseded_by_id'
 } as const
 
 export type Report_sourcesScalarFieldEnum = (typeof Report_sourcesScalarFieldEnum)[keyof typeof Report_sourcesScalarFieldEnum]

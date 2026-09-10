@@ -58,3 +58,12 @@ export const roles = {
 } as const
 
 export type roles = (typeof roles)[keyof typeof roles]
+
+
+export const report_source_status = {
+  current: 'current',
+  superseded: 'superseded',
+  removed: 'removed'
+} as const
+
+export type report_source_status = (typeof report_source_status)[keyof typeof report_source_status]

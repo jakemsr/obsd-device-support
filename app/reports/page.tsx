@@ -32,7 +32,11 @@ export default async function Page() {
       user_id: user.id
     },
     include: {
-      sources: true,
+      sources: {
+        where: {
+          status: "current",
+        },
+      },
       reported_devices: true
     }
   });
