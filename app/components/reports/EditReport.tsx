@@ -1,14 +1,11 @@
 "use client";
 
-import { useActionState } from 'react'
-import { Suspense, use, useEffect, useState } from "react";
+import { Suspense, use, useActionState, useEffect, useState } from "react";
 import { Prisma } from "@/app/generated/prisma/client";
-import { AuthSessionPromise, FullReport, FullDeviceInfo } from "@/lib/local-types";
+import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState } from "@/lib/local-types";
 import { report_status } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
-import { InitialActionState } from '@/lib/local-types'
-import { updateReportStatus } from '@/app/reports/[id]/edit/actions';
-//import prisma from "@/lib/prisma";
+import { updateReportStatus, getMatchedDevices } from '@/app/reports/[id]/edit/actions';
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
@@ -198,36 +195,15 @@ const DeviceDisplay = ({ device, matchedDevices }: { device: FullReportedDevice,
 
 const ShowDevices = ({ report }: { report: FullReport }) => {
 
-  /*
-  const matchMap = new Map<bigint, FullDeviceInfo[]>();
+  const [matchMap, setMatchMap] = useState<Map<bigint, FullDeviceInfo[]>>(new Map());
 
-  const matchedEntries = await Promise.all(
-    report.reported_devices.map(async (device) => {
-      const devices: FullDeviceInfo[] = await prisma.devices.findMany({
-        where: {
-          product_id: "0x" + device.product_id,
-          bus: device.bus,
-          vendors: {
-            [device.bus === "PCI" ? "pci_id" : "usb_id"]: "0x" + device.vendor_id,
-          },
-        },
-        include: {
-          vendors: true,
-          drivers: true,
-          issues: true,
-          other_device_names: true,
-        },
-        orderBy: { name: "asc" },
-      });
-
-      return [device.id, devices] as const;
-    })
-  );
-
-  for (const [deviceId, devices] of matchedEntries) {
-    matchMap.set(deviceId, devices);
-  }
-  */
+  useEffect(() => {
+    const fetchMatchedDevices = async () => {
+      const matchMap = await getMatchedDevices(report);
+      setMatchMap(matchMap);
+    };
+    fetchMatchedDevices();
+  }, [report]);
 
   return (
     <>
@@ -240,7 +216,7 @@ const ShowDevices = ({ report }: { report: FullReport }) => {
                 className="px-4 border-t"
                 key={device.id}
               >
-                <DeviceDisplay device={device} matchedDevices={[]} />
+                <DeviceDisplay device={device} matchedDevices={matchMap.get(device.id)} />
               </div>
             ))}
           </div>

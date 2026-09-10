@@ -6,7 +6,7 @@ import { auth } from '@/lib/auth'
 import type { report_status } from '@/app/generated/prisma/enums'
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
-import type { ActionState } from '@/lib/local-types'
+import type { ActionState, FullDeviceInfo, FullReport } from '@/lib/local-types'
 
 
 export async function updateReportStatus(
@@ -67,4 +67,40 @@ export async function updateReportStatus(
     success: true,
     message: 'Report status updated successfully'
   };
+}
+
+
+export async function getMatchedDevices(report: FullReport) {
+
+  const matchMap = new Map<bigint, FullDeviceInfo[]>();
+
+  const matchedEntries = await Promise.all(
+    report.reported_devices.map(async (device) => {
+      const devices: FullDeviceInfo[] = await prisma.devices.findMany({
+        where: {
+          product_id: "0x" + device.product_id,
+          bus: device.bus,
+          vendors: {
+            [device.bus === "PCI" ? "pci_id" : "usb_id"]: "0x" + device.vendor_id,
+          },
+        },
+        include: {
+          vendors: true,
+          drivers: true,
+          issues: true,
+          other_device_names: true,
+        },
+        orderBy: { name: "asc" },
+      });
+
+      return [device.id, devices] as const;
+    })
+  );
+
+  for (const [deviceId, devices] of matchedEntries) {
+    matchMap.set(deviceId, devices);
+  }
+
+  return matchMap;
+
 }
