@@ -4,6 +4,7 @@ import { refresh } from 'next/cache';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth'
 import prisma from "@/lib/prisma";
+import { Prisma } from "@/app/generated/prisma/client";
 import { roles } from '@/app/generated/prisma/enums'
 import type { ActionState } from '@/lib/local-types'
 
@@ -35,13 +36,31 @@ export async function updateRole(
     };
   }
 
-  await prisma.user.update({
-    where: { id: userId },
-    data: { role: newRole },
-  });
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { role: newRole },
+    });
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err.code === "P2025") {
+        return {
+          error: "Not found",
+          success: false,
+          message: "The user does not exist.",
+        };
+      }
+    }
+
+    return {
+      error: "Database error",
+      success: false,
+      message: "Something went wrong while updating the role.",
+    };
+  }
 
   refresh();
-  
+
   return {
     error: '',
     success: true,
