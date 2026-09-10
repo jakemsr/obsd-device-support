@@ -20,6 +20,8 @@
   --color-unsupported: var(--unsupported);
   --color-unknown: var(--unknown);
   --color-likely: var(--likely);
+  --color-success: var(--supported);
+  --color-error: var(--unsupported);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
