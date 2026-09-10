@@ -1,9 +1,13 @@
 "use client";
 
+import { useActionState } from 'react'
 import { Suspense, use, useEffect, useState } from "react";
 import { Prisma } from "@/app/generated/prisma/client";
 import { AuthSessionPromise, FullReport, FullDeviceInfo } from "@/lib/local-types";
 import { report_status } from "@/app/generated/prisma/enums";
+import { Button, LoadingSpinner } from "@/app/components/Button";
+import { InitialActionState } from '@/lib/local-types'
+import { updateReportStatus } from '@/app/reports/[id]/edit/actions';
 //import prisma from "@/lib/prisma";
 
 
@@ -280,20 +284,27 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
       )
       : statusOptions;
 
+  const [state, statusFormAction, pending] = useActionState(updateReportStatus, {
+    ...InitialActionState
+  });
+
 
   return (
     <>
-      <form>
-        <div className="px-4 mt-4">
+      <form action={statusFormAction}>
+        <div className="px-4 my-4">
           <div>
             Status: {report.status}
-            <select name="status" defaultValue={report.status}>
+            &nbsp;
+            <select name="newStatus" defaultValue={report.status}>
               {filteredStatusOptions.map(({ value, label }) => (
                 <option key={value} value={value}>
                   {label}
                 </option>
               ))}
             </select>
+            <input type="hidden" name="reportId" value={report.id.toString()} />
+            <input type="hidden" name="userId" value={report.user_id} />
           </div>
           <div>
             Created At: {report.created_at.toLocaleString()}
@@ -302,6 +313,21 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
             Updated At: {report.updated_at.toLocaleString()}
           </div>
         </div>
+        <Button type="submit" disabled={pending}>
+          {pending && <LoadingSpinner />}
+          Update Status
+        </Button>
+        {state.error &&
+          <div className="my-2 text-error">
+            {state.error} {state.message}
+          </div>
+        }
+        {state.success &&
+          <div className="my-2 text-success">
+            {state.message}
+          </div>
+        }
+      </form>
         <>
           {report.sources.length > 0 && (
             <div className="mt-4">
@@ -320,10 +346,6 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
         <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
           <ShowDevices report={report} />
         </Suspense>
-        <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
-          Save
-        </button>
-      </form>
     </>
   );
 }
