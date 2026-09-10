@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
-import EditReport from "@/app/components/reports/EditReport"; 
+import Link from "next/link";
+import EditReport from "@/app/components/reports/EditReport";
 import { Suspense } from "react";
 import { AuthSessionPromise, FullReport } from "@/lib/local-types";
 import { auth } from "@/lib/auth";
@@ -36,7 +37,13 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="px-4 mt-4">
-      <h1>Edit Report {id}</h1>
+      <Link
+        href="/reports"
+        className="text-link hover:underline"
+      >
+        &larr; Back to reports
+      </Link>
+      <h1 className="mt-4">Edit Report {id}</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <EditReport reportPromise={reportPromise} sessionPromise={sessionPromise} />
       </Suspense>
