@@ -5,6 +5,7 @@ import { Prisma } from "@/app/generated/prisma/client";
 import { FullDeviceInfo, FullReport } from "@/lib/local-types";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { Button } from "@/app/components/Button";
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
@@ -307,8 +308,10 @@ const ReportDisplay = async ({ id }: { id: string }) => {
           </div>
         </div>
         <div>
-          <Link href={`/reports/${id}/edit`} className="text-link hover:underline">
-            Edit Report
+          <Link href={`/reports/${id}/edit`}>
+            <Button type="button">
+              Edit Report
+            </Button>
           </Link>
         </div>
       </div>
