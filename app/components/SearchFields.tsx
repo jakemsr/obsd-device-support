@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
+import { Button } from "./Button";
 
 
 const getDeviceTypes = unstable_cache(
@@ -90,12 +91,9 @@ export default async function SearchFields() {
             </select>
           </div>
           <div className="flex gap-2 items-center">
-            <button
-              type="submit"
-              className="p-2 bg-blue-500 text-white rounded"
-            >
+            <Button type="submit">
               Search
-            </button>
+            </Button>
           </div>
         </form>
 

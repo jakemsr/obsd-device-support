@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import EditUser from './EditUser'
 import type { User } from '@/app/generated/prisma/client'
+import { Button } from '@/app/components/Button'
 
 
 export default function EditUserButton({user}: {user: User}) {
@@ -10,12 +11,11 @@ export default function EditUserButton({user}: {user: User}) {
 
   return (
     <div className="space-y-4">
-      <button 
+      <Button 
         onClick={() => setIsLoaded(!isLoaded)}
-        className="px-4 py-2 bg-blue-600 text-white rounded"
       >
         {isLoaded ? 'Hide' : 'Edit User'}
-      </button>
+      </Button>
 
       {/* Conditionally render the client component */}
       {isLoaded && <EditUser user={user} />}
