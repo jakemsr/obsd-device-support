@@ -20,7 +20,7 @@ export const Button = ({ onClick, children, disabled, type }: ButtonProps) => {
       onClick={onClick}
       disabled={disabled}
       type={type}
-      className="flex items-center justify-center text-sm sm:text-base p-2 bg-blue-500 text-white rounded"
+      className="flex items-center justify-center text-sm sm:text-base p-2 bg-blue-500 text-white rounded hover:scale-105 transition-transform duration-200"
     >
       {children}
     </button>
