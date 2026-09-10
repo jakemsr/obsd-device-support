@@ -1,5 +1,11 @@
 import type { Prisma } from "@/app/generated/prisma/client";
+import { auth } from "@/lib/auth";
 
+export type AuthSession = NonNullable<
+  Awaited<ReturnType<typeof auth.api.getSession>>
+>;
+
+export type AuthSessionPromise = Promise<AuthSession | null>;
 
 export type FullDeviceInfo = Prisma.devicesGetPayload<{
   include: {
