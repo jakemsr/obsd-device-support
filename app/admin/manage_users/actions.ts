@@ -5,12 +5,12 @@ import { headers } from 'next/headers';
 import { auth } from '@/lib/auth'
 import prisma from "@/lib/prisma";
 import { roles } from '@/app/generated/prisma/enums'
-import type { UpdateRoleState } from '@/lib/local-types'
+import type { ActionState } from '@/lib/local-types'
 
 
 export async function updateRole(
-  prevState: UpdateRoleState, formData: FormData
-): Promise<UpdateRoleState> {
+  prevState: ActionState, formData: FormData
+): Promise<ActionState> {
 
   const userId = formData.get("userId") as string;
   const newRole = formData.get("role") as roles;

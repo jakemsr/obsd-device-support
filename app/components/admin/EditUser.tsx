@@ -4,13 +4,13 @@ import type { User } from '@/app/generated/prisma/client'
 import { roles } from '@/app/generated/prisma/enums'
 import { updateRole } from '@/app/admin/manage_users/actions'
 import { Button } from '@/app/components/Button'
-import { updateRoleInitialState } from '@/lib/local-types'
+import { InitialActionState } from '@/lib/local-types'
 
 
 export default function EditUser({ user }: { user: User }) {
 
   const [state, formAction, pending] = useActionState(updateRole, {
-    ...updateRoleInitialState
+    ...InitialActionState
   });
 
   return (

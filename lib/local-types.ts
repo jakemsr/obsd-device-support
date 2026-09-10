@@ -49,15 +49,15 @@ export type FullReport = Prisma.reportsGetPayload<{
   };
 }>;
 
-export type UpdateRoleState = {
+export type ActionState = {
   error: string
   success: boolean
   message: string
 };
 
-const updateRoleInitialState: UpdateRoleState = {
+const InitialActionState: ActionState = {
   error: '',
   success: false,
   message: '',
 };
-export { updateRoleInitialState };
+export { InitialActionState };
