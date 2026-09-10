@@ -46,7 +46,15 @@ export default async function Page() {
         },
       },
       reported_devices: true
-    }
+    },
+    orderBy: [
+      {
+        created_at: 'asc',
+      },
+      {
+        id: 'asc',
+      }
+    ]
   });
 
   return (
