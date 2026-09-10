@@ -48,3 +48,16 @@ export type FullReport = Prisma.reportsGetPayload<{
     };
   };
 }>;
+
+export type UpdateRoleState = {
+  error: string
+  success: boolean
+  message: string
+};
+
+const updateRoleInitialState: UpdateRoleState = {
+  error: '',
+  success: false,
+  message: '',
+};
+export { updateRoleInitialState };
