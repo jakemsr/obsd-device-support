@@ -2,6 +2,7 @@
 
 import { OtherNameWithDevice } from "@/app/admin/fix_other_names/actions";
 import Link from "next/link";
+import { Button, LoadingSpinner } from "@/app/components/Button";
 import { useState } from "react";
 
 
@@ -33,10 +34,12 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
 
   const [apiResponse, setApiResponse] = useState<any>(null);
   const [apiStatus, setApiStatus] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setLoading(true);
     // Send the POST request to the custom API endpoint
     const response = await fetch(`/api/admin/fix_other_names`, {
       method: 'POST',
@@ -64,12 +67,13 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
       const data = await response.json();
       setApiResponse(data);
     }
+    setLoading(false);
   };
 
 
   return (
     <div className="px-4">
-      <Link href="/admin/fix_other_names" className="text-blue-500 hover:underline mb-4 inline-block">
+      <Link href="/admin/fix_other_names" className="text-link hover:underline mb-4 inline-block">
         &larr; Back to Other Names List
       </Link>
       <h1 className="text-center text-xl font-bold mb-4">Edit Other Name</h1>
@@ -110,12 +114,12 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
             onChange={(e) => setDeleteEntry(e.target.checked)}
           />
         </label>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-20"
-        >
-          Update
-        </button>
+        <div className="max-w-fit">
+          <Button type="submit" disabled={loading}>
+            {loading && <LoadingSpinner />}
+            Update
+          </Button>
+        </div>
       </form>
 
       {apiResponse ? (
