@@ -1,15 +1,22 @@
 'use client'
+import { useActionState } from 'react'
 import type { User } from '@/app/generated/prisma/client'
 import { roles } from '@/app/generated/prisma/enums'
 import { updateRole } from '@/app/admin/manage_users/actions'
+import { Button } from '@/app/components/Button'
+import { updateRoleInitialState } from '@/lib/local-types'
 
 
 export default function EditUser({ user }: { user: User }) {
 
+  const [state, formAction, pending] = useActionState(updateRole, {
+    ...updateRoleInitialState
+  });
+
   return (
     <div>
       <form
-        action={updateRole}
+        action={formAction}
         className="grid grid-cols-2 gap-2 max-w-fit"
       >
         <div className="font-bold">Email</div>
@@ -25,10 +32,23 @@ export default function EditUser({ user }: { user: User }) {
             ))}
           </select>
         </div>
-        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+        <Button disabled={pending}>
           Save Changes
-        </button>
+        </Button>
       </form>
+
+      {state?.error && (
+        <div className="mt-2 col-span-2 text-error">
+          {state.error} {state.message}
+        </div>
+      )}
+
+      {state?.success && (
+        <div className="mt-2 col-span-2 text-success">
+          {state.message}
+        </div>
+      )}
+
     </div>
   );
 }
