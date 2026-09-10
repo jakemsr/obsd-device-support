@@ -8,16 +8,18 @@ export const LoadingSpinner = () => {
 }
 
 interface ButtonProps {
-  onClick: ReactEventHandler;
+  onClick?: ReactEventHandler;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset"; 
   children: React.ReactNode;
 }
 
-export const Button = ({ onClick, children, disabled }: ButtonProps) => {
+export const Button = ({ onClick, children, disabled, type }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
+      type={type}
       className="flex items-center justify-center text-sm sm:text-base p-2 bg-blue-500 text-white rounded"
     >
       {children}
