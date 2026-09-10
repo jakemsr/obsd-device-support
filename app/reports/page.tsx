@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import Link from "next/link";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { setShowAllReports } from "./actions";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import type { ReportWithRelations } from "@/lib/local-types";
@@ -8,11 +8,7 @@ import { Button } from "@/app/components/Button";
 import ListReports from "@/app/components/reports/ListReports";
 
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: Promise<{ all?: string }>;
-}) {
+export default async function Page() {
 
   const session = await auth.api.getSession({
     headers: await headers()
@@ -32,8 +28,12 @@ export default async function Page({
   }
 
   const user = session.user;
-  const params = (await searchParams) ?? {};
-  const showAllReports = user.role === "editor" && params.all === "true";
+
+  const cookieStore = await cookies();
+
+  const showAllReports =
+    user.role === "editor" &&
+    cookieStore.get("reports_view")?.value === "all";
 
   const reportsPromise: Promise<ReportWithRelations[]> = prisma.reports.findMany({
     where: showAllReports ? undefined : {
@@ -57,16 +57,22 @@ export default async function Page({
         </h1>
 
         {user.role === "editor" && (
-          <Link href={showAllReports ? "/reports" : "/reports?all=true"}>
-            <Button type="button">
+          <form action={setShowAllReports}>
+            <input
+              type="hidden"
+              name="reportsView"
+              value={showAllReports ? "user" : "all"}
+            />
+
+            <Button type="submit">
               {showAllReports ? "View my reports" : "View all reports"}
             </Button>
-          </Link>
+          </form>
         )}
       </div>
 
       <Suspense fallback={<div>Loading reports...</div>}>
-        <ListReports reportsPromise={reportsPromise}/>
+        <ListReports reportsPromise={reportsPromise} />
       </Suspense>
     </div>
   )
