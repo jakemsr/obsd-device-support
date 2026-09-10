@@ -5,9 +5,13 @@ import { headers } from 'next/headers';
 import { auth } from '@/lib/auth'
 import prisma from "@/lib/prisma";
 import { roles } from '@/app/generated/prisma/enums'
+import type { UpdateRoleState } from '@/lib/local-types'
 
 
-export async function updateRole(formData: FormData) {
+export async function updateRole(
+  prevState: UpdateRoleState, formData: FormData
+): Promise<UpdateRoleState> {
+
   const userId = formData.get("userId") as string;
   const newRole = formData.get("role") as roles;
 
@@ -16,7 +20,19 @@ export async function updateRole(formData: FormData) {
   });
 
   if (!session || !session.user || session.user.role !== "admin") {
-    throw new Error('Unauthorized')
+    return {
+      error: 'Unauthorized',
+      success: false,
+      message: 'Not logged in or not an admin'
+    };
+  }
+
+  if (!userId || !newRole) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'User ID or role is missing'
+    };
   }
 
   await prisma.user.update({
@@ -25,4 +41,10 @@ export async function updateRole(formData: FormData) {
   });
 
   refresh();
+  
+  return {
+    error: '',
+    success: true,
+    message: 'Role updated successfully'
+  };
 }
