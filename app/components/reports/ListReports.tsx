@@ -3,6 +3,7 @@
 import { useState, use } from "react";
 import Link from "next/link";
 import type { ReportWithRelations } from "@/lib/local-types";
+import { report_status } from "@/app/generated/prisma/browser";
 
 
 interface ListReportsProps {
@@ -25,7 +26,10 @@ export default function ListReports({ reportsPromise }: ListReportsProps) {
     .sort((a, b) => a.localeCompare(b))
     .map((filter, index) => ({ id: index, name: filter }));
 
-  const [filterIds, setFilterIds] = useState<number[]>(filters.map(filter => filter.id));
+  const [filterIds, setFilterIds] = useState<number[]>(filters
+    .map(filter => filter.name !== report_status.withdrawn ? filter.id : -1)
+    .filter(id => id !== -1)
+  );
 
   const filteredReports = reports.filter(
     (report) => filterIds.includes(filters.find(filter => filter.name === report.status)?.id ?? -1)
