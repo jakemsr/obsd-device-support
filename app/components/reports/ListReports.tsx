@@ -50,7 +50,7 @@ export default function ListReports({ reportsPromise }: ListReportsProps) {
                     checked={filterIds.includes(filter.id)}
                     onChange={() => handleCheckboxChange(filter.id)}
                   />
-                  {filter.name}
+                  &nbsp;{filter.name.split("_").join(" ")}
                 </label>
               </div>
             ))}
@@ -75,7 +75,7 @@ export default function ListReports({ reportsPromise }: ListReportsProps) {
                 </Link>
               </div>
               <div>
-                Status: {report.status}
+                Status: {report.status.split("_").join(" ")}
               </div>
               <div className="col-span-2">
                 Created At: {report.created_at.toLocaleString()}

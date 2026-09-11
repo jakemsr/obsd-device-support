@@ -281,7 +281,7 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
       <form action={statusFormAction}>
         <div className="px-4 my-4">
           <div>
-            Status: {report.status}
+            Status: {report.status.split("_").join(" ")}
             &nbsp;
             <select
               name="newStatus"
