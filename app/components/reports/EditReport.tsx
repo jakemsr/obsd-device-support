@@ -246,7 +246,6 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     return <div>User not authenticated</div>;
   }
 
-
   const statusOptions = Object.values(report_status).map((value) => ({
     value,
     label: value.replace(/_/g, " "),
@@ -286,7 +285,7 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
             <select
               name="newStatus"
               defaultValue={report.status}
-              onChange={(e) => {handleStatusChange(e)}}
+              onChange={(e) => { handleStatusChange(e) }}
             >
               {filteredStatusOptions.map(({ value, label }) => (
                 <option key={value} value={value}>
@@ -298,11 +297,11 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
             <input type="hidden" name="userId" value={report.user_id} />
             {showWithdrawnMessage && (
               <div className="my-2 w-100 h-20">
-              <textarea
-                name="withdrawnNote"
-                placeholder="Provide a reason for withdrawing the report"
-                className="w-full h-full p-2"
-              />
+                <textarea
+                  name="withdrawnNote"
+                  placeholder="Provide a reason for withdrawing the report"
+                  className="w-full h-full p-2"
+                />
               </div>
             )}
           </div>
