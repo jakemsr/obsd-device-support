@@ -16,6 +16,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     },
     include: {
       sources: {
+        where: { status: 'current' },
         include: {
           hwinspect_report: true,
           form_report: true,
