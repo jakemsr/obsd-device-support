@@ -265,6 +265,16 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     ...InitialActionState
   });
 
+  const [showWithdrawnMessage, setShowWithdrawnMessage] = useState(false);
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value === report_status.withdrawn) {
+      setShowWithdrawnMessage(true);
+    } else {
+      setShowWithdrawnMessage(false);
+    }
+  };
+
 
   return (
     <>
@@ -273,7 +283,11 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
           <div>
             Status: {report.status}
             &nbsp;
-            <select name="newStatus" defaultValue={report.status}>
+            <select
+              name="newStatus"
+              defaultValue={report.status}
+              onChange={(e) => {handleStatusChange(e)}}
+            >
               {filteredStatusOptions.map(({ value, label }) => (
                 <option key={value} value={value}>
                   {label}
@@ -282,6 +296,15 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
             </select>
             <input type="hidden" name="reportId" value={report.id.toString()} />
             <input type="hidden" name="userId" value={report.user_id} />
+            {showWithdrawnMessage && (
+              <div className="my-2 w-100 h-20">
+              <textarea
+                name="withdrawnNote"
+                placeholder="Provide a reason for withdrawing the report"
+                className="w-full h-full p-2"
+              />
+              </div>
+            )}
           </div>
           <div>
             Created At: {report.created_at.toLocaleString()}
@@ -289,6 +312,16 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
           <div>
             Updated At: {report.updated_at.toLocaleString()}
           </div>
+          {report.withdrawn_at && (
+            <div>
+              Withdrawn At: {report.withdrawn_at.toLocaleString()}
+            </div>
+          )}
+          {report.withdrawn_note && (
+            <div>
+              Withdrawn Note: {report.withdrawn_note}
+            </div>
+          )}
         </div>
         <Button type="submit" disabled={pending}>
           {pending && <LoadingSpinner />}

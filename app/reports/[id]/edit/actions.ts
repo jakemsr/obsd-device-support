@@ -16,6 +16,7 @@ export async function updateReportStatus(
   const reportId = formData.get("reportId") as string;
   const userId = formData.get("userId") as string;
   const newStatus = formData.get("newStatus") as report_status;
+  const withdrawnNote = formData.get("withdrawnNote") as string | null;
 
   const session = await auth.api.getSession({
     headers: await headers()
@@ -41,7 +42,12 @@ export async function updateReportStatus(
   try {
     await prisma.reports.update({
       where: { id: BigInt(reportId) },
-      data: { status: newStatus },
+      data: {
+        status: newStatus,
+        ...(newStatus === "withdrawn" &&
+          { withdrawn_at: new Date(),
+            withdrawn_note: withdrawnNote })
+      },
     });
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {

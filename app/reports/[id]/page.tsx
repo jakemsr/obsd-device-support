@@ -269,7 +269,7 @@ const ReportDisplay = async ({ id }: { id: string }) => {
 
   return (
     <div className="px-4 mt-4">
-      <div className="flex gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <div>
           <div>
             Status: {report.status}
@@ -280,6 +280,16 @@ const ReportDisplay = async ({ id }: { id: string }) => {
           <div>
             Updated At: {report.updated_at.toLocaleString()}
           </div>
+          {report.withdrawn_at && (
+            <div>
+              Withdrawn At: {report.withdrawn_at.toLocaleString()}
+            </div>
+          )}
+          {report.withdrawn_note && (
+            <div>
+              Withdrawn Note: {report.withdrawn_note}
+            </div>
+          )}
         </div>
         <div>
           <Link href={`/reports/${id}/edit`}>
