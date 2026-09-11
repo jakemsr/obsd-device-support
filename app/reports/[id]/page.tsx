@@ -272,7 +272,7 @@ const ReportDisplay = async ({ id }: { id: string }) => {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <div>
-            Status: {report.status}
+            Status: {report.status.split("_").join(" ")}
           </div>
           <div>
             Created At: {report.created_at.toLocaleString()}
