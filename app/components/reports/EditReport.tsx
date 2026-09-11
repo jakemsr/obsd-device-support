@@ -2,11 +2,11 @@
 
 import { Suspense, use, useActionState, useEffect, useState } from "react";
 import { Prisma } from "@/app/generated/prisma/client";
-import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState } from "@/lib/local-types";
-import { report_status } from "@/app/generated/prisma/enums";
+import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState, ActionState } from "@/lib/local-types";
+import { report_status, source_type } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { getMatchedDevices } from '@/app/reports/[id]/actions';
-import { updateReportStatus } from '@/app/reports/[id]/edit/actions';
+import { updateReportSource, updateReportStatus } from '@/app/reports/[id]/edit/actions';
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
@@ -16,25 +16,76 @@ type SourceWithReports = Prisma.report_sourcesGetPayload<{
   };
 }>;
 
-const SourceDisplay = ({ index, source }: { index: number, source: SourceWithReports }) => {
+interface SourceDisplayProps {
+  index: number;
+  source: SourceWithReports;
+  userId: string;
+}
+
+const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
+
+  const [loading, setLoading] = useState(false);
+  const [resultState, setResultState] = useState<ActionState>(InitialActionState);
+
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    const formData = new FormData(event.currentTarget);
+    const result = await updateReportSource(InitialActionState, formData);
+    setResultState(result);
+    setLoading(false);
+  };
+
   return (
     <div>
-      <div>
-        Source #{index + 1}
-      </div>
-      {source.name && (
+      <form onSubmit={handleSubmit}>
         <div>
-          Name: {source.name}
+          Source #{index + 1}
         </div>
-      )}
-      <div>
-        Type: {source.source_type}
-      </div>
-      {source.url && (
-        <div>
-          URL: {source.url}
+        {source.name && (
+          <div className="mt-2">
+            <label>
+              Name: <input type="text" name="sourceName" defaultValue={source.name} />
+            </label>
+          </div>
+        )}
+        <div className="mt-2">
+          <label>
+            Type: <select name="sourceType" defaultValue={source.source_type}>
+              {Object.values(source_type).map((type) => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </label>
         </div>
-      )}
+        {source.url && (
+          <div className="mt-2">
+            <label>
+              URL: <input type="text" name="sourceUrl" defaultValue={source.url} />
+            </label>
+          </div>
+        )}
+        <input type="hidden" name="sourceId" value={String(source.id)} />
+        <input type="hidden" name="reportId" value={String(source.report_id)} />
+        <input type="hidden" name="userId" value={userId} />
+        <div className="mt-2">
+          <Button type="submit">
+            {loading && <LoadingSpinner />}
+            Update Source #{index + 1}
+          </Button>
+        </div>
+        {resultState.error && (
+          <div className="mt-2 text-error">
+            Error updating source: {resultState.error}: {resultState.message}
+          </div>
+        )}
+        {resultState.success && (
+          <div className="mt-2 text-success">
+            Source updated successfully.
+          </div>
+        )}
+      </form>
+
       {source.hwinspect_report && (
         <div>
           hwinspect Report:
@@ -337,24 +388,24 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
           </div>
         }
       </form>
-        <>
-          {report.sources.length > 0 && (
-            <div className="mt-4">
-              Sources:
-              {report.sources.map((source, index) => (
-                <div
-                  className="px-4 border-t"
-                  key={source.id}
-                >
-                  <SourceDisplay index={index} source={source} />
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-        <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
-          <ShowDevices report={report} />
-        </Suspense>
+      <>
+        {report.sources.length > 0 && (
+          <div className="mt-4">
+            Sources:
+            {report.sources.map((source, index) => (
+              <div
+                className="px-4 border-t"
+                key={source.id}
+              >
+                <SourceDisplay index={index} source={source} userId={report.user_id} />
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+      <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
+        <ShowDevices report={report} />
+      </Suspense>
     </>
   );
 }

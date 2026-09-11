@@ -3,7 +3,7 @@
 import { refresh } from 'next/cache';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth'
-import type { report_status } from '@/app/generated/prisma/enums'
+import { report_status, source_type, report_source_status } from '@/app/generated/prisma/enums'
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
 import type { ActionState } from '@/lib/local-types'
@@ -84,10 +84,77 @@ export async function updateReportStatus(
   }
 
   refresh();
-  
+
   return {
     error: '',
     success: true,
     message: 'Report status updated successfully'
+  };
+}
+
+
+export async function updateReportSource(
+  prevState: ActionState, formData: FormData
+): Promise<ActionState> {
+  const userId = formData.get("userId") as string;
+  const sourceId = formData.get("sourceId") as string;
+  const reportId = formData.get("reportId") as string;
+  const sourceType = formData.get("sourceType") as string;
+  const sourceUrl = formData.get("sourceUrl") as string | null;
+  const sourceName = formData.get("sourceName") as string | null;
+
+  if (!userId || !await checkAuth(userId)) {
+    return {
+      error: 'Unauthorized',
+      success: false,
+      message: 'Doesn\'t own the report or not an editor'
+    };
+  }
+
+  if (!reportId || !sourceId || !sourceType) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Report ID, source ID or type is missing'
+    };
+  }
+
+  const valid = Object.values(source_type);
+  if (!valid.includes(sourceType as typeof source_type[keyof typeof source_type])) {
+    return { error: 'Invalid input', success: false, message: 'Bad source type' };
+  }
+
+  try {
+    const newSource = await prisma.report_sources.create({
+      data: {
+        report_id: BigInt(reportId),
+        source_type: sourceType as source_type,
+        url: sourceUrl,
+        name: sourceName,
+      }
+    });
+    await prisma.report_sources.update({
+      where: { id: BigInt(sourceId) },
+      data: {
+        status: report_source_status.superseded,
+        status_updated_at: new Date(),
+        superseded_by_id: newSource.id,
+      }
+    });
+  } catch (err) {
+    return {
+      error: 'Database error',
+      success: false,
+      message: 'Something went wrong while updating the report source'
+    };
+  }
+
+  // refresh will lose the status message
+  // refresh();
+
+  return {
+    error: '',
+    success: true,
+    message: 'Report source updated successfully'
   };
 }
