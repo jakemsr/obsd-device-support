@@ -49,14 +49,21 @@ export async function updateReportStatus(
     };
   }
 
+  const valid = Object.values(report_status);
+  if (!valid.includes(newStatus as typeof report_status[keyof typeof report_status])) {
+    return { error: 'Invalid input', success: false, message: 'Bad report status' };
+  }
+
   try {
     await prisma.reports.update({
       where: { id: BigInt(reportId) },
       data: {
-        status: newStatus,
+        status: newStatus as report_status,
         ...(newStatus === "withdrawn" &&
-          { withdrawn_at: new Date(),
-            withdrawn_note: withdrawnNote })
+        {
+          withdrawn_at: new Date(),
+          withdrawn_note: withdrawnNote
+        })
       },
     });
   } catch (err) {
