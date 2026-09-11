@@ -6,7 +6,7 @@ import { FullDeviceInfo, FullReport } from "@/lib/local-types";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { Button } from "@/app/components/Button";
-import { getMatchedDevices } from "./edit/actions";
+import { getMatchedDevices } from "./actions";
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{

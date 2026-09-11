@@ -5,7 +5,8 @@ import { Prisma } from "@/app/generated/prisma/client";
 import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState } from "@/lib/local-types";
 import { report_status } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
-import { updateReportStatus, getMatchedDevices } from '@/app/reports/[id]/edit/actions';
+import { getMatchedDevices } from '@/app/reports/[id]/actions';
+import { updateReportStatus } from '@/app/reports/[id]/edit/actions';
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
