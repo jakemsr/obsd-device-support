@@ -88,15 +88,15 @@ async function main() {
   const authClient = createAuthClient({
     baseURL: "http://localhost:3000", // Your API URL
     fetchOptions: {
-        headers: {
-            "Origin": "http://localhost:3000"
-        }
+      headers: {
+        "Origin": "http://localhost:3000"
+      }
     }
   });
 
-  const {data, error} =  await authClient.signIn.email({
-        email: email,
-        password: password
+  const { data, error } = await authClient.signIn.email({
+    email: email,
+    password: password
   });
 
   if (error) {
@@ -110,23 +110,6 @@ async function main() {
     console.error("No active user found.");
     return;
   }
-
-  // create report
-  const report = await prisma.reports.create({
-    data: {
-      user_id: user.id,
-    },
-  });
-
-  // create report_source
-  const reportSource = await prisma.report_sources.create({
-    data: {
-      report_id: report.id,
-      name: "wikidevi.wi-cat.ru",
-      source_type: "website",
-      url: "https://wikidevi.wi-cat.ru/index.php",
-    },
-  });
 
   const vendorAndDeviceIds = await getVendorAndDeviceIds();
   for (const { device_id, vendor_usb_id, vendor_name, device_usb_id, device_name, support_status } of vendorAndDeviceIds) {
@@ -153,13 +136,30 @@ async function main() {
         );
         if (filtered.length > 0) {
 
+          // create report
+          const report = await prisma.reports.create({
+            data: {
+              user_id: user.id,
+            },
+          });
+
+          // create report_source
+          const reportSource = await prisma.report_sources.create({
+            data: {
+              report_id: report.id,
+              name: "wikidevi.wi-cat.ru",
+              source_type: "website",
+              url: "https://wikidevi.wi-cat.ru/index.php",
+            },
+          });
+
           // create reported_device
           const reportedDevice = await prisma.reported_devices.create({
             data: {
               report_id: report.id,
               bus: "USB",
-              vendor_id: vendor_usb_id,
-              product_id: device_usb_id,
+              vendor_id: "0x" + vendor_usb_id,
+              product_id: "0x" + device_usb_id,
               support_status: support_status as support_type
             },
           });
