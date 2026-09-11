@@ -9,6 +9,21 @@ import { Prisma } from "@/app/generated/prisma/client";
 import type { ActionState } from '@/lib/local-types'
 
 
+async function checkAuth(userId: string): Promise<boolean> {
+
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+
+  if (!session || !session.user ||
+    !(session.user.role === "editor" || session.user.id === userId)) {
+    return false;
+  }
+
+  return true;
+}
+
+
 export async function updateReportStatus(
   prevState: ActionState, formData: FormData
 ): Promise<ActionState> {
@@ -18,12 +33,7 @@ export async function updateReportStatus(
   const newStatus = formData.get("newStatus") as report_status;
   const withdrawnNote = formData.get("withdrawnNote") as string | null;
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
-
-  if (!session || !session.user ||
-    !(session.user.role === "editor" || session.user.id === userId)) {
+  if (!userId || !await checkAuth(userId)) {
     return {
       error: 'Unauthorized',
       success: false,
