@@ -1,4 +1,6 @@
-import type { FullDeviceInfo, FullReport } from '@/lib/local-types'
+'use server';
+
+import type { FullDeviceInfo, FullReport } from '@/lib/local-types';
 import prisma from "@/lib/prisma";
 
 
