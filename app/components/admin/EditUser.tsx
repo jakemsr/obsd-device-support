@@ -1,22 +1,36 @@
 'use client'
-import { useActionState } from 'react'
+
+import { useState } from 'react'
 import type { User } from '@/app/generated/prisma/client'
 import { roles } from '@/app/generated/prisma/enums'
-import { updateRole } from '@/app/admin/manage_users/actions'
-import { Button } from '@/app/components/Button'
+import { updateRole, RoleActionState } from '@/app/admin/manage_users/actions'
+import { Button, LoadingSpinner } from '@/app/components/Button'
 import { InitialActionState } from '@/lib/local-types'
 
 
 export default function EditUser({ user }: { user: User }) {
 
-  const [state, formAction, pending] = useActionState(updateRole, {
-    ...InitialActionState
-  });
+  const initialRoleActionState: RoleActionState = {
+    ...InitialActionState,
+    role: user.role
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [resultState, setResultState] = useState<RoleActionState>(initialRoleActionState);
+
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    const formData = new FormData(event.currentTarget);
+    const result = await updateRole(initialRoleActionState, formData);
+    setResultState(result);
+    setLoading(false);
+  };
 
   return (
     <div>
       <form
-        action={formAction}
+        onSubmit={handleSubmit}
         className="grid grid-cols-2 gap-2 max-w-fit"
       >
         <div className="font-bold">Email</div>
@@ -24,7 +38,7 @@ export default function EditUser({ user }: { user: User }) {
         <input type="hidden" name="userId" value={user.id} />
         <div className="font-bold">Role</div>
         <div>
-          <select name="role" defaultValue={user.role}>
+          <select name="role" defaultValue={resultState.role}>
             {Object.values(roles).map((role) => (
               <option key={role} value={role}>
                 {role}
@@ -32,20 +46,21 @@ export default function EditUser({ user }: { user: User }) {
             ))}
           </select>
         </div>
-        <Button disabled={pending}>
+        <Button disabled={loading}>
+          {loading && <LoadingSpinner />}
           Save Changes
         </Button>
       </form>
 
-      {state?.error && (
+      {resultState.error && (
         <div className="mt-2 col-span-2 text-error">
-          {state.error} {state.message}
+          {resultState.error} {resultState.message}
         </div>
       )}
 
-      {state?.success && (
+      {resultState.success && (
         <div className="mt-2 col-span-2 text-success">
-          {state.message}
+          {resultState.message}
         </div>
       )}
 
