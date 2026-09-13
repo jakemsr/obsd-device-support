@@ -26,7 +26,6 @@ interface SourceDisplayProps {
 const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
 
   const [loading, setLoading] = useState(false);
-  const [resultState, setResultState] = useState<ActionState>(InitialActionState);
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,7 +37,6 @@ const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
     } else {
       toast.error(result.error + ": " + result.message);
     }
-    setResultState(result);
     setLoading(false);
   };
 
