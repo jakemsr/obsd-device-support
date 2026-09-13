@@ -119,7 +119,7 @@ model hwinspect_reports {
   openbsd_version   String?
   architecture      String?
   collected_at      DateTime?      @db.Timestamptz(6)
-  payload           Json
+  payload           String
   payload_version   Int            @default(1)
   source            report_sources @relation(fields: [report_source_id], references: [id])
 
@@ -131,7 +131,7 @@ model form_reports {
   report_source_id BigInt         @unique
   url              String
   collected_at     DateTime?      @db.Timestamptz(6)
-  payload          Json
+  payload          String
   payload_version  Int            @default(1)
   source           report_sources @relation(fields: [report_source_id], references: [id])
 

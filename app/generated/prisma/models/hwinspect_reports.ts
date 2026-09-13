@@ -45,6 +45,7 @@ export type Hwinspect_reportsMinAggregateOutputType = {
   openbsd_version: string | null
   architecture: string | null
   collected_at: Date | null
+  payload: string | null
   payload_version: number | null
 }
 
@@ -55,6 +56,7 @@ export type Hwinspect_reportsMaxAggregateOutputType = {
   openbsd_version: string | null
   architecture: string | null
   collected_at: Date | null
+  payload: string | null
   payload_version: number | null
 }
 
@@ -90,6 +92,7 @@ export type Hwinspect_reportsMinAggregateInputType = {
   openbsd_version?: true
   architecture?: true
   collected_at?: true
+  payload?: true
   payload_version?: true
 }
 
@@ -100,6 +103,7 @@ export type Hwinspect_reportsMaxAggregateInputType = {
   openbsd_version?: true
   architecture?: true
   collected_at?: true
+  payload?: true
   payload_version?: true
 }
 
@@ -208,7 +212,7 @@ export type Hwinspect_reportsGroupByOutputType = {
   openbsd_version: string | null
   architecture: string | null
   collected_at: Date | null
-  payload: runtime.JsonValue
+  payload: string
   payload_version: number
   _count: Hwinspect_reportsCountAggregateOutputType | null
   _avg: Hwinspect_reportsAvgAggregateOutputType | null
@@ -242,7 +246,7 @@ export type hwinspect_reportsWhereInput = {
   openbsd_version?: Prisma.StringNullableFilter<"hwinspect_reports"> | string | null
   architecture?: Prisma.StringNullableFilter<"hwinspect_reports"> | string | null
   collected_at?: Prisma.DateTimeNullableFilter<"hwinspect_reports"> | Date | string | null
-  payload?: Prisma.JsonFilter<"hwinspect_reports">
+  payload?: Prisma.StringFilter<"hwinspect_reports"> | string
   payload_version?: Prisma.IntFilter<"hwinspect_reports"> | number
   source?: Prisma.XOR<Prisma.Report_sourcesScalarRelationFilter, Prisma.report_sourcesWhereInput>
 }
@@ -269,7 +273,7 @@ export type hwinspect_reportsWhereUniqueInput = Prisma.AtLeast<{
   openbsd_version?: Prisma.StringNullableFilter<"hwinspect_reports"> | string | null
   architecture?: Prisma.StringNullableFilter<"hwinspect_reports"> | string | null
   collected_at?: Prisma.DateTimeNullableFilter<"hwinspect_reports"> | Date | string | null
-  payload?: Prisma.JsonFilter<"hwinspect_reports">
+  payload?: Prisma.StringFilter<"hwinspect_reports"> | string
   payload_version?: Prisma.IntFilter<"hwinspect_reports"> | number
   source?: Prisma.XOR<Prisma.Report_sourcesScalarRelationFilter, Prisma.report_sourcesWhereInput>
 }, "id" | "report_source_id">
@@ -300,7 +304,7 @@ export type hwinspect_reportsScalarWhereWithAggregatesInput = {
   openbsd_version?: Prisma.StringNullableWithAggregatesFilter<"hwinspect_reports"> | string | null
   architecture?: Prisma.StringNullableWithAggregatesFilter<"hwinspect_reports"> | string | null
   collected_at?: Prisma.DateTimeNullableWithAggregatesFilter<"hwinspect_reports"> | Date | string | null
-  payload?: Prisma.JsonWithAggregatesFilter<"hwinspect_reports">
+  payload?: Prisma.StringWithAggregatesFilter<"hwinspect_reports"> | string
   payload_version?: Prisma.IntWithAggregatesFilter<"hwinspect_reports"> | number
 }
 
@@ -310,7 +314,7 @@ export type hwinspect_reportsCreateInput = {
   openbsd_version?: string | null
   architecture?: string | null
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
   source: Prisma.report_sourcesCreateNestedOneWithoutHwinspect_reportInput
 }
@@ -322,7 +326,7 @@ export type hwinspect_reportsUncheckedCreateInput = {
   openbsd_version?: string | null
   architecture?: string | null
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -332,7 +336,7 @@ export type hwinspect_reportsUpdateInput = {
   openbsd_version?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   architecture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
   source?: Prisma.report_sourcesUpdateOneRequiredWithoutHwinspect_reportNestedInput
 }
@@ -344,7 +348,7 @@ export type hwinspect_reportsUncheckedUpdateInput = {
   openbsd_version?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   architecture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -355,7 +359,7 @@ export type hwinspect_reportsCreateManyInput = {
   openbsd_version?: string | null
   architecture?: string | null
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -365,7 +369,7 @@ export type hwinspect_reportsUpdateManyMutationInput = {
   openbsd_version?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   architecture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -376,7 +380,7 @@ export type hwinspect_reportsUncheckedUpdateManyInput = {
   openbsd_version?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   architecture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -409,6 +413,7 @@ export type hwinspect_reportsMaxOrderByAggregateInput = {
   openbsd_version?: Prisma.SortOrder
   architecture?: Prisma.SortOrder
   collected_at?: Prisma.SortOrder
+  payload?: Prisma.SortOrder
   payload_version?: Prisma.SortOrder
 }
 
@@ -419,6 +424,7 @@ export type hwinspect_reportsMinOrderByAggregateInput = {
   openbsd_version?: Prisma.SortOrder
   architecture?: Prisma.SortOrder
   collected_at?: Prisma.SortOrder
+  payload?: Prisma.SortOrder
   payload_version?: Prisma.SortOrder
 }
 
@@ -474,7 +480,7 @@ export type hwinspect_reportsCreateWithoutSourceInput = {
   openbsd_version?: string | null
   architecture?: string | null
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -484,7 +490,7 @@ export type hwinspect_reportsUncheckedCreateWithoutSourceInput = {
   openbsd_version?: string | null
   architecture?: string | null
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -510,7 +516,7 @@ export type hwinspect_reportsUpdateWithoutSourceInput = {
   openbsd_version?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   architecture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -520,7 +526,7 @@ export type hwinspect_reportsUncheckedUpdateWithoutSourceInput = {
   openbsd_version?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   architecture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -596,7 +602,7 @@ export type $hwinspect_reportsPayload<ExtArgs extends runtime.Types.Extensions.I
     openbsd_version: string | null
     architecture: string | null
     collected_at: Date | null
-    payload: runtime.JsonValue
+    payload: string
     payload_version: number
   }, ExtArgs["result"]["hwinspect_reports"]>
   composites: {}
@@ -1028,7 +1034,7 @@ export interface hwinspect_reportsFieldRefs {
   readonly openbsd_version: Prisma.FieldRef<"hwinspect_reports", 'String'>
   readonly architecture: Prisma.FieldRef<"hwinspect_reports", 'String'>
   readonly collected_at: Prisma.FieldRef<"hwinspect_reports", 'DateTime'>
-  readonly payload: Prisma.FieldRef<"hwinspect_reports", 'Json'>
+  readonly payload: Prisma.FieldRef<"hwinspect_reports", 'String'>
   readonly payload_version: Prisma.FieldRef<"hwinspect_reports", 'Int'>
 }
     

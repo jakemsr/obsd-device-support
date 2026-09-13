@@ -43,6 +43,7 @@ export type Form_reportsMinAggregateOutputType = {
   report_source_id: bigint | null
   url: string | null
   collected_at: Date | null
+  payload: string | null
   payload_version: number | null
 }
 
@@ -51,6 +52,7 @@ export type Form_reportsMaxAggregateOutputType = {
   report_source_id: bigint | null
   url: string | null
   collected_at: Date | null
+  payload: string | null
   payload_version: number | null
 }
 
@@ -82,6 +84,7 @@ export type Form_reportsMinAggregateInputType = {
   report_source_id?: true
   url?: true
   collected_at?: true
+  payload?: true
   payload_version?: true
 }
 
@@ -90,6 +93,7 @@ export type Form_reportsMaxAggregateInputType = {
   report_source_id?: true
   url?: true
   collected_at?: true
+  payload?: true
   payload_version?: true
 }
 
@@ -194,7 +198,7 @@ export type Form_reportsGroupByOutputType = {
   report_source_id: bigint
   url: string
   collected_at: Date | null
-  payload: runtime.JsonValue
+  payload: string
   payload_version: number
   _count: Form_reportsCountAggregateOutputType | null
   _avg: Form_reportsAvgAggregateOutputType | null
@@ -226,7 +230,7 @@ export type form_reportsWhereInput = {
   report_source_id?: Prisma.BigIntFilter<"form_reports"> | bigint | number
   url?: Prisma.StringFilter<"form_reports"> | string
   collected_at?: Prisma.DateTimeNullableFilter<"form_reports"> | Date | string | null
-  payload?: Prisma.JsonFilter<"form_reports">
+  payload?: Prisma.StringFilter<"form_reports"> | string
   payload_version?: Prisma.IntFilter<"form_reports"> | number
   source?: Prisma.XOR<Prisma.Report_sourcesScalarRelationFilter, Prisma.report_sourcesWhereInput>
 }
@@ -249,7 +253,7 @@ export type form_reportsWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.form_reportsWhereInput | Prisma.form_reportsWhereInput[]
   url?: Prisma.StringFilter<"form_reports"> | string
   collected_at?: Prisma.DateTimeNullableFilter<"form_reports"> | Date | string | null
-  payload?: Prisma.JsonFilter<"form_reports">
+  payload?: Prisma.StringFilter<"form_reports"> | string
   payload_version?: Prisma.IntFilter<"form_reports"> | number
   source?: Prisma.XOR<Prisma.Report_sourcesScalarRelationFilter, Prisma.report_sourcesWhereInput>
 }, "id" | "report_source_id">
@@ -276,7 +280,7 @@ export type form_reportsScalarWhereWithAggregatesInput = {
   report_source_id?: Prisma.BigIntWithAggregatesFilter<"form_reports"> | bigint | number
   url?: Prisma.StringWithAggregatesFilter<"form_reports"> | string
   collected_at?: Prisma.DateTimeNullableWithAggregatesFilter<"form_reports"> | Date | string | null
-  payload?: Prisma.JsonWithAggregatesFilter<"form_reports">
+  payload?: Prisma.StringWithAggregatesFilter<"form_reports"> | string
   payload_version?: Prisma.IntWithAggregatesFilter<"form_reports"> | number
 }
 
@@ -284,7 +288,7 @@ export type form_reportsCreateInput = {
   id?: bigint | number
   url: string
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
   source: Prisma.report_sourcesCreateNestedOneWithoutForm_reportInput
 }
@@ -294,7 +298,7 @@ export type form_reportsUncheckedCreateInput = {
   report_source_id: bigint | number
   url: string
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -302,7 +306,7 @@ export type form_reportsUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
   source?: Prisma.report_sourcesUpdateOneRequiredWithoutForm_reportNestedInput
 }
@@ -312,7 +316,7 @@ export type form_reportsUncheckedUpdateInput = {
   report_source_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -321,7 +325,7 @@ export type form_reportsCreateManyInput = {
   report_source_id: bigint | number
   url: string
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -329,7 +333,7 @@ export type form_reportsUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -338,7 +342,7 @@ export type form_reportsUncheckedUpdateManyInput = {
   report_source_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -367,6 +371,7 @@ export type form_reportsMaxOrderByAggregateInput = {
   report_source_id?: Prisma.SortOrder
   url?: Prisma.SortOrder
   collected_at?: Prisma.SortOrder
+  payload?: Prisma.SortOrder
   payload_version?: Prisma.SortOrder
 }
 
@@ -375,6 +380,7 @@ export type form_reportsMinOrderByAggregateInput = {
   report_source_id?: Prisma.SortOrder
   url?: Prisma.SortOrder
   collected_at?: Prisma.SortOrder
+  payload?: Prisma.SortOrder
   payload_version?: Prisma.SortOrder
 }
 
@@ -420,7 +426,7 @@ export type form_reportsCreateWithoutSourceInput = {
   id?: bigint | number
   url: string
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -428,7 +434,7 @@ export type form_reportsUncheckedCreateWithoutSourceInput = {
   id?: bigint | number
   url: string
   collected_at?: Date | string | null
-  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload: string
   payload_version?: number
 }
 
@@ -452,7 +458,7 @@ export type form_reportsUpdateWithoutSourceInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -460,7 +466,7 @@ export type form_reportsUncheckedUpdateWithoutSourceInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
   collected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  payload?: Prisma.StringFieldUpdateOperationsInput | string
   payload_version?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -526,7 +532,7 @@ export type $form_reportsPayload<ExtArgs extends runtime.Types.Extensions.Intern
     report_source_id: bigint
     url: string
     collected_at: Date | null
-    payload: runtime.JsonValue
+    payload: string
     payload_version: number
   }, ExtArgs["result"]["form_reports"]>
   composites: {}
@@ -956,7 +962,7 @@ export interface form_reportsFieldRefs {
   readonly report_source_id: Prisma.FieldRef<"form_reports", 'BigInt'>
   readonly url: Prisma.FieldRef<"form_reports", 'String'>
   readonly collected_at: Prisma.FieldRef<"form_reports", 'DateTime'>
-  readonly payload: Prisma.FieldRef<"form_reports", 'Json'>
+  readonly payload: Prisma.FieldRef<"form_reports", 'String'>
   readonly payload_version: Prisma.FieldRef<"form_reports", 'Int'>
 }
     

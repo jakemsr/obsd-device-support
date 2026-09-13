@@ -54,7 +54,7 @@ const SourceDisplay = ({ index, source }: { index: number, source: SourceWithRep
             Collected At: {source.hwinspect_report.collected_at?.toLocaleString()}
           </div>
           <div>
-            Payload: {JSON.stringify(source.hwinspect_report.payload, null, 2)}
+            Payload: <pre>{JSON.stringify(JSON.parse(source.hwinspect_report.payload), null, 2)}</pre>
           </div>
           <div>
             Payload Version: {source.hwinspect_report.payload_version}
@@ -77,7 +77,7 @@ const SourceDisplay = ({ index, source }: { index: number, source: SourceWithRep
             Collected At: {source.form_report.collected_at?.toLocaleString()}
           </div>
           <div>
-            Payload: {JSON.stringify(source.form_report.payload, null, 2)}
+            Payload: <pre>{JSON.stringify(JSON.parse(source.form_report.payload), null, 2)}</pre>
           </div>
           <div>
             Payload Version: {source.form_report.payload_version}
