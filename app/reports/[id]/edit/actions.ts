@@ -149,8 +149,7 @@ export async function updateReportSource(
     };
   }
 
-  // refresh will lose the status message
-  // refresh();
+  refresh();
 
   return {
     error: '',
