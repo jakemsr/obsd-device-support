@@ -26,6 +26,7 @@ export default async function Page() {
       { "manage users": "/admin/manage_users" },
       { "manage content": "/admin/manage_content" }
     ] : [
+      { "submit report": "/reports/submit" },
       { "view reports": "/reports" }
     ];
 
