@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'sonner'
 import type { User } from '@/app/generated/prisma/client'
 import { roles } from '@/app/generated/prisma/enums'
 import { updateRole, RoleActionState } from '@/app/admin/manage_users/actions'
@@ -23,6 +24,11 @@ export default function EditUser({ user }: { user: User }) {
     setLoading(true);
     const formData = new FormData(event.currentTarget);
     const result = await updateRole(initialRoleActionState, formData);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error + ": " + result.message);
+    }
     setResultState(result);
     setLoading(false);
   };
@@ -51,19 +57,6 @@ export default function EditUser({ user }: { user: User }) {
           Save Changes
         </Button>
       </form>
-
-      {resultState.error && (
-        <div className="mt-2 col-span-2 text-error">
-          {resultState.error} {resultState.message}
-        </div>
-      )}
-
-      {resultState.success && (
-        <div className="mt-2 col-span-2 text-success">
-          {resultState.message}
-        </div>
-      )}
-
     </div>
   );
 }

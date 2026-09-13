@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, use, useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Prisma } from "@/app/generated/prisma/client";
 import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState, ActionState } from "@/lib/local-types";
 import { report_status, source_type } from "@/app/generated/prisma/enums";
@@ -32,6 +33,11 @@ const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
     setLoading(true);
     const formData = new FormData(event.currentTarget);
     const result = await updateReportSource(InitialActionState, formData);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error + ": " + result.message);
+    }
     setResultState(result);
     setLoading(false);
   };
@@ -74,16 +80,6 @@ const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
             Update Source #{index + 1}
           </Button>
         </div>
-        {resultState.error && (
-          <div className="mt-2 text-error">
-            Error updating source: {resultState.error}: {resultState.message}
-          </div>
-        )}
-        {resultState.success && (
-          <div className="mt-2 text-success">
-            Source updated successfully.
-          </div>
-        )}
       </form>
 
       {source.hwinspect_report && (
