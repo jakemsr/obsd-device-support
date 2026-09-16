@@ -61,6 +61,10 @@ have.
 Search results include the OpenBSD device and driver information along with
 hardware identifiers that can be used to verify the exact hardware.
 
+## User-Contributed Data / Verification
+
+Users can contribute to the database by filling out a form describing device information. User contributions enter a review process where authenticated editors verify the accuracy of the information. This review process is enhanced by automated lookup of device information with the Brave search API and OpenAI reasoning on whether the claims in the report match the data retrieved by the search. This is only supporting evidence; the final decision on report accuracy is left up to the editors. All data is preserved. If a user edits their report, a new report is generated and the old version is marked as superceded by the new report. All review data, including Brave search results and OpenAI responses, is similarly preserved.
+
 ## API
 
 The project exposes an API for looking up devices by bus, vendor ID, and
@@ -121,8 +125,7 @@ driver source and device data files to populate the database.
 ## Status
 
 The project is under active development. Current work includes expanding
-device coverage, improving the relationships between OpenBSD device records
-and real-world product names, and developing tools that consume the database.
+device coverage, improving the report submission and review process. Also scheduled is having hwinspect submit reports directly in lieu of having the user submit a form on the website.
 
 Contributions that improve device coverage or the process for deriving device
 information from OpenBSD sources are welcome.
