@@ -15,8 +15,7 @@ async function checkAuth(userId: string): Promise<boolean> {
     headers: await headers()
   });
 
-  if (!session || !session.user ||
-    !(session.user.role === "editor" || session.user.id === userId)) {
+  if (!session || !session.user || session.user.id !== userId) {
     return false;
   }
 
@@ -37,7 +36,7 @@ export async function updateReportStatus(
     return {
       error: 'Unauthorized',
       success: false,
-      message: 'Doesn\'t own the report or not an editor'
+      message: 'Not logged in or doesn\'t own the report'
     };
   }
 

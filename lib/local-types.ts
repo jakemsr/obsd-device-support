@@ -29,6 +29,7 @@ export type ReportWithRelations = Prisma.reportsGetPayload<{
   include: {
     sources: true;
     reported_devices: true;
+    user: true;
   };
 }>;
 

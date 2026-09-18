@@ -286,9 +286,12 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     return <div>Report not found</div>;
   }
 
-  if (!session || !session.user ||
-    !(session.user.role === "editor" || session.user.id === report.user_id)) {
-    return <div>User not authenticated</div>;
+  if (!session || !session.user || session.user.id !== report.user_id) {
+    return <div>Not authorized to edit this report</div>;
+  }
+
+  if (report.status === "withdrawn") {
+    return <div>Cannot edit a withdrawn report</div>;
   }
 
   const statusOptions = Object.values(report_status).map((value) => ({
