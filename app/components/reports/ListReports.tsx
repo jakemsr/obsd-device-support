@@ -64,7 +64,7 @@ export default function ListReports({ reportsPromise }: ListReportsProps) {
           {filteredReports.map(report => (
             <div
               key={report.id}
-              className="border-t py-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-x-4"
+              className="border-t py-2 grid grid-cols-2 sm:grid-cols-4 gap-x-4"
             >
               <div>
                 <Link
@@ -78,15 +78,18 @@ export default function ListReports({ reportsPromise }: ListReportsProps) {
                 Status: {report.status.split("_").join(" ")}
               </div>
               <div className="col-span-2">
+                Reported by: {report.user.email}
+              </div>
+              <div className="col-span-2">
                 Created At: {report.created_at.toLocaleString()}
               </div>
               <div className="col-span-2">
                 Updated At: {report.updated_at.toLocaleString()}
               </div>
-              <div className="col-span-2 lg:col-span-3">
+              <div className="col-span-2">
                 Sources: {report.sources.map(source => source.name).join(", ")}
               </div>
-              <div className="col-span-2 lg:col-span-3">
+              <div className="col-span-2">
                 Reported Devices: {report.reported_devices.map(device => `${device.vendor_id}:${device.product_id}`).join(", ")}
               </div>
             </div>
