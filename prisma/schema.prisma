@@ -94,19 +94,19 @@ model reports {
 }
 
 model report_sources {
-  id                   BigInt               @id @default(autoincrement())
-  report_id            BigInt
-  name                 String?
-  source_type          source_type
-  url                  String?
-  status               report_source_status @default(current)
-  status_updated_at    DateTime             @default(now()) @db.Timestamptz(6)
-  superseded_by_id     BigInt?
-  form_report          form_reports?
-  hwinspect_report     hwinspect_reports?
-  report               reports              @relation(fields: [report_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  report_sources       report_sources?      @relation("report_sourcesToreport_sources", fields: [superseded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  other_report_sources report_sources[]     @relation("report_sourcesToreport_sources")
+  id                               BigInt                @id @default(autoincrement())
+  report_id                        BigInt
+  name                             String?
+  source_type                      source_type
+  url                              String?
+  report_element_status_updated_at DateTime              @default(now()) @db.Timestamptz(6)
+  report_element_superseded_by_id  BigInt?
+  report_element_status            report_element_status @default(current)
+  form_report                      form_reports?
+  hwinspect_report                 hwinspect_reports?
+  report_sources                   report_sources?       @relation("report_sourcesToreport_sources", fields: [report_element_superseded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_report_sources             report_sources[]      @relation("report_sourcesToreport_sources")
+  report                           reports               @relation(fields: [report_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([report_id])
   @@schema("public")
@@ -139,18 +139,23 @@ model form_reports {
 }
 
 model reported_devices {
-  id                          BigInt                        @id @default(autoincrement())
-  report_id                   BigInt
-  bus                         String
-  vendor_id                   String
-  product_id                  String
-  reported_vendor             String?
-  reported_product            String?
-  reported_driver             String?
-  support_status              support_type?
-  report                      reports                       @relation(fields: [report_id], references: [id])
-  reported_issues             reported_issues[]
-  reported_other_device_names reported_other_device_names[]
+  id                               BigInt                        @id @default(autoincrement())
+  report_id                        BigInt
+  bus                              String
+  vendor_id                        String
+  product_id                       String
+  reported_vendor                  String?
+  reported_product                 String?
+  reported_driver                  String?
+  support_status                   support_type?
+  report_element_status            report_element_status         @default(current)
+  report_element_status_updated_at DateTime                      @default(now()) @db.Timestamptz(6)
+  report_element_superseded_by_id  BigInt?
+  reported_devices                 reported_devices?             @relation("reported_devicesToreported_devices", fields: [report_element_superseded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_reported_devices           reported_devices[]            @relation("reported_devicesToreported_devices")
+  report                           reports                       @relation(fields: [report_id], references: [id])
+  reported_issues                  reported_issues[]
+  reported_other_device_names      reported_other_device_names[]
 
   @@index([report_id])
   @@schema("public")
@@ -344,6 +349,14 @@ enum roles {
 }
 
 enum report_source_status {
+  current
+  superseded
+  removed
+
+  @@schema("public")
+}
+
+enum report_element_status {
   current
   superseded
   removed

@@ -42,7 +42,7 @@ export default async function Page() {
     include: {
       sources: {
         where: {
-          status: "current",
+          report_element_status: "current",
         },
       },
       reported_devices: true,

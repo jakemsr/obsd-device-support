@@ -29,13 +29,13 @@ export type AggregateReport_sources = {
 export type Report_sourcesAvgAggregateOutputType = {
   id: number | null
   report_id: number | null
-  superseded_by_id: number | null
+  report_element_superseded_by_id: number | null
 }
 
 export type Report_sourcesSumAggregateOutputType = {
   id: bigint | null
   report_id: bigint | null
-  superseded_by_id: bigint | null
+  report_element_superseded_by_id: bigint | null
 }
 
 export type Report_sourcesMinAggregateOutputType = {
@@ -44,9 +44,9 @@ export type Report_sourcesMinAggregateOutputType = {
   name: string | null
   source_type: $Enums.source_type | null
   url: string | null
-  status: $Enums.report_source_status | null
-  status_updated_at: Date | null
-  superseded_by_id: bigint | null
+  report_element_status_updated_at: Date | null
+  report_element_superseded_by_id: bigint | null
+  report_element_status: $Enums.report_element_status | null
 }
 
 export type Report_sourcesMaxAggregateOutputType = {
@@ -55,9 +55,9 @@ export type Report_sourcesMaxAggregateOutputType = {
   name: string | null
   source_type: $Enums.source_type | null
   url: string | null
-  status: $Enums.report_source_status | null
-  status_updated_at: Date | null
-  superseded_by_id: bigint | null
+  report_element_status_updated_at: Date | null
+  report_element_superseded_by_id: bigint | null
+  report_element_status: $Enums.report_element_status | null
 }
 
 export type Report_sourcesCountAggregateOutputType = {
@@ -66,9 +66,9 @@ export type Report_sourcesCountAggregateOutputType = {
   name: number
   source_type: number
   url: number
-  status: number
-  status_updated_at: number
-  superseded_by_id: number
+  report_element_status_updated_at: number
+  report_element_superseded_by_id: number
+  report_element_status: number
   _all: number
 }
 
@@ -76,13 +76,13 @@ export type Report_sourcesCountAggregateOutputType = {
 export type Report_sourcesAvgAggregateInputType = {
   id?: true
   report_id?: true
-  superseded_by_id?: true
+  report_element_superseded_by_id?: true
 }
 
 export type Report_sourcesSumAggregateInputType = {
   id?: true
   report_id?: true
-  superseded_by_id?: true
+  report_element_superseded_by_id?: true
 }
 
 export type Report_sourcesMinAggregateInputType = {
@@ -91,9 +91,9 @@ export type Report_sourcesMinAggregateInputType = {
   name?: true
   source_type?: true
   url?: true
-  status?: true
-  status_updated_at?: true
-  superseded_by_id?: true
+  report_element_status_updated_at?: true
+  report_element_superseded_by_id?: true
+  report_element_status?: true
 }
 
 export type Report_sourcesMaxAggregateInputType = {
@@ -102,9 +102,9 @@ export type Report_sourcesMaxAggregateInputType = {
   name?: true
   source_type?: true
   url?: true
-  status?: true
-  status_updated_at?: true
-  superseded_by_id?: true
+  report_element_status_updated_at?: true
+  report_element_superseded_by_id?: true
+  report_element_status?: true
 }
 
 export type Report_sourcesCountAggregateInputType = {
@@ -113,9 +113,9 @@ export type Report_sourcesCountAggregateInputType = {
   name?: true
   source_type?: true
   url?: true
-  status?: true
-  status_updated_at?: true
-  superseded_by_id?: true
+  report_element_status_updated_at?: true
+  report_element_superseded_by_id?: true
+  report_element_status?: true
   _all?: true
 }
 
@@ -211,9 +211,9 @@ export type Report_sourcesGroupByOutputType = {
   name: string | null
   source_type: $Enums.source_type
   url: string | null
-  status: $Enums.report_source_status
-  status_updated_at: Date
-  superseded_by_id: bigint | null
+  report_element_status_updated_at: Date
+  report_element_superseded_by_id: bigint | null
+  report_element_status: $Enums.report_element_status
   _count: Report_sourcesCountAggregateOutputType | null
   _avg: Report_sourcesAvgAggregateOutputType | null
   _sum: Report_sourcesSumAggregateOutputType | null
@@ -245,14 +245,14 @@ export type report_sourcesWhereInput = {
   name?: Prisma.StringNullableFilter<"report_sources"> | string | null
   source_type?: Prisma.Enumsource_typeFilter<"report_sources"> | $Enums.source_type
   url?: Prisma.StringNullableFilter<"report_sources"> | string | null
-  status?: Prisma.Enumreport_source_statusFilter<"report_sources"> | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFilter<"report_sources"> | Date | string
-  superseded_by_id?: Prisma.BigIntNullableFilter<"report_sources"> | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFilter<"report_sources"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"report_sources"> | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFilter<"report_sources"> | $Enums.report_element_status
   form_report?: Prisma.XOR<Prisma.Form_reportsNullableScalarRelationFilter, Prisma.form_reportsWhereInput> | null
   hwinspect_report?: Prisma.XOR<Prisma.Hwinspect_reportsNullableScalarRelationFilter, Prisma.hwinspect_reportsWhereInput> | null
-  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
   report_sources?: Prisma.XOR<Prisma.Report_sourcesNullableScalarRelationFilter, Prisma.report_sourcesWhereInput> | null
   other_report_sources?: Prisma.Report_sourcesListRelationFilter
+  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
 }
 
 export type report_sourcesOrderByWithRelationInput = {
@@ -261,14 +261,14 @@ export type report_sourcesOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   source_type?: Prisma.SortOrder
   url?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
-  status_updated_at?: Prisma.SortOrder
-  superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
   form_report?: Prisma.form_reportsOrderByWithRelationInput
   hwinspect_report?: Prisma.hwinspect_reportsOrderByWithRelationInput
-  report?: Prisma.reportsOrderByWithRelationInput
   report_sources?: Prisma.report_sourcesOrderByWithRelationInput
   other_report_sources?: Prisma.report_sourcesOrderByRelationAggregateInput
+  report?: Prisma.reportsOrderByWithRelationInput
 }
 
 export type report_sourcesWhereUniqueInput = Prisma.AtLeast<{
@@ -280,14 +280,14 @@ export type report_sourcesWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"report_sources"> | string | null
   source_type?: Prisma.Enumsource_typeFilter<"report_sources"> | $Enums.source_type
   url?: Prisma.StringNullableFilter<"report_sources"> | string | null
-  status?: Prisma.Enumreport_source_statusFilter<"report_sources"> | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFilter<"report_sources"> | Date | string
-  superseded_by_id?: Prisma.BigIntNullableFilter<"report_sources"> | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFilter<"report_sources"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"report_sources"> | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFilter<"report_sources"> | $Enums.report_element_status
   form_report?: Prisma.XOR<Prisma.Form_reportsNullableScalarRelationFilter, Prisma.form_reportsWhereInput> | null
   hwinspect_report?: Prisma.XOR<Prisma.Hwinspect_reportsNullableScalarRelationFilter, Prisma.hwinspect_reportsWhereInput> | null
-  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
   report_sources?: Prisma.XOR<Prisma.Report_sourcesNullableScalarRelationFilter, Prisma.report_sourcesWhereInput> | null
   other_report_sources?: Prisma.Report_sourcesListRelationFilter
+  report?: Prisma.XOR<Prisma.ReportsScalarRelationFilter, Prisma.reportsWhereInput>
 }, "id">
 
 export type report_sourcesOrderByWithAggregationInput = {
@@ -296,9 +296,9 @@ export type report_sourcesOrderByWithAggregationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   source_type?: Prisma.SortOrder
   url?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
-  status_updated_at?: Prisma.SortOrder
-  superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
   _count?: Prisma.report_sourcesCountOrderByAggregateInput
   _avg?: Prisma.report_sourcesAvgOrderByAggregateInput
   _max?: Prisma.report_sourcesMaxOrderByAggregateInput
@@ -315,9 +315,9 @@ export type report_sourcesScalarWhereWithAggregatesInput = {
   name?: Prisma.StringNullableWithAggregatesFilter<"report_sources"> | string | null
   source_type?: Prisma.Enumsource_typeWithAggregatesFilter<"report_sources"> | $Enums.source_type
   url?: Prisma.StringNullableWithAggregatesFilter<"report_sources"> | string | null
-  status?: Prisma.Enumreport_source_statusWithAggregatesFilter<"report_sources"> | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeWithAggregatesFilter<"report_sources"> | Date | string
-  superseded_by_id?: Prisma.BigIntNullableWithAggregatesFilter<"report_sources"> | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeWithAggregatesFilter<"report_sources"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableWithAggregatesFilter<"report_sources"> | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusWithAggregatesFilter<"report_sources"> | $Enums.report_element_status
 }
 
 export type report_sourcesCreateInput = {
@@ -325,13 +325,13 @@ export type report_sourcesCreateInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
   report_sources?: Prisma.report_sourcesCreateNestedOneWithoutOther_report_sourcesInput
   other_report_sources?: Prisma.report_sourcesCreateNestedManyWithoutReport_sourcesInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateInput = {
@@ -340,9 +340,9 @@ export type report_sourcesUncheckedCreateInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
-  superseded_by_id?: bigint | number | null
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
   other_report_sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReport_sourcesInput
@@ -353,13 +353,13 @@ export type report_sourcesUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
   report_sources?: Prisma.report_sourcesUpdateOneWithoutOther_report_sourcesNestedInput
   other_report_sources?: Prisma.report_sourcesUpdateManyWithoutReport_sourcesNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateInput = {
@@ -368,9 +368,9 @@ export type report_sourcesUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
   other_report_sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReport_sourcesNestedInput
@@ -382,9 +382,9 @@ export type report_sourcesCreateManyInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
-  superseded_by_id?: bigint | number | null
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  report_element_status?: $Enums.report_element_status
 }
 
 export type report_sourcesUpdateManyMutationInput = {
@@ -392,8 +392,8 @@ export type report_sourcesUpdateManyMutationInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
 }
 
 export type report_sourcesUncheckedUpdateManyInput = {
@@ -402,9 +402,9 @@ export type report_sourcesUncheckedUpdateManyInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
 }
 
 export type Report_sourcesListRelationFilter = {
@@ -428,15 +428,15 @@ export type report_sourcesCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   source_type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  status_updated_at?: Prisma.SortOrder
-  superseded_by_id?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
 }
 
 export type report_sourcesAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   report_id?: Prisma.SortOrder
-  superseded_by_id?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
 }
 
 export type report_sourcesMaxOrderByAggregateInput = {
@@ -445,9 +445,9 @@ export type report_sourcesMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   source_type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  status_updated_at?: Prisma.SortOrder
-  superseded_by_id?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
 }
 
 export type report_sourcesMinOrderByAggregateInput = {
@@ -456,15 +456,15 @@ export type report_sourcesMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   source_type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  status_updated_at?: Prisma.SortOrder
-  superseded_by_id?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
 }
 
 export type report_sourcesSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   report_id?: Prisma.SortOrder
-  superseded_by_id?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
 }
 
 export type Report_sourcesScalarRelationFilter = {
@@ -538,8 +538,8 @@ export type Enumsource_typeFieldUpdateOperationsInput = {
   set?: $Enums.source_type
 }
 
-export type Enumreport_source_statusFieldUpdateOperationsInput = {
-  set?: $Enums.report_source_status
+export type Enumreport_element_statusFieldUpdateOperationsInput = {
+  set?: $Enums.report_element_status
 }
 
 export type report_sourcesUpdateOneWithoutOther_report_sourcesNestedInput = {
@@ -621,8 +621,8 @@ export type report_sourcesCreateWithoutReportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
   report_sources?: Prisma.report_sourcesCreateNestedOneWithoutOther_report_sourcesInput
@@ -634,9 +634,9 @@ export type report_sourcesUncheckedCreateWithoutReportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
-  superseded_by_id?: bigint | number | null
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
   other_report_sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReport_sourcesInput
@@ -677,9 +677,9 @@ export type report_sourcesScalarWhereInput = {
   name?: Prisma.StringNullableFilter<"report_sources"> | string | null
   source_type?: Prisma.Enumsource_typeFilter<"report_sources"> | $Enums.source_type
   url?: Prisma.StringNullableFilter<"report_sources"> | string | null
-  status?: Prisma.Enumreport_source_statusFilter<"report_sources"> | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFilter<"report_sources"> | Date | string
-  superseded_by_id?: Prisma.BigIntNullableFilter<"report_sources"> | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFilter<"report_sources"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"report_sources"> | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFilter<"report_sources"> | $Enums.report_element_status
 }
 
 export type report_sourcesCreateWithoutOther_report_sourcesInput = {
@@ -687,12 +687,12 @@ export type report_sourcesCreateWithoutOther_report_sourcesInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
   report_sources?: Prisma.report_sourcesCreateNestedOneWithoutOther_report_sourcesInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateWithoutOther_report_sourcesInput = {
@@ -701,9 +701,9 @@ export type report_sourcesUncheckedCreateWithoutOther_report_sourcesInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
-  superseded_by_id?: bigint | number | null
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
 }
@@ -718,12 +718,12 @@ export type report_sourcesCreateWithoutReport_sourcesInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
   other_report_sources?: Prisma.report_sourcesCreateNestedManyWithoutReport_sourcesInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateWithoutReport_sourcesInput = {
@@ -732,8 +732,8 @@ export type report_sourcesUncheckedCreateWithoutReport_sourcesInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedCreateNestedOneWithoutSourceInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
   other_report_sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReport_sourcesInput
@@ -765,12 +765,12 @@ export type report_sourcesUpdateWithoutOther_report_sourcesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
   report_sources?: Prisma.report_sourcesUpdateOneWithoutOther_report_sourcesNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateWithoutOther_report_sourcesInput = {
@@ -779,9 +779,9 @@ export type report_sourcesUncheckedUpdateWithoutOther_report_sourcesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
 }
@@ -807,12 +807,12 @@ export type report_sourcesCreateWithoutHwinspect_reportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsCreateNestedOneWithoutSourceInput
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
   report_sources?: Prisma.report_sourcesCreateNestedOneWithoutOther_report_sourcesInput
   other_report_sources?: Prisma.report_sourcesCreateNestedManyWithoutReport_sourcesInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateWithoutHwinspect_reportInput = {
@@ -821,9 +821,9 @@ export type report_sourcesUncheckedCreateWithoutHwinspect_reportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
-  superseded_by_id?: bigint | number | null
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  report_element_status?: $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedCreateNestedOneWithoutSourceInput
   other_report_sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReport_sourcesInput
 }
@@ -849,12 +849,12 @@ export type report_sourcesUpdateWithoutHwinspect_reportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
   report_sources?: Prisma.report_sourcesUpdateOneWithoutOther_report_sourcesNestedInput
   other_report_sources?: Prisma.report_sourcesUpdateManyWithoutReport_sourcesNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateWithoutHwinspect_reportInput = {
@@ -863,9 +863,9 @@ export type report_sourcesUncheckedUpdateWithoutHwinspect_reportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedUpdateOneWithoutSourceNestedInput
   other_report_sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReport_sourcesNestedInput
 }
@@ -875,12 +875,12 @@ export type report_sourcesCreateWithoutForm_reportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
   hwinspect_report?: Prisma.hwinspect_reportsCreateNestedOneWithoutSourceInput
-  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
   report_sources?: Prisma.report_sourcesCreateNestedOneWithoutOther_report_sourcesInput
   other_report_sources?: Prisma.report_sourcesCreateNestedManyWithoutReport_sourcesInput
+  report: Prisma.reportsCreateNestedOneWithoutSourcesInput
 }
 
 export type report_sourcesUncheckedCreateWithoutForm_reportInput = {
@@ -889,9 +889,9 @@ export type report_sourcesUncheckedCreateWithoutForm_reportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
-  superseded_by_id?: bigint | number | null
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  report_element_status?: $Enums.report_element_status
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedCreateNestedOneWithoutSourceInput
   other_report_sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReport_sourcesInput
 }
@@ -917,12 +917,12 @@ export type report_sourcesUpdateWithoutForm_reportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
   report_sources?: Prisma.report_sourcesUpdateOneWithoutOther_report_sourcesNestedInput
   other_report_sources?: Prisma.report_sourcesUpdateManyWithoutReport_sourcesNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateWithoutForm_reportInput = {
@@ -931,9 +931,9 @@ export type report_sourcesUncheckedUpdateWithoutForm_reportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
   other_report_sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReport_sourcesNestedInput
 }
@@ -943,9 +943,9 @@ export type report_sourcesCreateManyReportInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
-  superseded_by_id?: bigint | number | null
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  report_element_status?: $Enums.report_element_status
 }
 
 export type report_sourcesUpdateWithoutReportInput = {
@@ -953,8 +953,8 @@ export type report_sourcesUpdateWithoutReportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
   report_sources?: Prisma.report_sourcesUpdateOneWithoutOther_report_sourcesNestedInput
@@ -966,9 +966,9 @@ export type report_sourcesUncheckedUpdateWithoutReportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
   other_report_sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReport_sourcesNestedInput
@@ -979,9 +979,9 @@ export type report_sourcesUncheckedUpdateManyWithoutReportInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
 }
 
 export type report_sourcesCreateManyReport_sourcesInput = {
@@ -990,8 +990,8 @@ export type report_sourcesCreateManyReport_sourcesInput = {
   name?: string | null
   source_type: $Enums.source_type
   url?: string | null
-  status?: $Enums.report_source_status
-  status_updated_at?: Date | string
+  report_element_status_updated_at?: Date | string
+  report_element_status?: $Enums.report_element_status
 }
 
 export type report_sourcesUpdateWithoutReport_sourcesInput = {
@@ -999,12 +999,12 @@ export type report_sourcesUpdateWithoutReport_sourcesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUpdateOneWithoutSourceNestedInput
-  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
   other_report_sources?: Prisma.report_sourcesUpdateManyWithoutReport_sourcesNestedInput
+  report?: Prisma.reportsUpdateOneRequiredWithoutSourcesNestedInput
 }
 
 export type report_sourcesUncheckedUpdateWithoutReport_sourcesInput = {
@@ -1013,8 +1013,8 @@ export type report_sourcesUncheckedUpdateWithoutReport_sourcesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   form_report?: Prisma.form_reportsUncheckedUpdateOneWithoutSourceNestedInput
   hwinspect_report?: Prisma.hwinspect_reportsUncheckedUpdateOneWithoutSourceNestedInput
   other_report_sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReport_sourcesNestedInput
@@ -1026,8 +1026,8 @@ export type report_sourcesUncheckedUpdateManyWithoutReport_sourcesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_type?: Prisma.Enumsource_typeFieldUpdateOperationsInput | $Enums.source_type
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.Enumreport_source_statusFieldUpdateOperationsInput | $Enums.report_source_status
-  status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
 }
 
 
@@ -1067,14 +1067,14 @@ export type report_sourcesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   name?: boolean
   source_type?: boolean
   url?: boolean
-  status?: boolean
-  status_updated_at?: boolean
-  superseded_by_id?: boolean
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
+  report_element_status?: boolean
   form_report?: boolean | Prisma.report_sources$form_reportArgs<ExtArgs>
   hwinspect_report?: boolean | Prisma.report_sources$hwinspect_reportArgs<ExtArgs>
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
   report_sources?: boolean | Prisma.report_sources$report_sourcesArgs<ExtArgs>
   other_report_sources?: boolean | Prisma.report_sources$other_report_sourcesArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.Report_sourcesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["report_sources"]>
 
@@ -1084,11 +1084,11 @@ export type report_sourcesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   name?: boolean
   source_type?: boolean
   url?: boolean
-  status?: boolean
-  status_updated_at?: boolean
-  superseded_by_id?: boolean
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
+  report_element_status?: boolean
   report_sources?: boolean | Prisma.report_sources$report_sourcesArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["report_sources"]>
 
 export type report_sourcesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1097,11 +1097,11 @@ export type report_sourcesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   name?: boolean
   source_type?: boolean
   url?: boolean
-  status?: boolean
-  status_updated_at?: boolean
-  superseded_by_id?: boolean
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
+  report_element_status?: boolean
   report_sources?: boolean | Prisma.report_sources$report_sourcesArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["report_sources"]>
 
 export type report_sourcesSelectScalar = {
@@ -1110,27 +1110,27 @@ export type report_sourcesSelectScalar = {
   name?: boolean
   source_type?: boolean
   url?: boolean
-  status?: boolean
-  status_updated_at?: boolean
-  superseded_by_id?: boolean
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
+  report_element_status?: boolean
 }
 
-export type report_sourcesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "report_id" | "name" | "source_type" | "url" | "status" | "status_updated_at" | "superseded_by_id", ExtArgs["result"]["report_sources"]>
+export type report_sourcesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "report_id" | "name" | "source_type" | "url" | "report_element_status_updated_at" | "report_element_superseded_by_id" | "report_element_status", ExtArgs["result"]["report_sources"]>
 export type report_sourcesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   form_report?: boolean | Prisma.report_sources$form_reportArgs<ExtArgs>
   hwinspect_report?: boolean | Prisma.report_sources$hwinspect_reportArgs<ExtArgs>
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
   report_sources?: boolean | Prisma.report_sources$report_sourcesArgs<ExtArgs>
   other_report_sources?: boolean | Prisma.report_sources$other_report_sourcesArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.Report_sourcesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type report_sourcesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
   report_sources?: boolean | Prisma.report_sources$report_sourcesArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
 }
 export type report_sourcesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
   report_sources?: boolean | Prisma.report_sources$report_sourcesArgs<ExtArgs>
+  report?: boolean | Prisma.reportsDefaultArgs<ExtArgs>
 }
 
 export type $report_sourcesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1138,9 +1138,9 @@ export type $report_sourcesPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     form_report: Prisma.$form_reportsPayload<ExtArgs> | null
     hwinspect_report: Prisma.$hwinspect_reportsPayload<ExtArgs> | null
-    report: Prisma.$reportsPayload<ExtArgs>
     report_sources: Prisma.$report_sourcesPayload<ExtArgs> | null
     other_report_sources: Prisma.$report_sourcesPayload<ExtArgs>[]
+    report: Prisma.$reportsPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1148,9 +1148,9 @@ export type $report_sourcesPayload<ExtArgs extends runtime.Types.Extensions.Inte
     name: string | null
     source_type: $Enums.source_type
     url: string | null
-    status: $Enums.report_source_status
-    status_updated_at: Date
-    superseded_by_id: bigint | null
+    report_element_status_updated_at: Date
+    report_element_superseded_by_id: bigint | null
+    report_element_status: $Enums.report_element_status
   }, ExtArgs["result"]["report_sources"]>
   composites: {}
 }
@@ -1547,9 +1547,9 @@ export interface Prisma__report_sourcesClient<T, Null = never, ExtArgs extends r
   readonly [Symbol.toStringTag]: "PrismaPromise"
   form_report<T extends Prisma.report_sources$form_reportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.report_sources$form_reportArgs<ExtArgs>>): Prisma.Prisma__form_reportsClient<runtime.Types.Result.GetResult<Prisma.$form_reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   hwinspect_report<T extends Prisma.report_sources$hwinspect_reportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.report_sources$hwinspect_reportArgs<ExtArgs>>): Prisma.Prisma__hwinspect_reportsClient<runtime.Types.Result.GetResult<Prisma.$hwinspect_reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  report<T extends Prisma.reportsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reportsDefaultArgs<ExtArgs>>): Prisma.Prisma__reportsClient<runtime.Types.Result.GetResult<Prisma.$reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   report_sources<T extends Prisma.report_sources$report_sourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.report_sources$report_sourcesArgs<ExtArgs>>): Prisma.Prisma__report_sourcesClient<runtime.Types.Result.GetResult<Prisma.$report_sourcesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   other_report_sources<T extends Prisma.report_sources$other_report_sourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.report_sources$other_report_sourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$report_sourcesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  report<T extends Prisma.reportsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reportsDefaultArgs<ExtArgs>>): Prisma.Prisma__reportsClient<runtime.Types.Result.GetResult<Prisma.$reportsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1584,9 +1584,9 @@ export interface report_sourcesFieldRefs {
   readonly name: Prisma.FieldRef<"report_sources", 'String'>
   readonly source_type: Prisma.FieldRef<"report_sources", 'source_type'>
   readonly url: Prisma.FieldRef<"report_sources", 'String'>
-  readonly status: Prisma.FieldRef<"report_sources", 'report_source_status'>
-  readonly status_updated_at: Prisma.FieldRef<"report_sources", 'DateTime'>
-  readonly superseded_by_id: Prisma.FieldRef<"report_sources", 'BigInt'>
+  readonly report_element_status_updated_at: Prisma.FieldRef<"report_sources", 'DateTime'>
+  readonly report_element_superseded_by_id: Prisma.FieldRef<"report_sources", 'BigInt'>
+  readonly report_element_status: Prisma.FieldRef<"report_sources", 'report_element_status'>
 }
     
 

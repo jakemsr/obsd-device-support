@@ -67,3 +67,12 @@ export const report_source_status = {
 } as const
 
 export type report_source_status = (typeof report_source_status)[keyof typeof report_source_status]
+
+
+export const report_element_status = {
+  current: 'current',
+  superseded: 'superseded',
+  removed: 'removed'
+} as const
+
+export type report_element_status = (typeof report_element_status)[keyof typeof report_element_status]

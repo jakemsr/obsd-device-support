@@ -3,7 +3,7 @@
 import { refresh } from 'next/cache';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth'
-import { report_status, source_type, report_source_status } from '@/app/generated/prisma/enums'
+import { report_status, source_type, report_element_status } from '@/app/generated/prisma/enums'
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
 import type { ActionState } from '@/lib/local-types'
@@ -135,9 +135,9 @@ export async function updateReportSource(
     await prisma.report_sources.update({
       where: { id: BigInt(sourceId) },
       data: {
-        status: report_source_status.superseded,
-        status_updated_at: new Date(),
-        superseded_by_id: newSource.id,
+        report_element_status: report_element_status.superseded,
+        report_element_status_updated_at: new Date(),
+        report_element_superseded_by_id: newSource.id,
       }
     });
   } catch (err) {
