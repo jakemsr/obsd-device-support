@@ -42,37 +42,46 @@ const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-2 max-w-fit">
+        <div className="col-span-4">
           Source #{index + 1}
         </div>
         {source.name && (
-          <div className="mt-2">
-            <label>
-              Name: <input type="text" name="sourceName" defaultValue={source.name} />
-            </label>
-          </div>
+          <>
+            <div>
+              Name:
+            </div>
+            <div className="col-span-3">
+              <input type="text" name="sourceName" defaultValue={source.name} />
+            </div>
+          </>
         )}
-        <div className="mt-2">
-          <label>
-            Type: <select name="sourceType" defaultValue={source.source_type}>
+        <>
+          <div>
+            Type:
+          </div>
+          <div className="col-span-3">
+            <select name="sourceType" defaultValue={source.source_type}>
               {Object.values(source_type).map((type) => (
                 <option key={type} value={type}>{type}</option>
               ))}
             </select>
-          </label>
-        </div>
-        {source.url && (
-          <div className="mt-2">
-            <label>
-              URL: <input type="text" name="sourceUrl" defaultValue={source.url} />
-            </label>
           </div>
+        </>
+        {source.url && (
+          <>
+            <div>
+              URL:
+            </div>
+            <div className="col-span-3">
+              <input type="text" name="sourceUrl" defaultValue={source.url} />
+            </div>
+          </>
         )}
         <input type="hidden" name="sourceId" value={String(source.id)} />
         <input type="hidden" name="reportId" value={String(source.report_id)} />
         <input type="hidden" name="userId" value={userId} />
-        <div className="mt-2">
+        <div className="col-span-4">
           <Button type="submit">
             {loading && <LoadingSpinner />}
             Update Source #{index + 1}
