@@ -79,56 +79,6 @@ const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
           </Button>
         </div>
       </form>
-
-      {source.hwinspect_report && (
-        <div>
-          hwinspect Report:
-          <div>
-            ID: {source.hwinspect_report.id}
-          </div>
-          <div>
-            hwinspect Version: {source.hwinspect_report.hwinspect_version}
-          </div>
-          <div>
-            OpenBSD Version: {source.hwinspect_report.openbsd_version}
-          </div>
-          <div>
-            Architecture: {source.hwinspect_report.architecture}
-          </div>
-          <div>
-            Collected At: {source.hwinspect_report.collected_at?.toLocaleString()}
-          </div>
-          <div>
-            Payload: {JSON.stringify(source.hwinspect_report.payload, null, 2)}
-          </div>
-          <div>
-            Payload Version: {source.hwinspect_report.payload_version}
-          </div>
-        </div>
-      )}
-      {source.form_report && (
-        <div>
-          Form Report:
-          <div>
-            ID: {source.form_report.id}
-          </div>
-          <div>
-            Report Source ID: {source.form_report.report_source_id}
-          </div>
-          <div>
-            URL: {source.form_report.url}
-          </div>
-          <div>
-            Collected At: {source.form_report.collected_at?.toLocaleString()}
-          </div>
-          <div>
-            Payload: {JSON.stringify(source.form_report.payload, null, 2)}
-          </div>
-          <div>
-            Payload Version: {source.form_report.payload_version}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
