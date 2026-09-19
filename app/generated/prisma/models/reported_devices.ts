@@ -238,7 +238,7 @@ export type Reported_devicesGroupByOutputType = {
   reported_vendor: string | null
   reported_product: string | null
   reported_driver: string | null
-  support_status: $Enums.support_type | null
+  support_status: $Enums.support_type
   report_element_status: $Enums.report_element_status
   report_element_status_updated_at: Date
   report_element_superseded_by_id: bigint | null
@@ -276,7 +276,7 @@ export type reported_devicesWhereInput = {
   reported_vendor?: Prisma.StringNullableFilter<"reported_devices"> | string | null
   reported_product?: Prisma.StringNullableFilter<"reported_devices"> | string | null
   reported_driver?: Prisma.StringNullableFilter<"reported_devices"> | string | null
-  support_status?: Prisma.Enumsupport_typeNullableFilter<"reported_devices"> | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFilter<"reported_devices"> | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFilter<"reported_devices"> | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFilter<"reported_devices"> | Date | string
   report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"reported_devices"> | bigint | number | null
@@ -296,7 +296,7 @@ export type reported_devicesOrderByWithRelationInput = {
   reported_vendor?: Prisma.SortOrderInput | Prisma.SortOrder
   reported_product?: Prisma.SortOrderInput | Prisma.SortOrder
   reported_driver?: Prisma.SortOrderInput | Prisma.SortOrder
-  support_status?: Prisma.SortOrderInput | Prisma.SortOrder
+  support_status?: Prisma.SortOrder
   report_element_status?: Prisma.SortOrder
   report_element_status_updated_at?: Prisma.SortOrder
   report_element_superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -319,7 +319,7 @@ export type reported_devicesWhereUniqueInput = Prisma.AtLeast<{
   reported_vendor?: Prisma.StringNullableFilter<"reported_devices"> | string | null
   reported_product?: Prisma.StringNullableFilter<"reported_devices"> | string | null
   reported_driver?: Prisma.StringNullableFilter<"reported_devices"> | string | null
-  support_status?: Prisma.Enumsupport_typeNullableFilter<"reported_devices"> | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFilter<"reported_devices"> | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFilter<"reported_devices"> | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFilter<"reported_devices"> | Date | string
   report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"reported_devices"> | bigint | number | null
@@ -339,7 +339,7 @@ export type reported_devicesOrderByWithAggregationInput = {
   reported_vendor?: Prisma.SortOrderInput | Prisma.SortOrder
   reported_product?: Prisma.SortOrderInput | Prisma.SortOrder
   reported_driver?: Prisma.SortOrderInput | Prisma.SortOrder
-  support_status?: Prisma.SortOrderInput | Prisma.SortOrder
+  support_status?: Prisma.SortOrder
   report_element_status?: Prisma.SortOrder
   report_element_status_updated_at?: Prisma.SortOrder
   report_element_superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -362,7 +362,7 @@ export type reported_devicesScalarWhereWithAggregatesInput = {
   reported_vendor?: Prisma.StringNullableWithAggregatesFilter<"reported_devices"> | string | null
   reported_product?: Prisma.StringNullableWithAggregatesFilter<"reported_devices"> | string | null
   reported_driver?: Prisma.StringNullableWithAggregatesFilter<"reported_devices"> | string | null
-  support_status?: Prisma.Enumsupport_typeNullableWithAggregatesFilter<"reported_devices"> | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeWithAggregatesFilter<"reported_devices"> | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusWithAggregatesFilter<"reported_devices"> | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeWithAggregatesFilter<"reported_devices"> | Date | string
   report_element_superseded_by_id?: Prisma.BigIntNullableWithAggregatesFilter<"reported_devices"> | bigint | number | null
@@ -376,7 +376,7 @@ export type reported_devicesCreateInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   reported_devices?: Prisma.reported_devicesCreateNestedOneWithoutOther_reported_devicesInput
@@ -395,7 +395,7 @@ export type reported_devicesUncheckedCreateInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   report_element_superseded_by_id?: bigint | number | null
@@ -412,7 +412,7 @@ export type reported_devicesUpdateInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reported_devices?: Prisma.reported_devicesUpdateOneWithoutOther_reported_devicesNestedInput
@@ -431,7 +431,7 @@ export type reported_devicesUncheckedUpdateInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -449,7 +449,7 @@ export type reported_devicesCreateManyInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   report_element_superseded_by_id?: bigint | number | null
@@ -463,7 +463,7 @@ export type reported_devicesUpdateManyMutationInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -477,7 +477,7 @@ export type reported_devicesUncheckedUpdateManyInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -622,10 +622,6 @@ export type reported_devicesUncheckedCreateNestedManyWithoutReported_devicesInpu
   connect?: Prisma.reported_devicesWhereUniqueInput | Prisma.reported_devicesWhereUniqueInput[]
 }
 
-export type NullableEnumsupport_typeFieldUpdateOperationsInput = {
-  set?: $Enums.support_type | null
-}
-
 export type reported_devicesUpdateOneWithoutOther_reported_devicesNestedInput = {
   create?: Prisma.XOR<Prisma.reported_devicesCreateWithoutOther_reported_devicesInput, Prisma.reported_devicesUncheckedCreateWithoutOther_reported_devicesInput>
   connectOrCreate?: Prisma.reported_devicesCreateOrConnectWithoutOther_reported_devicesInput
@@ -700,7 +696,7 @@ export type reported_devicesCreateWithoutReportInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   reported_devices?: Prisma.reported_devicesCreateNestedOneWithoutOther_reported_devicesInput
@@ -717,7 +713,7 @@ export type reported_devicesUncheckedCreateWithoutReportInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   report_element_superseded_by_id?: bigint | number | null
@@ -764,7 +760,7 @@ export type reported_devicesScalarWhereInput = {
   reported_vendor?: Prisma.StringNullableFilter<"reported_devices"> | string | null
   reported_product?: Prisma.StringNullableFilter<"reported_devices"> | string | null
   reported_driver?: Prisma.StringNullableFilter<"reported_devices"> | string | null
-  support_status?: Prisma.Enumsupport_typeNullableFilter<"reported_devices"> | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFilter<"reported_devices"> | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFilter<"reported_devices"> | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFilter<"reported_devices"> | Date | string
   report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"reported_devices"> | bigint | number | null
@@ -778,7 +774,7 @@ export type reported_devicesCreateWithoutOther_reported_devicesInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   reported_devices?: Prisma.reported_devicesCreateNestedOneWithoutOther_reported_devicesInput
@@ -796,7 +792,7 @@ export type reported_devicesUncheckedCreateWithoutOther_reported_devicesInput = 
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   report_element_superseded_by_id?: bigint | number | null
@@ -817,7 +813,7 @@ export type reported_devicesCreateWithoutReported_devicesInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   other_reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReported_devicesInput
@@ -835,7 +831,7 @@ export type reported_devicesUncheckedCreateWithoutReported_devicesInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   other_reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReported_devicesInput
@@ -872,7 +868,7 @@ export type reported_devicesUpdateWithoutOther_reported_devicesInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reported_devices?: Prisma.reported_devicesUpdateOneWithoutOther_reported_devicesNestedInput
@@ -890,7 +886,7 @@ export type reported_devicesUncheckedUpdateWithoutOther_reported_devicesInput = 
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -922,7 +918,7 @@ export type reported_devicesCreateWithoutReported_issuesInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   reported_devices?: Prisma.reported_devicesCreateNestedOneWithoutOther_reported_devicesInput
@@ -940,7 +936,7 @@ export type reported_devicesUncheckedCreateWithoutReported_issuesInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   report_element_superseded_by_id?: bigint | number | null
@@ -972,7 +968,7 @@ export type reported_devicesUpdateWithoutReported_issuesInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reported_devices?: Prisma.reported_devicesUpdateOneWithoutOther_reported_devicesNestedInput
@@ -990,7 +986,7 @@ export type reported_devicesUncheckedUpdateWithoutReported_issuesInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -1006,7 +1002,7 @@ export type reported_devicesCreateWithoutReported_other_device_namesInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   reported_devices?: Prisma.reported_devicesCreateNestedOneWithoutOther_reported_devicesInput
@@ -1024,7 +1020,7 @@ export type reported_devicesUncheckedCreateWithoutReported_other_device_namesInp
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   report_element_superseded_by_id?: bigint | number | null
@@ -1056,7 +1052,7 @@ export type reported_devicesUpdateWithoutReported_other_device_namesInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reported_devices?: Prisma.reported_devicesUpdateOneWithoutOther_reported_devicesNestedInput
@@ -1074,7 +1070,7 @@ export type reported_devicesUncheckedUpdateWithoutReported_other_device_namesInp
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -1090,7 +1086,7 @@ export type reported_devicesCreateManyReportInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
   report_element_superseded_by_id?: bigint | number | null
@@ -1104,7 +1100,7 @@ export type reported_devicesUpdateWithoutReportInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reported_devices?: Prisma.reported_devicesUpdateOneWithoutOther_reported_devicesNestedInput
@@ -1121,7 +1117,7 @@ export type reported_devicesUncheckedUpdateWithoutReportInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -1138,7 +1134,7 @@ export type reported_devicesUncheckedUpdateManyWithoutReportInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -1153,7 +1149,7 @@ export type reported_devicesCreateManyReported_devicesInput = {
   reported_vendor?: string | null
   reported_product?: string | null
   reported_driver?: string | null
-  support_status?: $Enums.support_type | null
+  support_status?: $Enums.support_type
   report_element_status?: $Enums.report_element_status
   report_element_status_updated_at?: Date | string
 }
@@ -1166,7 +1162,7 @@ export type reported_devicesUpdateWithoutReported_devicesInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   other_reported_devices?: Prisma.reported_devicesUpdateManyWithoutReported_devicesNestedInput
@@ -1184,7 +1180,7 @@ export type reported_devicesUncheckedUpdateWithoutReported_devicesInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   other_reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReported_devicesNestedInput
@@ -1201,7 +1197,7 @@ export type reported_devicesUncheckedUpdateManyWithoutReported_devicesInput = {
   reported_vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reported_driver?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  support_status?: Prisma.NullableEnumsupport_typeFieldUpdateOperationsInput | $Enums.support_type | null
+  support_status?: Prisma.Enumsupport_typeFieldUpdateOperationsInput | $Enums.support_type
   report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
   report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1361,7 +1357,7 @@ export type $reported_devicesPayload<ExtArgs extends runtime.Types.Extensions.In
     reported_vendor: string | null
     reported_product: string | null
     reported_driver: string | null
-    support_status: $Enums.support_type | null
+    support_status: $Enums.support_type
     report_element_status: $Enums.report_element_status
     report_element_status_updated_at: Date
     report_element_superseded_by_id: bigint | null

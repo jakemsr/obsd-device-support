@@ -147,7 +147,7 @@ model reported_devices {
   reported_vendor                  String?
   reported_product                 String?
   reported_driver                  String?
-  support_status                   support_type?
+  support_status                   support_type                  @default(unknown)
   report_element_status            report_element_status         @default(current)
   report_element_status_updated_at DateTime                      @default(now()) @db.Timestamptz(6)
   report_element_superseded_by_id  BigInt?
