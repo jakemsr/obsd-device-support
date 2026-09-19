@@ -180,7 +180,7 @@ const ReportDisplay = async ({ id }: { id: string }) => {
     include: {
       sources: {
         where: {
-          status: "current",
+          report_element_status: "current",
         },
         include: {
           hwinspect_report: true,
@@ -188,6 +188,9 @@ const ReportDisplay = async ({ id }: { id: string }) => {
         },
       },
       reported_devices: {
+        where: {
+          report_element_status: "current",
+        },
         include: {
           reported_issues: true,
           reported_other_device_names: true,
