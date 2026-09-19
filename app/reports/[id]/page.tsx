@@ -246,13 +246,13 @@ const ReportDisplay = async ({ id }: { id: string }) => {
           )}
         </div>
         {session.user.id === report.user_id && report.status !== "withdrawn" && (
-        <div>
-          <Link href={`/reports/${id}/edit`}>
-            <Button type="button">
-              Edit Report
-            </Button>
-          </Link>
-        </div>
+          <div>
+            <Link href={`/reports/${id}/edit`}>
+              <Button type="button">
+                Edit Report
+              </Button>
+            </Link>
+          </div>
         )}
       </div>
 
