@@ -23,6 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         },
       },
       reported_devices: {
+        where: { report_element_status: 'current' },
         include: {
           reported_issues: true,
           reported_other_device_names: true,

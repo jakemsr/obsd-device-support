@@ -3,11 +3,11 @@
 import { Suspense, use, useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Prisma } from "@/app/generated/prisma/client";
-import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState, ActionState } from "@/lib/local-types";
-import { report_status, source_type } from "@/app/generated/prisma/enums";
+import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState } from "@/lib/local-types";
+import { report_status, source_type, support_type } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { getMatchedDevices } from '@/app/reports/[id]/actions';
-import { updateReportSource, updateReportStatus } from '@/app/reports/[id]/edit/actions';
+import { updateReportSource, updateReportStatus, updateReportedDevice } from '@/app/reports/[id]/edit/actions';
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
@@ -100,57 +100,113 @@ type FullReportedDevice = Prisma.reported_devicesGetPayload<{
   };
 }>;
 
-const DeviceDisplay = ({ device, matchedDevices }: { device: FullReportedDevice, matchedDevices?: FullDeviceInfo[] }) => {
+const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport, device: FullReportedDevice, matchedDevices?: FullDeviceInfo[] }) => {
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    const formData = new FormData(event.currentTarget);
+    const result = await updateReportedDevice(InitialActionState, formData);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error + ": " + result.message);
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="my-2 grid grid-cols-1 sm:grid-cols-2 gap-y-6">
       <div>
-        <div>
-          Bus: {device.bus}
-        </div>
-        <div>
-          Vendor ID: {device.vendor_id}
-        </div>
-        <div>
-          Product ID: {device.product_id}
-        </div>
-        <div>
-          Reported Vendor: {device.reported_vendor}
-        </div>
-        <div>
-          Reported Product: {device.reported_product}
-        </div>
-        <div>
-          Reported Driver: {device.reported_driver}
-        </div>
-        <div>
-          Support Status: {device.support_status}
-        </div>
-
-        {device.reported_issues.length > 0 && (
+        <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-2">
+          <input type="hidden" name="reportId" value={String(device.report_id)} />
+          <input type="hidden" name="userId" value={report.user_id} />
+          <input type="hidden" name="deviceId" value={String(device.id)} />
           <div>
-            Reported Issues: {device.reported_issues.map(issue => (
-              <div
-                className="px-4 mt-2"
-                key={issue.id}
-              >
-                {issue.description}
-              </div>
-            ))}
+            Bus:
           </div>
-        )}
+          <div className="col-span-3">
+            <input type="text" name="bus" defaultValue={device.bus} />
+          </div>
+          <div>
+            Vendor ID:
+          </div>
+          <div className="col-span-3">
+            <input type="text" name="vendorId" defaultValue={device.vendor_id} />
+          </div>
+          <div>
+            Product ID:
+          </div>
+          <div className="col-span-3">
+            <input type="text" name="productId" defaultValue={device.product_id} />
+          </div>
+          <div>
+            Vendor:
+          </div>
+          <div className="col-span-3">
+            <input type="text" name="vendorName" defaultValue={device.reported_vendor ?? ""} />
+          </div>
+          <div>
+            Product:
+          </div>
+          <div className="col-span-3">
+            <input type="text" name="productName" defaultValue={device.reported_product ?? ""} />
+          </div>
+          <div>
+            Driver:
+          </div>
+          <div className="col-span-3">
+            <input type="text" name="driverName" defaultValue={device.reported_driver ?? ""} />
+          </div>
+          <div>
+            Support Status:
+          </div>
+          <div className="col-span-3">
+            <select name="supportStatus" defaultValue={device.support_status}>
+              {Object.values(support_type).map(status => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="col-span-4">
+            {device.reported_issues.map(issue => (
+              <input key={issue.id} type="hidden" name="reportedIssues" value={String(issue.id)} />
+            ))}
+            {device.reported_other_device_names.map(name => (
+              <input key={name.id} type="hidden" name="reportedOtherDeviceNames" value={String(name.id)} />
+            ))}
+            <Button type="submit" disabled={loading}>
+              {loading && <LoadingSpinner />}
+              Update Device
+            </Button>
+          </div>
+        </form>
 
-        {device.reported_other_device_names.length > 0 && (
-          <div className="mt-2">
-            Reported Other Device Names: {device.reported_other_device_names.map(name => (
-              <div
-                className="px-4"
-                key={name.id}
-              >
-                {name.vendor_name} {name.product_name}
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="mt-2">
+          Reported Issues: {device.reported_issues.map(issue => (
+            <div
+              className="px-4"
+              key={issue.id}
+            >
+              {issue.description}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-2">
+          Reported Other Device Names: {device.reported_other_device_names.map(name => (
+            <div
+              className="px-4"
+              key={name.id}
+            >
+              {name.vendor_name} {name.product_name}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div>
@@ -221,7 +277,7 @@ const ShowDevices = ({ report }: { report: FullReport }) => {
                 className="px-4 border-t"
                 key={device.id}
               >
-                <DeviceDisplay device={device} matchedDevices={matchMap.get(device.id)} />
+                <DeviceDisplay report={report} device={device} matchedDevices={matchMap.get(device.id)} />
               </div>
             ))}
           </div>

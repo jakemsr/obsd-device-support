@@ -3,7 +3,7 @@
 import { refresh } from 'next/cache';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth'
-import { report_status, source_type, report_element_status } from '@/app/generated/prisma/enums'
+import { report_status, report_element_status, source_type, support_type } from '@/app/generated/prisma/enums'
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
 import type { ActionState } from '@/lib/local-types'
@@ -154,5 +154,93 @@ export async function updateReportSource(
     error: '',
     success: true,
     message: 'Report source updated successfully'
+  };
+}
+
+export async function updateReportedDevice(
+  prevState: ActionState, formData: FormData
+): Promise<ActionState> {
+
+  const reportId = formData.get("reportId") as string;
+  const userId = formData.get("userId") as string;
+  const deviceId = formData.get("deviceId") as string;
+  const bus = formData.get("bus") as string;
+  const vendorId = formData.get("vendorId") as string;
+  const productId = formData.get("productId") as string;
+  const vendorName = formData.get("vendorName") as string;
+  const productName = formData.get("productName") as string;
+  const driverName = formData.get("driverName") as string;
+  const supportStatus = formData.get("supportStatus") as string;
+  const reportedIssues = formData.getAll("reportedIssues") as string[];
+  const reportedOtherDeviceNames = formData.getAll("reportedOtherDeviceNames") as string[];
+
+  if (!userId || !await checkAuth(userId)) {
+    return {
+      error: 'Unauthorized',
+      success: false,
+      message: 'Not logged in or doesn\'t own the report'
+    };
+  }
+
+  if (!reportId || !bus || !vendorId || !productId) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Report ID, bus, vendor ID or product ID is missing'
+    };
+  }
+
+  const valid = Object.values(support_type);
+  if (!valid.includes(supportStatus as typeof support_type[keyof typeof support_type])) {
+    return { error: 'Invalid input', success: false, message: 'Bad support status' };
+  }
+
+  try {
+    const newDevice = await prisma.reported_devices.create({
+      data: {
+        report_id: BigInt(reportId),
+        bus: bus,
+        vendor_id: vendorId,
+        product_id: productId,
+        reported_vendor: vendorName,
+        reported_product: productName,
+        reported_driver: driverName,
+        support_status: supportStatus as support_type,
+      }
+    });
+    await prisma.reported_devices.update({
+      where: { id: BigInt(deviceId) },
+      data: {
+        report_element_status: report_element_status.superseded,
+        report_element_status_updated_at: new Date(),
+        report_element_superseded_by_id: newDevice.id,
+      }
+    });
+    await prisma.reported_issues.updateMany({
+      where: { id: { in: reportedIssues.map(id => BigInt(id)) } },
+      data: {
+        reported_device_id: newDevice.id,
+      }
+    });
+    await prisma.reported_other_device_names.updateMany({
+      where: { id: { in: reportedOtherDeviceNames.map(id => BigInt(id)) } },
+      data: {
+        reported_device_id: newDevice.id,
+      }
+    });
+  } catch (err) {
+    return {
+      error: 'Database error',
+      success: false,
+      message: 'Something went wrong while updating the reported device'
+    };
+  }
+
+  refresh();
+
+  return {
+    error: '',
+    success: true,
+    message: 'Report device updated successfully'
   };
 }
