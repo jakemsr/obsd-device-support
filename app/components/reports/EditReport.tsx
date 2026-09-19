@@ -314,14 +314,11 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     label: value.replace(/_/g, " "),
   }));
 
-  const filteredStatusOptions =
-    session.user.role !== "editor"
-      ? statusOptions.filter(
+  const filteredStatusOptions = statusOptions.filter(
         (option) =>
           option.value === report_status.pending ||
           option.value === report_status.withdrawn
-      )
-      : statusOptions;
+      );
 
   const [state, statusFormAction, pending] = useActionState(updateReportStatus, {
     ...InitialActionState
