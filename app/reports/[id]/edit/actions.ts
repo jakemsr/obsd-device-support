@@ -106,7 +106,7 @@ export async function updateReportSource(
     return {
       error: 'Unauthorized',
       success: false,
-      message: 'Doesn\'t own the report or not an editor'
+      message: 'Not logged in or doesn\'t own the report'
     };
   }
 
