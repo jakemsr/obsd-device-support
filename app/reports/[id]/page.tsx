@@ -73,10 +73,10 @@ const DeviceDisplay = ({ device, matchedDevices }: { device: FullReportedDevice,
         </div>
 
         {device.reported_issues.length > 0 && (
-          <div>
+          <div className="mt-2">
             Reported Issues: {device.reported_issues.map(issue => (
               <div
-                className="px-4 mt-2"
+                className="px-4"
                 key={issue.id}
               >
                 {issue.description}
