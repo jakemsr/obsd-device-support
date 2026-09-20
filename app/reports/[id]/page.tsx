@@ -74,7 +74,8 @@ const DeviceDisplay = ({ device, matchedDevices }: { device: FullReportedDevice,
 
         {device.reported_issues.length > 0 && (
           <div className="mt-2">
-            Reported Issues: {device.reported_issues.map(issue => (
+            Reported Issues:
+            {device.reported_issues.map(issue => (
               <div
                 className="px-4"
                 key={issue.id}
@@ -87,7 +88,8 @@ const DeviceDisplay = ({ device, matchedDevices }: { device: FullReportedDevice,
 
         {device.reported_other_device_names.length > 0 && (
           <div className="mt-2">
-            Reported Other Device Names: {device.reported_other_device_names.map(name => (
+            Reported Other Device Names:
+            {device.reported_other_device_names.map(name => (
               <div
                 className="px-4"
                 key={name.id}
