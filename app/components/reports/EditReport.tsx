@@ -320,11 +320,21 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
           option.value === report_status.withdrawn
       );
 
-  const [state, statusFormAction, pending] = useActionState(updateReportStatus, {
-    ...InitialActionState
-  });
-
   const [showWithdrawnMessage, setShowWithdrawnMessage] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    const formData = new FormData(event.currentTarget);
+    const result = await updateReportStatus(InitialActionState, formData);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error + ": " + result.message);
+    }
+    setLoading(false);
+  };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === report_status.withdrawn) {
@@ -337,7 +347,7 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
 
   return (
     <>
-      <form action={statusFormAction}>
+      <form onSubmit={handleSubmit}>
         <div className="px-4 my-4">
           <div>
             Status: {report.status.split("_").join(" ")}
@@ -382,20 +392,10 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
             </div>
           )}
         </div>
-        <Button type="submit" disabled={pending}>
-          {pending && <LoadingSpinner />}
+        <Button type="submit" disabled={loading}>
+          {loading && <LoadingSpinner />}
           Update Status
         </Button>
-        {state.error &&
-          <div className="my-2 text-error">
-            {state.error} {state.message}
-          </div>
-        }
-        {state.success &&
-          <div className="my-2 text-success">
-            {state.message}
-          </div>
-        }
       </form>
       <>
         {report.sources.length > 0 && (
