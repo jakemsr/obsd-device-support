@@ -29,11 +29,13 @@ export type AggregateReported_other_device_names = {
 export type Reported_other_device_namesAvgAggregateOutputType = {
   id: number | null
   reported_device_id: number | null
+  report_element_superseded_by_id: number | null
 }
 
 export type Reported_other_device_namesSumAggregateOutputType = {
   id: bigint | null
   reported_device_id: bigint | null
+  report_element_superseded_by_id: bigint | null
 }
 
 export type Reported_other_device_namesMinAggregateOutputType = {
@@ -41,6 +43,9 @@ export type Reported_other_device_namesMinAggregateOutputType = {
   reported_device_id: bigint | null
   vendor_name: string | null
   product_name: string | null
+  report_element_status: $Enums.report_element_status | null
+  report_element_status_updated_at: Date | null
+  report_element_superseded_by_id: bigint | null
 }
 
 export type Reported_other_device_namesMaxAggregateOutputType = {
@@ -48,6 +53,9 @@ export type Reported_other_device_namesMaxAggregateOutputType = {
   reported_device_id: bigint | null
   vendor_name: string | null
   product_name: string | null
+  report_element_status: $Enums.report_element_status | null
+  report_element_status_updated_at: Date | null
+  report_element_superseded_by_id: bigint | null
 }
 
 export type Reported_other_device_namesCountAggregateOutputType = {
@@ -55,6 +63,9 @@ export type Reported_other_device_namesCountAggregateOutputType = {
   reported_device_id: number
   vendor_name: number
   product_name: number
+  report_element_status: number
+  report_element_status_updated_at: number
+  report_element_superseded_by_id: number
   _all: number
 }
 
@@ -62,11 +73,13 @@ export type Reported_other_device_namesCountAggregateOutputType = {
 export type Reported_other_device_namesAvgAggregateInputType = {
   id?: true
   reported_device_id?: true
+  report_element_superseded_by_id?: true
 }
 
 export type Reported_other_device_namesSumAggregateInputType = {
   id?: true
   reported_device_id?: true
+  report_element_superseded_by_id?: true
 }
 
 export type Reported_other_device_namesMinAggregateInputType = {
@@ -74,6 +87,9 @@ export type Reported_other_device_namesMinAggregateInputType = {
   reported_device_id?: true
   vendor_name?: true
   product_name?: true
+  report_element_status?: true
+  report_element_status_updated_at?: true
+  report_element_superseded_by_id?: true
 }
 
 export type Reported_other_device_namesMaxAggregateInputType = {
@@ -81,6 +97,9 @@ export type Reported_other_device_namesMaxAggregateInputType = {
   reported_device_id?: true
   vendor_name?: true
   product_name?: true
+  report_element_status?: true
+  report_element_status_updated_at?: true
+  report_element_superseded_by_id?: true
 }
 
 export type Reported_other_device_namesCountAggregateInputType = {
@@ -88,6 +107,9 @@ export type Reported_other_device_namesCountAggregateInputType = {
   reported_device_id?: true
   vendor_name?: true
   product_name?: true
+  report_element_status?: true
+  report_element_status_updated_at?: true
+  report_element_superseded_by_id?: true
   _all?: true
 }
 
@@ -182,6 +204,9 @@ export type Reported_other_device_namesGroupByOutputType = {
   reported_device_id: bigint
   vendor_name: string
   product_name: string
+  report_element_status: $Enums.report_element_status
+  report_element_status_updated_at: Date
+  report_element_superseded_by_id: bigint | null
   _count: Reported_other_device_namesCountAggregateOutputType | null
   _avg: Reported_other_device_namesAvgAggregateOutputType | null
   _sum: Reported_other_device_namesSumAggregateOutputType | null
@@ -212,7 +237,12 @@ export type reported_other_device_namesWhereInput = {
   reported_device_id?: Prisma.BigIntFilter<"reported_other_device_names"> | bigint | number
   vendor_name?: Prisma.StringFilter<"reported_other_device_names"> | string
   product_name?: Prisma.StringFilter<"reported_other_device_names"> | string
+  report_element_status?: Prisma.Enumreport_element_statusFilter<"reported_other_device_names"> | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFilter<"reported_other_device_names"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"reported_other_device_names"> | bigint | number | null
   reportedNameVerifications?: Prisma.Reported_name_verificationsListRelationFilter
+  reported_other_device_names?: Prisma.XOR<Prisma.Reported_other_device_namesNullableScalarRelationFilter, Prisma.reported_other_device_namesWhereInput> | null
+  other_reported_other_device_names?: Prisma.Reported_other_device_namesListRelationFilter
   reported_device?: Prisma.XOR<Prisma.Reported_devicesScalarRelationFilter, Prisma.reported_devicesWhereInput>
 }
 
@@ -221,7 +251,12 @@ export type reported_other_device_namesOrderByWithRelationInput = {
   reported_device_id?: Prisma.SortOrder
   vendor_name?: Prisma.SortOrder
   product_name?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
   reportedNameVerifications?: Prisma.reported_name_verificationsOrderByRelationAggregateInput
+  reported_other_device_names?: Prisma.reported_other_device_namesOrderByWithRelationInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesOrderByRelationAggregateInput
   reported_device?: Prisma.reported_devicesOrderByWithRelationInput
 }
 
@@ -233,7 +268,12 @@ export type reported_other_device_namesWhereUniqueInput = Prisma.AtLeast<{
   reported_device_id?: Prisma.BigIntFilter<"reported_other_device_names"> | bigint | number
   vendor_name?: Prisma.StringFilter<"reported_other_device_names"> | string
   product_name?: Prisma.StringFilter<"reported_other_device_names"> | string
+  report_element_status?: Prisma.Enumreport_element_statusFilter<"reported_other_device_names"> | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFilter<"reported_other_device_names"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"reported_other_device_names"> | bigint | number | null
   reportedNameVerifications?: Prisma.Reported_name_verificationsListRelationFilter
+  reported_other_device_names?: Prisma.XOR<Prisma.Reported_other_device_namesNullableScalarRelationFilter, Prisma.reported_other_device_namesWhereInput> | null
+  other_reported_other_device_names?: Prisma.Reported_other_device_namesListRelationFilter
   reported_device?: Prisma.XOR<Prisma.Reported_devicesScalarRelationFilter, Prisma.reported_devicesWhereInput>
 }, "id">
 
@@ -242,6 +282,9 @@ export type reported_other_device_namesOrderByWithAggregationInput = {
   reported_device_id?: Prisma.SortOrder
   vendor_name?: Prisma.SortOrder
   product_name?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.reported_other_device_namesCountOrderByAggregateInput
   _avg?: Prisma.reported_other_device_namesAvgOrderByAggregateInput
   _max?: Prisma.reported_other_device_namesMaxOrderByAggregateInput
@@ -257,13 +300,20 @@ export type reported_other_device_namesScalarWhereWithAggregatesInput = {
   reported_device_id?: Prisma.BigIntWithAggregatesFilter<"reported_other_device_names"> | bigint | number
   vendor_name?: Prisma.StringWithAggregatesFilter<"reported_other_device_names"> | string
   product_name?: Prisma.StringWithAggregatesFilter<"reported_other_device_names"> | string
+  report_element_status?: Prisma.Enumreport_element_statusWithAggregatesFilter<"reported_other_device_names"> | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeWithAggregatesFilter<"reported_other_device_names"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableWithAggregatesFilter<"reported_other_device_names"> | bigint | number | null
 }
 
 export type reported_other_device_namesCreateInput = {
   id?: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
   reportedNameVerifications?: Prisma.reported_name_verificationsCreateNestedManyWithoutReported_nameInput
+  reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedOneWithoutOther_reported_other_device_namesInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedManyWithoutReported_other_device_namesInput
   reported_device: Prisma.reported_devicesCreateNestedOneWithoutReported_other_device_namesInput
 }
 
@@ -272,14 +322,22 @@ export type reported_other_device_namesUncheckedCreateInput = {
   reported_device_id: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
   reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedCreateNestedManyWithoutReported_nameInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedCreateNestedManyWithoutReported_other_device_namesInput
 }
 
 export type reported_other_device_namesUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reportedNameVerifications?: Prisma.reported_name_verificationsUpdateManyWithoutReported_nameNestedInput
+  reported_other_device_names?: Prisma.reported_other_device_namesUpdateOneWithoutOther_reported_other_device_namesNestedInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUpdateManyWithoutReported_other_device_namesNestedInput
   reported_device?: Prisma.reported_devicesUpdateOneRequiredWithoutReported_other_device_namesNestedInput
 }
 
@@ -288,7 +346,11 @@ export type reported_other_device_namesUncheckedUpdateInput = {
   reported_device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedUpdateManyWithoutReported_nameNestedInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedUpdateManyWithoutReported_other_device_namesNestedInput
 }
 
 export type reported_other_device_namesCreateManyInput = {
@@ -296,12 +358,17 @@ export type reported_other_device_namesCreateManyInput = {
   reported_device_id: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
 }
 
 export type reported_other_device_namesUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type reported_other_device_namesUncheckedUpdateManyInput = {
@@ -309,6 +376,9 @@ export type reported_other_device_namesUncheckedUpdateManyInput = {
   reported_device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
 }
 
 export type Reported_other_device_namesListRelationFilter = {
@@ -321,16 +391,25 @@ export type reported_other_device_namesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type Reported_other_device_namesNullableScalarRelationFilter = {
+  is?: Prisma.reported_other_device_namesWhereInput | null
+  isNot?: Prisma.reported_other_device_namesWhereInput | null
+}
+
 export type reported_other_device_namesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reported_device_id?: Prisma.SortOrder
   vendor_name?: Prisma.SortOrder
   product_name?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
 }
 
 export type reported_other_device_namesAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reported_device_id?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
 }
 
 export type reported_other_device_namesMaxOrderByAggregateInput = {
@@ -338,6 +417,9 @@ export type reported_other_device_namesMaxOrderByAggregateInput = {
   reported_device_id?: Prisma.SortOrder
   vendor_name?: Prisma.SortOrder
   product_name?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
 }
 
 export type reported_other_device_namesMinOrderByAggregateInput = {
@@ -345,11 +427,15 @@ export type reported_other_device_namesMinOrderByAggregateInput = {
   reported_device_id?: Prisma.SortOrder
   vendor_name?: Prisma.SortOrder
   product_name?: Prisma.SortOrder
+  report_element_status?: Prisma.SortOrder
+  report_element_status_updated_at?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
 }
 
 export type reported_other_device_namesSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reported_device_id?: Prisma.SortOrder
+  report_element_superseded_by_id?: Prisma.SortOrder
 }
 
 export type Reported_other_device_namesScalarRelationFilter = {
@@ -399,6 +485,64 @@ export type reported_other_device_namesUncheckedUpdateManyWithoutReported_device
   deleteMany?: Prisma.reported_other_device_namesScalarWhereInput | Prisma.reported_other_device_namesScalarWhereInput[]
 }
 
+export type reported_other_device_namesCreateNestedOneWithoutOther_reported_other_device_namesInput = {
+  create?: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutOther_reported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutOther_reported_other_device_namesInput>
+  connectOrCreate?: Prisma.reported_other_device_namesCreateOrConnectWithoutOther_reported_other_device_namesInput
+  connect?: Prisma.reported_other_device_namesWhereUniqueInput
+}
+
+export type reported_other_device_namesCreateNestedManyWithoutReported_other_device_namesInput = {
+  create?: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput> | Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput[] | Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput[]
+  connectOrCreate?: Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput[]
+  createMany?: Prisma.reported_other_device_namesCreateManyReported_other_device_namesInputEnvelope
+  connect?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+}
+
+export type reported_other_device_namesUncheckedCreateNestedManyWithoutReported_other_device_namesInput = {
+  create?: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput> | Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput[] | Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput[]
+  connectOrCreate?: Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput[]
+  createMany?: Prisma.reported_other_device_namesCreateManyReported_other_device_namesInputEnvelope
+  connect?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+}
+
+export type reported_other_device_namesUpdateOneWithoutOther_reported_other_device_namesNestedInput = {
+  create?: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutOther_reported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutOther_reported_other_device_namesInput>
+  connectOrCreate?: Prisma.reported_other_device_namesCreateOrConnectWithoutOther_reported_other_device_namesInput
+  upsert?: Prisma.reported_other_device_namesUpsertWithoutOther_reported_other_device_namesInput
+  disconnect?: Prisma.reported_other_device_namesWhereInput | boolean
+  delete?: Prisma.reported_other_device_namesWhereInput | boolean
+  connect?: Prisma.reported_other_device_namesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.reported_other_device_namesUpdateToOneWithWhereWithoutOther_reported_other_device_namesInput, Prisma.reported_other_device_namesUpdateWithoutOther_reported_other_device_namesInput>, Prisma.reported_other_device_namesUncheckedUpdateWithoutOther_reported_other_device_namesInput>
+}
+
+export type reported_other_device_namesUpdateManyWithoutReported_other_device_namesNestedInput = {
+  create?: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput> | Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput[] | Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput[]
+  connectOrCreate?: Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput[]
+  upsert?: Prisma.reported_other_device_namesUpsertWithWhereUniqueWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesUpsertWithWhereUniqueWithoutReported_other_device_namesInput[]
+  createMany?: Prisma.reported_other_device_namesCreateManyReported_other_device_namesInputEnvelope
+  set?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  disconnect?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  delete?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  connect?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  update?: Prisma.reported_other_device_namesUpdateWithWhereUniqueWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesUpdateWithWhereUniqueWithoutReported_other_device_namesInput[]
+  updateMany?: Prisma.reported_other_device_namesUpdateManyWithWhereWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesUpdateManyWithWhereWithoutReported_other_device_namesInput[]
+  deleteMany?: Prisma.reported_other_device_namesScalarWhereInput | Prisma.reported_other_device_namesScalarWhereInput[]
+}
+
+export type reported_other_device_namesUncheckedUpdateManyWithoutReported_other_device_namesNestedInput = {
+  create?: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput> | Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput[] | Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput[]
+  connectOrCreate?: Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput[]
+  upsert?: Prisma.reported_other_device_namesUpsertWithWhereUniqueWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesUpsertWithWhereUniqueWithoutReported_other_device_namesInput[]
+  createMany?: Prisma.reported_other_device_namesCreateManyReported_other_device_namesInputEnvelope
+  set?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  disconnect?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  delete?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  connect?: Prisma.reported_other_device_namesWhereUniqueInput | Prisma.reported_other_device_namesWhereUniqueInput[]
+  update?: Prisma.reported_other_device_namesUpdateWithWhereUniqueWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesUpdateWithWhereUniqueWithoutReported_other_device_namesInput[]
+  updateMany?: Prisma.reported_other_device_namesUpdateManyWithWhereWithoutReported_other_device_namesInput | Prisma.reported_other_device_namesUpdateManyWithWhereWithoutReported_other_device_namesInput[]
+  deleteMany?: Prisma.reported_other_device_namesScalarWhereInput | Prisma.reported_other_device_namesScalarWhereInput[]
+}
+
 export type reported_other_device_namesCreateNestedOneWithoutReportedNameVerificationsInput = {
   create?: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutReportedNameVerificationsInput, Prisma.reported_other_device_namesUncheckedCreateWithoutReportedNameVerificationsInput>
   connectOrCreate?: Prisma.reported_other_device_namesCreateOrConnectWithoutReportedNameVerificationsInput
@@ -417,14 +561,22 @@ export type reported_other_device_namesCreateWithoutReported_deviceInput = {
   id?: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
   reportedNameVerifications?: Prisma.reported_name_verificationsCreateNestedManyWithoutReported_nameInput
+  reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedOneWithoutOther_reported_other_device_namesInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedManyWithoutReported_other_device_namesInput
 }
 
 export type reported_other_device_namesUncheckedCreateWithoutReported_deviceInput = {
   id?: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
   reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedCreateNestedManyWithoutReported_nameInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedCreateNestedManyWithoutReported_other_device_namesInput
 }
 
 export type reported_other_device_namesCreateOrConnectWithoutReported_deviceInput = {
@@ -461,12 +613,127 @@ export type reported_other_device_namesScalarWhereInput = {
   reported_device_id?: Prisma.BigIntFilter<"reported_other_device_names"> | bigint | number
   vendor_name?: Prisma.StringFilter<"reported_other_device_names"> | string
   product_name?: Prisma.StringFilter<"reported_other_device_names"> | string
+  report_element_status?: Prisma.Enumreport_element_statusFilter<"reported_other_device_names"> | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFilter<"reported_other_device_names"> | Date | string
+  report_element_superseded_by_id?: Prisma.BigIntNullableFilter<"reported_other_device_names"> | bigint | number | null
+}
+
+export type reported_other_device_namesCreateWithoutOther_reported_other_device_namesInput = {
+  id?: bigint | number
+  vendor_name: string
+  product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  reportedNameVerifications?: Prisma.reported_name_verificationsCreateNestedManyWithoutReported_nameInput
+  reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedOneWithoutOther_reported_other_device_namesInput
+  reported_device: Prisma.reported_devicesCreateNestedOneWithoutReported_other_device_namesInput
+}
+
+export type reported_other_device_namesUncheckedCreateWithoutOther_reported_other_device_namesInput = {
+  id?: bigint | number
+  reported_device_id: bigint | number
+  vendor_name: string
+  product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedCreateNestedManyWithoutReported_nameInput
+}
+
+export type reported_other_device_namesCreateOrConnectWithoutOther_reported_other_device_namesInput = {
+  where: Prisma.reported_other_device_namesWhereUniqueInput
+  create: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutOther_reported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutOther_reported_other_device_namesInput>
+}
+
+export type reported_other_device_namesCreateWithoutReported_other_device_namesInput = {
+  id?: bigint | number
+  vendor_name: string
+  product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  reportedNameVerifications?: Prisma.reported_name_verificationsCreateNestedManyWithoutReported_nameInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedManyWithoutReported_other_device_namesInput
+  reported_device: Prisma.reported_devicesCreateNestedOneWithoutReported_other_device_namesInput
+}
+
+export type reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput = {
+  id?: bigint | number
+  reported_device_id: bigint | number
+  vendor_name: string
+  product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedCreateNestedManyWithoutReported_nameInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedCreateNestedManyWithoutReported_other_device_namesInput
+}
+
+export type reported_other_device_namesCreateOrConnectWithoutReported_other_device_namesInput = {
+  where: Prisma.reported_other_device_namesWhereUniqueInput
+  create: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput>
+}
+
+export type reported_other_device_namesCreateManyReported_other_device_namesInputEnvelope = {
+  data: Prisma.reported_other_device_namesCreateManyReported_other_device_namesInput | Prisma.reported_other_device_namesCreateManyReported_other_device_namesInput[]
+  skipDuplicates?: boolean
+}
+
+export type reported_other_device_namesUpsertWithoutOther_reported_other_device_namesInput = {
+  update: Prisma.XOR<Prisma.reported_other_device_namesUpdateWithoutOther_reported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedUpdateWithoutOther_reported_other_device_namesInput>
+  create: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutOther_reported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutOther_reported_other_device_namesInput>
+  where?: Prisma.reported_other_device_namesWhereInput
+}
+
+export type reported_other_device_namesUpdateToOneWithWhereWithoutOther_reported_other_device_namesInput = {
+  where?: Prisma.reported_other_device_namesWhereInput
+  data: Prisma.XOR<Prisma.reported_other_device_namesUpdateWithoutOther_reported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedUpdateWithoutOther_reported_other_device_namesInput>
+}
+
+export type reported_other_device_namesUpdateWithoutOther_reported_other_device_namesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
+  product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reportedNameVerifications?: Prisma.reported_name_verificationsUpdateManyWithoutReported_nameNestedInput
+  reported_other_device_names?: Prisma.reported_other_device_namesUpdateOneWithoutOther_reported_other_device_namesNestedInput
+  reported_device?: Prisma.reported_devicesUpdateOneRequiredWithoutReported_other_device_namesNestedInput
+}
+
+export type reported_other_device_namesUncheckedUpdateWithoutOther_reported_other_device_namesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  reported_device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
+  product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedUpdateManyWithoutReported_nameNestedInput
+}
+
+export type reported_other_device_namesUpsertWithWhereUniqueWithoutReported_other_device_namesInput = {
+  where: Prisma.reported_other_device_namesWhereUniqueInput
+  update: Prisma.XOR<Prisma.reported_other_device_namesUpdateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedUpdateWithoutReported_other_device_namesInput>
+  create: Prisma.XOR<Prisma.reported_other_device_namesCreateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedCreateWithoutReported_other_device_namesInput>
+}
+
+export type reported_other_device_namesUpdateWithWhereUniqueWithoutReported_other_device_namesInput = {
+  where: Prisma.reported_other_device_namesWhereUniqueInput
+  data: Prisma.XOR<Prisma.reported_other_device_namesUpdateWithoutReported_other_device_namesInput, Prisma.reported_other_device_namesUncheckedUpdateWithoutReported_other_device_namesInput>
+}
+
+export type reported_other_device_namesUpdateManyWithWhereWithoutReported_other_device_namesInput = {
+  where: Prisma.reported_other_device_namesScalarWhereInput
+  data: Prisma.XOR<Prisma.reported_other_device_namesUpdateManyMutationInput, Prisma.reported_other_device_namesUncheckedUpdateManyWithoutReported_other_device_namesInput>
 }
 
 export type reported_other_device_namesCreateWithoutReportedNameVerificationsInput = {
   id?: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedOneWithoutOther_reported_other_device_namesInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesCreateNestedManyWithoutReported_other_device_namesInput
   reported_device: Prisma.reported_devicesCreateNestedOneWithoutReported_other_device_namesInput
 }
 
@@ -475,6 +742,10 @@ export type reported_other_device_namesUncheckedCreateWithoutReportedNameVerific
   reported_device_id: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedCreateNestedManyWithoutReported_other_device_namesInput
 }
 
 export type reported_other_device_namesCreateOrConnectWithoutReportedNameVerificationsInput = {
@@ -497,6 +768,10 @@ export type reported_other_device_namesUpdateWithoutReportedNameVerificationsInp
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reported_other_device_names?: Prisma.reported_other_device_namesUpdateOneWithoutOther_reported_other_device_namesNestedInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUpdateManyWithoutReported_other_device_namesNestedInput
   reported_device?: Prisma.reported_devicesUpdateOneRequiredWithoutReported_other_device_namesNestedInput
 }
 
@@ -505,32 +780,90 @@ export type reported_other_device_namesUncheckedUpdateWithoutReportedNameVerific
   reported_device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedUpdateManyWithoutReported_other_device_namesNestedInput
 }
 
 export type reported_other_device_namesCreateManyReported_deviceInput = {
   id?: bigint | number
   vendor_name: string
   product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+  report_element_superseded_by_id?: bigint | number | null
 }
 
 export type reported_other_device_namesUpdateWithoutReported_deviceInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reportedNameVerifications?: Prisma.reported_name_verificationsUpdateManyWithoutReported_nameNestedInput
+  reported_other_device_names?: Prisma.reported_other_device_namesUpdateOneWithoutOther_reported_other_device_namesNestedInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUpdateManyWithoutReported_other_device_namesNestedInput
 }
 
 export type reported_other_device_namesUncheckedUpdateWithoutReported_deviceInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedUpdateManyWithoutReported_nameNestedInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedUpdateManyWithoutReported_other_device_namesNestedInput
 }
 
 export type reported_other_device_namesUncheckedUpdateManyWithoutReported_deviceInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
   product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  report_element_superseded_by_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+}
+
+export type reported_other_device_namesCreateManyReported_other_device_namesInput = {
+  id?: bigint | number
+  reported_device_id: bigint | number
+  vendor_name: string
+  product_name: string
+  report_element_status?: $Enums.report_element_status
+  report_element_status_updated_at?: Date | string
+}
+
+export type reported_other_device_namesUpdateWithoutReported_other_device_namesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
+  product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reportedNameVerifications?: Prisma.reported_name_verificationsUpdateManyWithoutReported_nameNestedInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUpdateManyWithoutReported_other_device_namesNestedInput
+  reported_device?: Prisma.reported_devicesUpdateOneRequiredWithoutReported_other_device_namesNestedInput
+}
+
+export type reported_other_device_namesUncheckedUpdateWithoutReported_other_device_namesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  reported_device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
+  product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reportedNameVerifications?: Prisma.reported_name_verificationsUncheckedUpdateManyWithoutReported_nameNestedInput
+  other_reported_other_device_names?: Prisma.reported_other_device_namesUncheckedUpdateManyWithoutReported_other_device_namesNestedInput
+}
+
+export type reported_other_device_namesUncheckedUpdateManyWithoutReported_other_device_namesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  reported_device_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  vendor_name?: Prisma.StringFieldUpdateOperationsInput | string
+  product_name?: Prisma.StringFieldUpdateOperationsInput | string
+  report_element_status?: Prisma.Enumreport_element_statusFieldUpdateOperationsInput | $Enums.report_element_status
+  report_element_status_updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -540,10 +873,12 @@ export type reported_other_device_namesUncheckedUpdateManyWithoutReported_device
 
 export type Reported_other_device_namesCountOutputType = {
   reportedNameVerifications: number
+  other_reported_other_device_names: number
 }
 
 export type Reported_other_device_namesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reportedNameVerifications?: boolean | Reported_other_device_namesCountOutputTypeCountReportedNameVerificationsArgs
+  other_reported_other_device_names?: boolean | Reported_other_device_namesCountOutputTypeCountOther_reported_other_device_namesArgs
 }
 
 /**
@@ -563,13 +898,25 @@ export type Reported_other_device_namesCountOutputTypeCountReportedNameVerificat
   where?: Prisma.reported_name_verificationsWhereInput
 }
 
+/**
+ * Reported_other_device_namesCountOutputType without action
+ */
+export type Reported_other_device_namesCountOutputTypeCountOther_reported_other_device_namesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.reported_other_device_namesWhereInput
+}
+
 
 export type reported_other_device_namesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reported_device_id?: boolean
   vendor_name?: boolean
   product_name?: boolean
+  report_element_status?: boolean
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
   reportedNameVerifications?: boolean | Prisma.reported_other_device_names$reportedNameVerificationsArgs<ExtArgs>
+  reported_other_device_names?: boolean | Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs>
+  other_reported_other_device_names?: boolean | Prisma.reported_other_device_names$other_reported_other_device_namesArgs<ExtArgs>
   reported_device?: boolean | Prisma.reported_devicesDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.Reported_other_device_namesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reported_other_device_names"]>
@@ -579,6 +926,10 @@ export type reported_other_device_namesSelectCreateManyAndReturn<ExtArgs extends
   reported_device_id?: boolean
   vendor_name?: boolean
   product_name?: boolean
+  report_element_status?: boolean
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
+  reported_other_device_names?: boolean | Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs>
   reported_device?: boolean | Prisma.reported_devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reported_other_device_names"]>
 
@@ -587,6 +938,10 @@ export type reported_other_device_namesSelectUpdateManyAndReturn<ExtArgs extends
   reported_device_id?: boolean
   vendor_name?: boolean
   product_name?: boolean
+  report_element_status?: boolean
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
+  reported_other_device_names?: boolean | Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs>
   reported_device?: boolean | Prisma.reported_devicesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reported_other_device_names"]>
 
@@ -595,18 +950,25 @@ export type reported_other_device_namesSelectScalar = {
   reported_device_id?: boolean
   vendor_name?: boolean
   product_name?: boolean
+  report_element_status?: boolean
+  report_element_status_updated_at?: boolean
+  report_element_superseded_by_id?: boolean
 }
 
-export type reported_other_device_namesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reported_device_id" | "vendor_name" | "product_name", ExtArgs["result"]["reported_other_device_names"]>
+export type reported_other_device_namesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reported_device_id" | "vendor_name" | "product_name" | "report_element_status" | "report_element_status_updated_at" | "report_element_superseded_by_id", ExtArgs["result"]["reported_other_device_names"]>
 export type reported_other_device_namesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reportedNameVerifications?: boolean | Prisma.reported_other_device_names$reportedNameVerificationsArgs<ExtArgs>
+  reported_other_device_names?: boolean | Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs>
+  other_reported_other_device_names?: boolean | Prisma.reported_other_device_names$other_reported_other_device_namesArgs<ExtArgs>
   reported_device?: boolean | Prisma.reported_devicesDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.Reported_other_device_namesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type reported_other_device_namesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reported_other_device_names?: boolean | Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs>
   reported_device?: boolean | Prisma.reported_devicesDefaultArgs<ExtArgs>
 }
 export type reported_other_device_namesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reported_other_device_names?: boolean | Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs>
   reported_device?: boolean | Prisma.reported_devicesDefaultArgs<ExtArgs>
 }
 
@@ -614,6 +976,8 @@ export type $reported_other_device_namesPayload<ExtArgs extends runtime.Types.Ex
   name: "reported_other_device_names"
   objects: {
     reportedNameVerifications: Prisma.$reported_name_verificationsPayload<ExtArgs>[]
+    reported_other_device_names: Prisma.$reported_other_device_namesPayload<ExtArgs> | null
+    other_reported_other_device_names: Prisma.$reported_other_device_namesPayload<ExtArgs>[]
     reported_device: Prisma.$reported_devicesPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -621,6 +985,9 @@ export type $reported_other_device_namesPayload<ExtArgs extends runtime.Types.Ex
     reported_device_id: bigint
     vendor_name: string
     product_name: string
+    report_element_status: $Enums.report_element_status
+    report_element_status_updated_at: Date
+    report_element_superseded_by_id: bigint | null
   }, ExtArgs["result"]["reported_other_device_names"]>
   composites: {}
 }
@@ -1016,6 +1383,8 @@ readonly fields: reported_other_device_namesFieldRefs;
 export interface Prisma__reported_other_device_namesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   reportedNameVerifications<T extends Prisma.reported_other_device_names$reportedNameVerificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reported_other_device_names$reportedNameVerificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$reported_name_verificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reported_other_device_names<T extends Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reported_other_device_names$reported_other_device_namesArgs<ExtArgs>>): Prisma.Prisma__reported_other_device_namesClient<runtime.Types.Result.GetResult<Prisma.$reported_other_device_namesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  other_reported_other_device_names<T extends Prisma.reported_other_device_names$other_reported_other_device_namesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reported_other_device_names$other_reported_other_device_namesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$reported_other_device_namesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reported_device<T extends Prisma.reported_devicesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.reported_devicesDefaultArgs<ExtArgs>>): Prisma.Prisma__reported_devicesClient<runtime.Types.Result.GetResult<Prisma.$reported_devicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1050,6 +1419,9 @@ export interface reported_other_device_namesFieldRefs {
   readonly reported_device_id: Prisma.FieldRef<"reported_other_device_names", 'BigInt'>
   readonly vendor_name: Prisma.FieldRef<"reported_other_device_names", 'String'>
   readonly product_name: Prisma.FieldRef<"reported_other_device_names", 'String'>
+  readonly report_element_status: Prisma.FieldRef<"reported_other_device_names", 'report_element_status'>
+  readonly report_element_status_updated_at: Prisma.FieldRef<"reported_other_device_names", 'DateTime'>
+  readonly report_element_superseded_by_id: Prisma.FieldRef<"reported_other_device_names", 'BigInt'>
 }
     
 
@@ -1472,6 +1844,49 @@ export type reported_other_device_names$reportedNameVerificationsArgs<ExtArgs ex
   take?: number
   skip?: number
   distinct?: Prisma.Reported_name_verificationsScalarFieldEnum | Prisma.Reported_name_verificationsScalarFieldEnum[]
+}
+
+/**
+ * reported_other_device_names.reported_other_device_names
+ */
+export type reported_other_device_names$reported_other_device_namesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the reported_other_device_names
+   */
+  select?: Prisma.reported_other_device_namesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the reported_other_device_names
+   */
+  omit?: Prisma.reported_other_device_namesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.reported_other_device_namesInclude<ExtArgs> | null
+  where?: Prisma.reported_other_device_namesWhereInput
+}
+
+/**
+ * reported_other_device_names.other_reported_other_device_names
+ */
+export type reported_other_device_names$other_reported_other_device_namesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the reported_other_device_names
+   */
+  select?: Prisma.reported_other_device_namesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the reported_other_device_names
+   */
+  omit?: Prisma.reported_other_device_namesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.reported_other_device_namesInclude<ExtArgs> | null
+  where?: Prisma.reported_other_device_namesWhereInput
+  orderBy?: Prisma.reported_other_device_namesOrderByWithRelationInput | Prisma.reported_other_device_namesOrderByWithRelationInput[]
+  cursor?: Prisma.reported_other_device_namesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Reported_other_device_namesScalarFieldEnum | Prisma.Reported_other_device_namesScalarFieldEnum[]
 }
 
 /**

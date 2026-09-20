@@ -224,7 +224,10 @@ export type Reported_devicesScalarFieldEnum = (typeof Reported_devicesScalarFiel
 export const Reported_issuesScalarFieldEnum = {
   id: 'id',
   reported_device_id: 'reported_device_id',
-  description: 'description'
+  description: 'description',
+  report_element_status: 'report_element_status',
+  report_element_status_updated_at: 'report_element_status_updated_at',
+  report_element_superseded_by_id: 'report_element_superseded_by_id'
 } as const
 
 export type Reported_issuesScalarFieldEnum = (typeof Reported_issuesScalarFieldEnum)[keyof typeof Reported_issuesScalarFieldEnum]
@@ -234,7 +237,10 @@ export const Reported_other_device_namesScalarFieldEnum = {
   id: 'id',
   reported_device_id: 'reported_device_id',
   vendor_name: 'vendor_name',
-  product_name: 'product_name'
+  product_name: 'product_name',
+  report_element_status: 'report_element_status',
+  report_element_status_updated_at: 'report_element_status_updated_at',
+  report_element_superseded_by_id: 'report_element_superseded_by_id'
 } as const
 
 export type Reported_other_device_namesScalarFieldEnum = (typeof Reported_other_device_namesScalarFieldEnum)[keyof typeof Reported_other_device_namesScalarFieldEnum]

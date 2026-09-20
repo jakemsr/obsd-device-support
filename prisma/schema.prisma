@@ -162,22 +162,32 @@ model reported_devices {
 }
 
 model reported_issues {
-  id                 BigInt           @id @default(autoincrement())
-  reported_device_id BigInt
-  description        String
-  reported_device    reported_devices @relation(fields: [reported_device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                               BigInt                @id @default(autoincrement())
+  reported_device_id               BigInt
+  description                      String
+  report_element_status            report_element_status @default(current)
+  report_element_status_updated_at DateTime              @default(now()) @db.Timestamptz(6)
+  report_element_superseded_by_id  BigInt?
+  reported_issues                  reported_issues?      @relation("reported_issuesToreported_issues", fields: [report_element_superseded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_reported_issues            reported_issues[]     @relation("reported_issuesToreported_issues")
+  reported_device                  reported_devices      @relation(fields: [reported_device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([reported_device_id])
   @@schema("public")
 }
 
 model reported_other_device_names {
-  id                        BigInt                        @id @default(autoincrement())
-  reported_device_id        BigInt
-  vendor_name               String
-  product_name              String
-  reportedNameVerifications reported_name_verifications[]
-  reported_device           reported_devices              @relation(fields: [reported_device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                                BigInt                        @id @default(autoincrement())
+  reported_device_id                BigInt
+  vendor_name                       String
+  product_name                      String
+  report_element_status             report_element_status         @default(current)
+  report_element_status_updated_at  DateTime                      @default(now()) @db.Timestamptz(6)
+  report_element_superseded_by_id   BigInt?
+  reportedNameVerifications         reported_name_verifications[]
+  reported_other_device_names       reported_other_device_names?  @relation("reported_other_device_namesToreported_other_device_names", fields: [report_element_superseded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_reported_other_device_names reported_other_device_names[] @relation("reported_other_device_namesToreported_other_device_names")
+  reported_device                   reported_devices              @relation(fields: [reported_device_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([reported_device_id])
   @@schema("public")
