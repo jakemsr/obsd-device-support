@@ -244,3 +244,176 @@ export async function updateReportedDevice(
     message: 'Report device updated successfully'
   };
 }
+
+export async function updateReportedIssues(
+  prevState: ActionState, formData: FormData
+): Promise<ActionState> {
+  const userId = formData.get("userId") as string;
+  const deviceId = formData.get("deviceId") as string;
+  const reportedIssueCount = formData.get("reportedIssueCount") as string;
+  const addedIssueCount = formData.get("addedIssueCount") as string;
+
+
+  if (!userId || !await checkAuth(userId)) {
+    return {
+      error: 'Unauthorized',
+      success: false,
+      message: 'Not logged in or doesn\'t own the report'
+    };
+  }
+
+  if (!deviceId || !reportedIssueCount || !addedIssueCount) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Device ID or an issue count are missing'
+    };
+  }
+
+  type ReportedIssue = {
+    id: string;
+    text: string;
+  }
+  const reportedIssues: ReportedIssue[] = [];
+
+  for (let i = 0; i < Number(reportedIssueCount); i++) {
+    const id = formData.get(`reportedIssueId${i}`) as string;
+    const text = formData.get(`reportedIssueText${i}`) as string;
+    reportedIssues.push({ id, text });
+  }
+  for (let i = 0; i < Number(addedIssueCount); i++) {
+    const text = formData.get(`addedIssueText${i}`) as string;
+    reportedIssues.push({ id: '', text });
+  }
+
+  try {
+    for (const issue of reportedIssues) {
+      if (issue.text) {
+        const newIssue = await prisma.reported_issues.create({
+          data: {
+            reported_device_id: BigInt(deviceId),
+            description: issue.text,
+          }
+        });
+        // if the issue has an id, it is an existing issue that is being superseded
+        if (issue.id) {
+          await prisma.reported_issues.update({
+            where: { id: BigInt(issue.id) },
+            data: {
+              report_element_status: report_element_status.superseded,
+              report_element_status_updated_at: new Date(),
+              report_element_superseded_by_id: newIssue.id,
+            }
+          });
+        }
+      } else {
+        // don't try to remove empty new issues
+        if (issue.id) {
+          await prisma.reported_issues.update({
+            where: { id: BigInt(issue.id) },
+            data: {
+              report_element_status: report_element_status.removed,
+              report_element_status_updated_at: new Date(),
+            }
+          });
+        }
+      }
+    }
+  } catch (err) {
+    return {
+      error: 'Database error',
+      success: false,
+      message: 'Something went wrong while updating the reported issues'
+    };
+  }
+
+  refresh();
+
+  return {
+    error: '',
+    success: true,
+    message: 'Reported issues updated successfully'
+  };
+
+}
+
+
+export async function updateReportedOtherDeviceNames(
+  prevState: ActionState, formData: FormData
+): Promise<ActionState> {
+  const userId = formData.get("userId") as string;
+  const deviceId = formData.get("deviceId") as string;
+  const reportedIssueCount = formData.get("reportedIssueCount") as string;
+
+  type ReportedIssue = {
+    id: string;
+    text: string;
+  }
+  const reportedIssues: ReportedIssue[] = [];
+
+  for (let i = 0; i < Number(reportedIssueCount); i++) {
+    const id = formData.get(`reportedIssueId${i}`) as string;
+    const text = formData.get(`reportedIssueText${i}`) as string;
+    reportedIssues.push({ id, text });
+  }
+
+  if (!userId || !await checkAuth(userId)) {
+    return {
+      error: 'Unauthorized',
+      success: false,
+      message: 'Not logged in or doesn\'t own the report'
+    };
+  }
+
+  if (!deviceId || !reportedIssueCount) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Device ID or reported issue count are missing'
+    };
+  }
+
+  try {
+    for (const issue of reportedIssues) {
+      if (issue.text) {
+        const newIssue = await prisma.reported_issues.create({
+          data: {
+            reported_device_id: BigInt(deviceId),
+            description: issue.text,
+          }
+        });
+        await prisma.reported_issues.update({
+          where: { id: BigInt(issue.id) },
+          data: {
+            reported_element_status: report_element_status.superseded,
+            report_element_status_updated_at: new Date(),
+            report_element_superseded_by_id: newIssue.id,
+          }
+        });
+      } else {
+        await prisma.reported_issues.update({
+          where: { id: BigInt(issue.id) },
+          data: {
+            reported_element_status: report_element_status.removed,
+            report_element_status_updated_at: new Date(),
+          }
+        });
+      }
+    }
+  } catch (err) {
+    return {
+      error: 'Database error',
+      success: false,
+      message: 'Something went wrong while updating the reported device'
+    };
+  }
+
+  refresh();
+
+  return {
+    error: '',
+    success: true,
+    message: 'Reported issues updated successfully'
+  };
+
+}

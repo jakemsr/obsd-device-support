@@ -1,13 +1,19 @@
 "use client";
 
-import { Suspense, use, useActionState, useEffect, useState } from "react";
+import { ChangeEvent, Suspense, use, useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Prisma } from "@/app/generated/prisma/client";
 import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState } from "@/lib/local-types";
 import { report_status, source_type, support_type } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { getMatchedDevices } from '@/app/reports/[id]/actions';
-import { updateReportSource, updateReportStatus, updateReportedDevice } from '@/app/reports/[id]/edit/actions';
+import {
+  updateReportSource,
+  updateReportStatus,
+  updateReportedDevice,
+  updateReportedIssues,
+  updateReportedOtherDeviceNames
+} from '@/app/reports/[id]/edit/actions';
 
 
 type SourceWithReports = Prisma.report_sourcesGetPayload<{
@@ -102,25 +108,72 @@ type FullReportedDevice = Prisma.reported_devicesGetPayload<{
 
 const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport, device: FullReportedDevice, matchedDevices?: FullDeviceInfo[] }) => {
 
-  const [loading, setLoading] = useState(false);
+  enum SubmitType {
+    Device = "device",
+    Issues = "issues",
+    OtherNames = "otherNames"
+  }
 
-  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+  const [loadingDevice, setLoadingDevice] = useState(false);
+  const [loadingIssues, setLoadingIssues] = useState(false);
+  const [loadingOtherNames, setLoadingOtherNames] = useState(false);
+
+  interface valueField {
+    value: string;
+  }
+
+  const [addedIssueFields, setAddedIssueFields] = useState<valueField[]>([]);
+
+  const handleAddedIssueChange = (index: number, event: ChangeEvent<HTMLTextAreaElement>) => {
+    const data = [...addedIssueFields];
+    data[index].value = event.target.value;
+    setAddedIssueFields(data);
+  };
+
+  const addIssueField = () => {
+    setAddedIssueFields([...addedIssueFields, { value: '' }]);
+  };
+
+
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>, submitType: SubmitType) => {
     event.preventDefault();
-    setLoading(true);
     const formData = new FormData(event.currentTarget);
-    const result = await updateReportedDevice(InitialActionState, formData);
+    let result;
+    switch (submitType) {
+      case SubmitType.Device:
+        setLoadingDevice(true);
+        result = await updateReportedDevice(InitialActionState, formData);
+        setLoadingDevice(false);
+        break;
+      case SubmitType.Issues:
+        setLoadingIssues(true);
+        result = await updateReportedIssues(InitialActionState, formData);
+        setLoadingIssues(false);
+        break;
+      case SubmitType.OtherNames:
+        setLoadingOtherNames(true);
+        result = await updateReportedOtherDeviceNames(InitialActionState, formData);
+        setLoadingOtherNames(false);
+        break;
+    }
     if (result.success) {
       toast.success(result.message);
+      if (submitType === SubmitType.Issues) {
+        setAddedIssueFields([]);
+      }
     } else {
       toast.error(result.error + ": " + result.message);
     }
-    setLoading(false);
   };
+
 
   return (
     <div className="my-2 grid grid-cols-1 sm:grid-cols-2 gap-y-6">
       <div>
-        <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-2">
+        <form
+          onSubmit={(e) => handleSubmit(e, SubmitType.Device)}
+          className="grid grid-cols-4 gap-2"
+        >
           <input type="hidden" name="reportId" value={String(device.report_id)} />
           <input type="hidden" name="userId" value={report.user_id} />
           <input type="hidden" name="deviceId" value={String(device.id)} />
@@ -179,33 +232,102 @@ const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport,
             {device.reported_other_device_names.map(name => (
               <input key={name.id} type="hidden" name="reportedOtherDeviceNames" value={String(name.id)} />
             ))}
-            <Button type="submit" disabled={loading}>
-              {loading && <LoadingSpinner />}
+            <Button type="submit" disabled={loadingDevice}>
+              {loadingDevice && <LoadingSpinner />}
               Update Device
             </Button>
           </div>
         </form>
 
-        <div className="mt-2">
-          Reported Issues: {device.reported_issues.map(issue => (
-            <div
-              className="px-4"
-              key={issue.id}
-            >
-              {issue.description}
+        <div className="mt-6">
+          Reported Issues:
+          {device.reported_issues.length === 0 ? (
+            <div className="px-4">
+              No reported issues
+              <Button type="button" onClick={addIssueField}>
+                Add Another Issue
+              </Button>
             </div>
-          ))}
+          ) : (
+            <form
+              onSubmit={(e) => handleSubmit(e, SubmitType.Issues)}
+              className="px-4"
+            >
+              <input type="hidden" name="userId" value={String(report.user_id)} />
+              <input type="hidden" name="deviceId" value={String(device.id)} />
+              <input type="hidden" name="reportedIssueCount" value={String(device.reported_issues.length)} />
+              {device.reported_issues.map((issue, index) => (
+                <div key={index} className="grid grid-cols-4 gap-4">
+                  <input type="hidden" name={`reportedIssueId${index}`} value={String(issue.id)} />
+                  <div>
+                    Issue #{index + 1}:
+                  </div>
+                  <textarea
+                    className="px-4 col-span-3"
+                    name={`reportedIssueText${index}`}
+                    defaultValue={issue.description}
+                    key={issue.id}
+                  />
+                </div>
+              ))}
+              <input type="hidden" name="addedIssueCount" value={String(addedIssueFields.length)} />
+              {addedIssueFields.map((issue, index) => (
+                <div key={index} className="grid grid-cols-4 gap-4">
+                  <div>
+                    Issue #{device.reported_issues.length + index + 1}:
+                  </div>
+                  <textarea
+                    className="px-4 col-span-3"
+                    name={`addedIssueText${index}`}
+                    value={issue.value}
+                    onChange={(e) => handleAddedIssueChange(index, e)}
+                  />
+                </div>
+              ))}
+              <div className="mt-2">
+                <Button type="button" onClick={addIssueField}>
+                  Add Another Issue
+                </Button>
+              </div>
+              <div className="mt-2">
+                <Button type="submit" disabled={loadingIssues}>
+                  {loadingIssues && <LoadingSpinner />}
+                  Update Reported Issues
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
 
-        <div className="mt-2">
-          Reported Other Device Names: {device.reported_other_device_names.map(name => (
-            <div
-              className="px-4"
-              key={name.id}
-            >
-              {name.vendor_name} {name.product_name}
+        <div className="mt-6">
+          Reported Other Device Names:
+          {device.reported_other_device_names.length === 0 ? (
+            <div className="px-4">
+              No reported other device names
             </div>
-          ))}
+          ) : (
+            <form
+              onSubmit={(e) => handleSubmit(e, SubmitType.OtherNames)}
+            >
+              <input type="hidden" name="userId" value={String(report.user_id)} />
+              <input type="hidden" name="deviceId" value={String(device.id)} />
+              <input type="hidden" name="reportedOtherDeviceNamesCount" value={String(device.reported_other_device_names.length)} />
+              {device.reported_other_device_names.map((name, index) => (
+                <div key={index}>
+                  <input type="hidden" name={`reportedOtherDeviceNameId${index}`} value={String(name.id)} />
+                  <textarea
+                    className="px-4"
+                    name={`reportedOtherDeviceNameText${index}`}
+                    defaultValue={`${name.vendor_name} ${name.product_name}`}
+                  />
+                </div>
+              ))}
+              <Button type="submit" disabled={loadingOtherNames}>
+                {loadingOtherNames && <LoadingSpinner />}
+                Update Reported Other Device Names
+              </Button>
+            </form>
+          )}
         </div>
       </div>
 
@@ -315,10 +437,10 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
   }));
 
   const filteredStatusOptions = statusOptions.filter(
-        (option) =>
-          option.value === report_status.pending ||
-          option.value === report_status.withdrawn
-      );
+    (option) =>
+      option.value === report_status.pending ||
+      option.value === report_status.withdrawn
+  );
 
   const [showWithdrawnMessage, setShowWithdrawnMessage] = useState(false);
   const [loading, setLoading] = useState(false);
