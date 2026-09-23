@@ -2,6 +2,7 @@ import "dotenv/config";
 import prisma from "@/lib/prisma";
 import { createAuthClient } from "better-auth/client";
 import { support_type } from "@/app/generated/prisma/enums";
+import { normalizeDeviceId } from "@/lib/device-ids";
 
 const args = process.argv.slice(2);
 
@@ -153,13 +154,15 @@ async function main() {
             },
           });
 
+          const normalizedVendorUsbId = normalizeDeviceId(vendor_usb_id);
+          const normalizedDeviceUsbId = normalizeDeviceId(device_usb_id);
           // create reported_device
           const reportedDevice = await prisma.reported_devices.create({
             data: {
               report_id: report.id,
               bus: "USB",
-              vendor_id: "0x" + vendor_usb_id,
-              product_id: "0x" + device_usb_id,
+              vendor_id: "0x" + normalizedVendorUsbId,
+              product_id: "0x" + normalizedDeviceUsbId,
               support_status: support_status as support_type
             },
           });

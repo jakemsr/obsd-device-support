@@ -1,6 +1,6 @@
-
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { normalizeDeviceId } from "@/lib/device-ids";
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -15,7 +15,19 @@ export async function GET(request: Request) {
 		);
 	}
 
-	if (bus && bus !== "PCI" && bus !== "USB") {
+  let normalizedVendorId;
+  let normalizedProductId;
+  try {
+    normalizedVendorId = normalizeDeviceId(vendorId);
+    normalizedProductId = normalizeDeviceId(productId);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Invalid vendor_id or product_id" },
+      { status: 400 }
+    );
+  }
+
+	if (bus !== "PCI" && bus !== "USB") {
 		return NextResponse.json(
 			{ error: "bus must be either PCI or USB" },
 			{ status: 400 }
@@ -24,10 +36,10 @@ export async function GET(request: Request) {
 
   const devices = await prisma.devices.findMany({
 		where: {
-			product_id: productId,
+			product_id: normalizedProductId,
 			bus,
 			vendors: {
-				[bus === "PCI" ? "pci_id" : "usb_id"]: vendorId,
+				[bus === "PCI" ? "pci_id" : "usb_id"]: normalizedVendorId,
 			},
 		},
 		include: {
@@ -40,8 +52,8 @@ export async function GET(request: Request) {
 
 	return NextResponse.json({
 		bus,
-		vendor_id: vendorId,
-		product_id: productId,
+		vendor_id: normalizedVendorId,
+		product_id: normalizedProductId,
 		matches: devices.map((device) => ({
 			vendor: device.vendors.name ?? "",
 			device: device.name,

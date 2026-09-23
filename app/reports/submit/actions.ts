@@ -6,7 +6,7 @@ import { ActionState } from '@/lib/local-types';
 import prisma from '@/lib/prisma';
 import { support_type } from '@/app/generated/prisma/browser';
 import { Prisma } from "@/app/generated/prisma/client";
-
+import { normalizeDeviceId } from '@/lib/device-ids';
 
 
 export async function checkAuth(): Promise<string | null> {
@@ -67,6 +67,19 @@ export async function reportSumbission(
     };
   }
 
+  let normalizedVendorId;
+  let normalizedProductId;
+  try {
+    normalizedVendorId = normalizeDeviceId(vendorId);
+    normalizedProductId = normalizeDeviceId(productId);
+  } catch (error) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Bad vendor ID or product ID'
+    };
+  }
+
   // validate support status
   if (!Object.values(support_type).includes(supportStatus as support_type)) {
     return {
@@ -111,8 +124,8 @@ export async function reportSumbission(
       data: {
         report_id: report.id,
         bus: bus,
-        vendor_id: vendorId,
-        product_id: productId,
+        vendor_id: normalizedVendorId,
+        product_id: normalizedProductId,
         reported_vendor: reportedVendor,
         reported_product: reportedProduct,
         reported_driver: reportedDriver,
