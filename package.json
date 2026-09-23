@@ -10,7 +10,8 @@
     "verify:device-names": "tsx utils/verify-device-names.ts",
     "import:vendors-pci": "tsx utils/import-vendors-pci.ts",
     "import:devices": "tsx utils/match-devices.ts",
-    "import:wicat": "tsx utils/search-wi-cat.ts"
+    "import:wicat": "tsx utils/search-wi-cat.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
@@ -26,14 +27,17 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "^16.3.4",
+    "jest": "^30.5.2",
     "prisma": "^7.9.1",
     "tailwindcss": "^4",
+    "ts-jest": "^29.4.12",
     "tsx": "^4.20.3",
     "typescript": "^5"
   },
@@ -42,6 +46,7 @@
     "unrs-resolver@1.12.2": true,
     "esbuild@0.28.1": true,
     "prisma@7.10.0": true,
-    "@prisma/engines@7.10.0": true
+    "@prisma/engines@7.10.0": true,
+    "@parcel/watcher@2.6.0": true
   }
 }
