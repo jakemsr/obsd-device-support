@@ -123,6 +123,8 @@ const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport,
   }
 
   const [addedIssueFields, setAddedIssueFields] = useState<valueField[]>([]);
+  const [addedOtherDeviceNameVendorFields, setAddedOtherDeviceNameVendorFields] = useState<valueField[]>([]);
+  const [addedOtherDeviceNameProductFields, setAddedOtherDeviceNameProductFields] = useState<valueField[]>([]);
 
   const handleAddedIssueChange = (index: number, event: ChangeEvent<HTMLTextAreaElement>) => {
     const data = [...addedIssueFields];
@@ -130,8 +132,25 @@ const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport,
     setAddedIssueFields(data);
   };
 
+  const handleAddedOtherDeviceNameVendorChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
+    const data = [...addedOtherDeviceNameVendorFields];
+    data[index].value = event.target.value;
+    setAddedOtherDeviceNameVendorFields(data);
+  };
+
+  const handleAddedOtherDeviceNameProductChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
+    const data = [...addedOtherDeviceNameProductFields];
+    data[index].value = event.target.value;
+    setAddedOtherDeviceNameProductFields(data);
+  };
+
   const addIssueField = () => {
     setAddedIssueFields([...addedIssueFields, { value: '' }]);
+  };
+
+  const addOtherDeviceNameField = () => {
+    setAddedOtherDeviceNameVendorFields([...addedOtherDeviceNameVendorFields, { value: '' }]);
+    setAddedOtherDeviceNameProductFields([...addedOtherDeviceNameProductFields, { value: '' }]);
   };
 
 
@@ -160,6 +179,9 @@ const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport,
       toast.success(result.message);
       if (submitType === SubmitType.Issues) {
         setAddedIssueFields([]);
+      } else if (submitType === SubmitType.OtherNames) {
+        setAddedOtherDeviceNameVendorFields([]);
+        setAddedOtherDeviceNameProductFields([]);
       }
     } else {
       toast.error(result.error + ": " + result.message);
@@ -300,32 +322,93 @@ const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport,
         </div>
 
         <div className="mt-6">
-          Reported Other Device Names:
+          Other device names:
           {device.reported_other_device_names.length === 0 ? (
             <div className="px-4">
               No reported other device names
+              <Button type="button" onClick={addOtherDeviceNameField}>
+                Add Another Other Device Name
+              </Button>
             </div>
           ) : (
             <form
               onSubmit={(e) => handleSubmit(e, SubmitType.OtherNames)}
+              className="px-4"
             >
               <input type="hidden" name="userId" value={String(report.user_id)} />
               <input type="hidden" name="deviceId" value={String(device.id)} />
-              <input type="hidden" name="reportedOtherDeviceNamesCount" value={String(device.reported_other_device_names.length)} />
+              <input type="hidden" name="reportedOtherDeviceNameCount" value={String(device.reported_other_device_names.length)} />
               {device.reported_other_device_names.map((name, index) => (
-                <div key={index}>
+                <div key={index} className="grid grid-cols-4">
                   <input type="hidden" name={`reportedOtherDeviceNameId${index}`} value={String(name.id)} />
-                  <textarea
-                    className="px-4"
-                    name={`reportedOtherDeviceNameText${index}`}
-                    defaultValue={`${name.vendor_name} ${name.product_name}`}
-                  />
+                  <div className="col-span-4 mt-2">
+                    Other Device Name #{index + 1}:
+                  </div>
+                  <div>
+                    Vendor
+                  </div>
+                  <div className="col-span-3">
+                    <input
+                      type="text"
+                      name={`reportedOtherDeviceNameVendorText${index}`}
+                      defaultValue={name.vendor_name}
+                      key={`${name.id}-${name.vendor_name}`}
+                    />
+                  </div>
+                  <div>
+                    Product
+                  </div>
+                  <div className="col-span-3">
+                    <input
+                      type="text"
+                      name={`reportedOtherDeviceNameProductText${index}`}
+                      defaultValue={name.product_name}
+                      key={`${name.id}-${name.product_name}`}
+                    />
+                  </div>
                 </div>
               ))}
-              <Button type="submit" disabled={loadingOtherNames}>
-                {loadingOtherNames && <LoadingSpinner />}
-                Update Reported Other Device Names
-              </Button>
+              <input type="hidden" name="addedOtherDeviceNameCount" value={String(addedOtherDeviceNameVendorFields.length)} />
+              {addedOtherDeviceNameVendorFields.map((issue, index) => (
+                <div key={index} className="grid grid-cols-4">
+                  <div className="col-span-4">
+                    Other Device Name #{device.reported_other_device_names.length + index + 1}:
+                  </div>
+                  <div>
+                    Vendor
+                  </div>
+                  <div className="col-span-3">
+                    <input
+                      type="text"
+                      name={`addedOtherDeviceNameVendor${index}`}
+                      value={addedOtherDeviceNameVendorFields[index].value}
+                      onChange={(e) => handleAddedOtherDeviceNameVendorChange(index, e)}
+                    />
+                  </div>
+                  <div>
+                    Product
+                  </div>
+                  <div className="col-span-3">
+                    <input
+                      type="text"
+                      name={`addedOtherDeviceNameProduct${index}`}
+                      value={addedOtherDeviceNameProductFields[index].value}
+                      onChange={(e) => handleAddedOtherDeviceNameProductChange(index, e)}
+                    />
+                  </div>
+                </div>
+              ))}
+              <div className="mt-2">
+                <Button type="button" onClick={addOtherDeviceNameField}>
+                  Add Another Other Device Name
+                </Button>
+              </div>
+              <div className="mt-2">
+                <Button type="submit" disabled={loadingOtherNames}>
+                  {loadingOtherNames && <LoadingSpinner />}
+                  Update Reported Other Device Names
+                </Button>
+              </div>
             </form>
           )}
         </div>

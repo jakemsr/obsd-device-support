@@ -334,28 +334,16 @@ export async function updateReportedIssues(
     success: true,
     message: 'Reported issues updated successfully'
   };
-
 }
-
 
 export async function updateReportedOtherDeviceNames(
   prevState: ActionState, formData: FormData
 ): Promise<ActionState> {
   const userId = formData.get("userId") as string;
   const deviceId = formData.get("deviceId") as string;
-  const reportedIssueCount = formData.get("reportedIssueCount") as string;
+  const reportedOtherDeviceNameCount = formData.get("reportedOtherDeviceNameCount") as string;
+  const addedOtherDeviceNameCount = formData.get("addedOtherDeviceNameCount") as string;
 
-  type ReportedIssue = {
-    id: string;
-    text: string;
-  }
-  const reportedIssues: ReportedIssue[] = [];
-
-  for (let i = 0; i < Number(reportedIssueCount); i++) {
-    const id = formData.get(`reportedIssueId${i}`) as string;
-    const text = formData.get(`reportedIssueText${i}`) as string;
-    reportedIssues.push({ id, text });
-  }
 
   if (!userId || !await checkAuth(userId)) {
     return {
@@ -365,46 +353,72 @@ export async function updateReportedOtherDeviceNames(
     };
   }
 
-  if (!deviceId || !reportedIssueCount) {
+  if (!deviceId || !reportedOtherDeviceNameCount || !addedOtherDeviceNameCount) {
     return {
       error: 'Invalid input',
       success: false,
-      message: 'Device ID or reported issue count are missing'
+      message: 'Device ID or a reported other device name count are missing'
     };
   }
 
+  type ReportedDeviceName = {
+    id: string;
+    vendor: string;
+    product: string;
+  }
+  const reportedOtherDeviceNames: ReportedDeviceName[] = [];
+
+  for (let i = 0; i < Number(reportedOtherDeviceNameCount); i++) {
+    const id = formData.get(`reportedOtherDeviceNameId${i}`) as string;
+    const vendor = formData.get(`reportedOtherDeviceNameVendorText${i}`) as string;
+    const product = formData.get(`reportedOtherDeviceNameProductText${i}`) as string;
+    reportedOtherDeviceNames.push({ id, vendor, product });
+  }
+  for (let i = 0; i < Number(addedOtherDeviceNameCount); i++) {
+    const vendor = formData.get(`addedOtherDeviceNameVendor${i}`) as string;
+    const product = formData.get(`addedOtherDeviceNameProduct${i}`) as string;
+    reportedOtherDeviceNames.push({ id: '', vendor, product });
+  }
+
   try {
-    for (const issue of reportedIssues) {
-      if (issue.text) {
-        const newIssue = await prisma.reported_issues.create({
+    for (const name of reportedOtherDeviceNames) {
+      if (name.vendor || name.product) {
+        const newName = await prisma.reported_other_device_names.create({
           data: {
             reported_device_id: BigInt(deviceId),
-            description: issue.text,
+            vendor_name: name.vendor,
+            product_name: name.product,
           }
         });
-        await prisma.reported_issues.update({
-          where: { id: BigInt(issue.id) },
-          data: {
-            reported_element_status: report_element_status.superseded,
-            report_element_status_updated_at: new Date(),
-            report_element_superseded_by_id: newIssue.id,
-          }
-        });
+        // if the name has an id, it is an existing product that is being superseded
+        if (name.id) {
+          await prisma.reported_other_device_names.update({
+            where: { id: BigInt(name.id) },
+            data: {
+              report_element_status: report_element_status.superseded,
+              report_element_status_updated_at: new Date(),
+              report_element_superseded_by_id: newName.id,
+            }
+          });
+        }
       } else {
-        await prisma.reported_issues.update({
-          where: { id: BigInt(issue.id) },
-          data: {
-            reported_element_status: report_element_status.removed,
-            report_element_status_updated_at: new Date(),
-          }
-        });
+        // if the name has an id but no vendor or product, it is being removed
+        if (name.id) {
+          await prisma.reported_other_device_names.update({
+            where: { id: BigInt(name.id) },
+            data: {
+              report_element_status: report_element_status.removed,
+              report_element_status_updated_at: new Date(),
+            }
+          });
+        }
       }
     }
   } catch (err) {
     return {
       error: 'Database error',
       success: false,
-      message: 'Something went wrong while updating the reported device'
+      message: 'Something went wrong while updating the reported other device names'
     };
   }
 
@@ -413,7 +427,6 @@ export async function updateReportedOtherDeviceNames(
   return {
     error: '',
     success: true,
-    message: 'Reported issues updated successfully'
+    message: 'Reported other device names updated successfully'
   };
-
 }

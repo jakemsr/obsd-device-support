@@ -28,7 +28,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           reported_issues: {
             where: { report_element_status: 'current' },
           },
-          reported_other_device_names: true,
+          reported_other_device_names: {
+            where: { report_element_status: 'current' },
+          },
         }
       }
     }
