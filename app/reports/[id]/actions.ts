@@ -12,10 +12,10 @@ export async function getMatchedDevices(report: FullReport) {
     report.reported_devices.map(async (device) => {
       const devices: FullDeviceInfo[] = await prisma.devices.findMany({
         where: {
-          product_id: "0x" + device.product_id,
+          product_id: device.product_id,
           bus: device.bus,
           vendors: {
-            [device.bus === "PCI" ? "pci_id" : "usb_id"]: "0x" + device.vendor_id,
+            [device.bus === "PCI" ? "pci_id" : "usb_id"]: device.vendor_id,
           },
         },
         include: {
