@@ -45,7 +45,11 @@ export default async function Page() {
           report_element_status: "current",
         },
       },
-      reported_devices: true,
+      reported_devices: {
+        where: {
+          report_element_status: "current",
+        }
+      },
       user: true,
     },
     orderBy: [
