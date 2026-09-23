@@ -194,8 +194,12 @@ const ReportDisplay = async ({ id }: { id: string }) => {
           report_element_status: "current",
         },
         include: {
-          reported_issues: true,
-          reported_other_device_names: true,
+          reported_issues: {
+            where: { report_element_status: "current" },
+          },
+          reported_other_device_names: {
+            where: { report_element_status: "current" },
+          },
         }
       }
     }
