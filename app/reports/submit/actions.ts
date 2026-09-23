@@ -5,7 +5,6 @@ import { headers } from 'next/headers';
 import { ActionState } from '@/lib/local-types';
 import prisma from '@/lib/prisma';
 import { support_type } from '@/app/generated/prisma/browser';
-import { Prisma } from "@/app/generated/prisma/client";
 import { normalizeDeviceId } from '@/lib/device-ids';
 
 
