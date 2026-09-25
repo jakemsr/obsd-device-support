@@ -4,6 +4,41 @@ import type { FullDeviceInfo, FullReport } from '@/lib/local-types';
 import prisma from "@/lib/prisma";
 
 
+export async function getFullReport(id: string) {
+  const report: FullReport | null = await prisma.reports.findUnique({
+    where: {
+      id: BigInt(id),
+    },
+    include: {
+      sources: {
+        where: {
+          report_element_status: "current",
+        },
+        include: {
+          hwinspect_report: true,
+          form_report: true,
+        },
+      },
+      reported_devices: {
+        where: {
+          report_element_status: "current",
+        },
+        include: {
+          reported_issues: {
+            where: { report_element_status: "current" },
+          },
+          reported_other_device_names: {
+            where: { report_element_status: "current" },
+          },
+        }
+      }
+    }
+  });
+
+  return report;
+}
+
+
 export async function getMatchedDevices(report: FullReport) {
 
   const matchMap = new Map<bigint, FullDeviceInfo[]>();

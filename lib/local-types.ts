@@ -62,3 +62,17 @@ const InitialActionState: ActionState = {
   message: '',
 };
 export { InitialActionState };
+
+export type FullReportedDevice = Prisma.reported_devicesGetPayload<{
+  include: {
+    reported_issues: true;
+    reported_other_device_names: true;
+  };
+}>;
+
+export type SourceWithReports = Prisma.report_sourcesGetPayload<{
+  include: {
+    hwinspect_report: true;
+    form_report: true;
+  };
+}>;
