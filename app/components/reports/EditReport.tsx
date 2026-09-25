@@ -2,8 +2,8 @@
 
 import { ChangeEvent, Suspense, use, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Prisma } from "@/app/generated/prisma/client";
-import { AuthSessionPromise, FullReport, FullDeviceInfo, InitialActionState } from "@/lib/local-types";
+import { InitialActionState } from "@/lib/local-types";
+import type { AuthSessionPromise, FullReport, FullReportedDevice, FullDeviceInfo, SourceWithReports } from "@/lib/local-types";
 import { report_status, source_type, support_type } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { getMatchedDevices } from '@/app/reports/[id]/actions';
@@ -16,20 +16,13 @@ import {
 } from '@/app/reports/[id]/edit/actions';
 
 
-type SourceWithReports = Prisma.report_sourcesGetPayload<{
-  include: {
-    hwinspect_report: true;
-    form_report: true;
-  };
-}>;
-
-interface SourceDisplayProps {
+interface EditSourceDisplayProps {
   index: number;
   source: SourceWithReports;
   userId: string;
 }
 
-const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
+const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) => {
 
   const [loading, setLoading] = useState(false);
 
@@ -98,15 +91,13 @@ const SourceDisplay = ({ index, source, userId }: SourceDisplayProps) => {
   );
 }
 
+interface EditDeviceDisplayProps {
+  report: FullReport;
+  device: FullReportedDevice;
+  matchedDevices?: FullDeviceInfo[];
+}
 
-type FullReportedDevice = Prisma.reported_devicesGetPayload<{
-  include: {
-    reported_issues: true;
-    reported_other_device_names: true;
-  };
-}>;
-
-const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport, device: FullReportedDevice, matchedDevices?: FullDeviceInfo[] }) => {
+const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplayProps) => {
 
   enum SubmitType {
     Device = "device",
@@ -459,7 +450,11 @@ const DeviceDisplay = ({ report, device, matchedDevices }: { report: FullReport,
   );
 }
 
-const ShowDevices = ({ report }: { report: FullReport }) => {
+interface EditDevicesProps {
+  report: FullReport;
+}
+
+const EditDevices = ({ report }: EditDevicesProps) => {
 
   const [matchMap, setMatchMap] = useState<Map<bigint, FullDeviceInfo[]>>(new Map());
 
@@ -482,7 +477,7 @@ const ShowDevices = ({ report }: { report: FullReport }) => {
                 className="px-4 border-t"
                 key={device.id}
               >
-                <DeviceDisplay report={report} device={device} matchedDevices={matchMap.get(device.id)} />
+                <EditDeviceDisplay report={report} device={device} matchedDevices={matchMap.get(device.id)} />
               </div>
             ))}
           </div>
@@ -611,14 +606,14 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
                 className="px-4 border-t"
                 key={source.id}
               >
-                <SourceDisplay index={index} source={source} userId={report.user_id} />
+                <EditSourceDisplay index={index} source={source} userId={report.user_id} />
               </div>
             ))}
           </div>
         )}
       </>
       <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
-        <ShowDevices report={report} />
+        <EditDevices report={report} />
       </Suspense>
     </>
   );
