@@ -1,25 +1,11 @@
 'use server'
 
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
 import { ActionState } from '@/lib/local-types';
 import prisma from '@/lib/prisma';
 import { support_type } from '@/app/generated/prisma/browser';
 import { normalizeDeviceId } from '@/lib/device-ids';
+import { checkUserAuth } from '@/lib/check-user-auth';
 
-
-export async function checkAuth(): Promise<string | null> {
-
-  const session = await auth.api.getSession({
-      headers: await headers()
-    });
-  
-    if (!session || !session.user) {
-      return null;
-    }
-  
-    return session.user.id;
-}
 
 export async function reportSumbission(
   prevState: ActionState, formData: FormData
@@ -48,9 +34,7 @@ export async function reportSumbission(
     });
   }
 
-  const checkUserId = await checkAuth();
-  if (!checkUserId || checkUserId !== userId) {
-    console.log("checkID: ", checkUserId, " userId:", userId)
+  if (!userId || !await checkUserAuth(userId)) {
     return {
       error: 'Unauthorized',
       success: false,

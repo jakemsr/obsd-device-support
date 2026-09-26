@@ -1,27 +1,12 @@
 'use server'
 
 import { refresh } from 'next/cache';
-import { headers } from 'next/headers';
-import { auth } from '@/lib/auth'
 import { report_status, report_element_status, source_type, support_type } from '@/app/generated/prisma/enums'
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
 import type { ActionState } from '@/lib/local-types'
 import { normalizeDeviceId } from '@/lib/device-ids';
-
-
-async function checkAuth(userId: string): Promise<boolean> {
-
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
-
-  if (!session || !session.user || session.user.id !== userId) {
-    return false;
-  }
-
-  return true;
-}
+import { checkUserAuth } from '@/lib/check-user-auth';
 
 
 export async function updateReportStatus(
@@ -33,7 +18,7 @@ export async function updateReportStatus(
   const newStatus = formData.get("newStatus") as report_status;
   const withdrawnNote = formData.get("withdrawnNote") as string | null;
 
-  if (!userId || !await checkAuth(userId)) {
+  if (!userId || !await checkUserAuth(userId)) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -103,7 +88,7 @@ export async function updateReportSource(
   const sourceUrl = formData.get("sourceUrl") as string | null;
   const sourceName = formData.get("sourceName") as string | null;
 
-  if (!userId || !await checkAuth(userId)) {
+  if (!userId || !await checkUserAuth(userId)) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -175,7 +160,7 @@ export async function updateReportedDevice(
   const reportedIssues = formData.getAll("reportedIssues") as string[];
   const reportedOtherDeviceNames = formData.getAll("reportedOtherDeviceNames") as string[];
 
-  if (!userId || !await checkAuth(userId)) {
+  if (!userId || !await checkUserAuth(userId)) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -268,7 +253,7 @@ export async function updateReportedIssues(
   const addedIssueCount = formData.get("addedIssueCount") as string;
 
 
-  if (!userId || !await checkAuth(userId)) {
+  if (!userId || !await checkUserAuth(userId)) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -359,7 +344,7 @@ export async function updateReportedOtherDeviceNames(
   const addedOtherDeviceNameCount = formData.get("addedOtherDeviceNameCount") as string;
 
 
-  if (!userId || !await checkAuth(userId)) {
+  if (!userId || !await checkUserAuth(userId)) {
     return {
       error: 'Unauthorized',
       success: false,
