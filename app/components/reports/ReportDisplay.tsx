@@ -4,18 +4,17 @@ import { Suspense } from "react";
 import { getFullReport } from "@/app/reports/[id]/actions";
 import SourceDisplay from "@/app/components/reports/SourceDisplay";
 import ShowDevices from "@/app/components/reports/ShowDevices";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 
 
 interface ReportDisplayProps {
   id: string;
-} 
+  sessionPromise: Promise<any>;
+}
 
-const ReportDisplay = async ({ id }: ReportDisplayProps) => {
+const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
 
   const report = await getFullReport(id);
-  
+
   if (!report) {
     return (
       <div className="px-4 mt-4">
@@ -24,9 +23,7 @@ const ReportDisplay = async ({ id }: ReportDisplayProps) => {
     );
   }
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await sessionPromise;
 
   if (!session || !session.user ||
     !(session.user.id === report.user_id || session.user.role === "editor")) {

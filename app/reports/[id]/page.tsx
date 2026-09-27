@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import ReportDisplay from "@/app/components/reports/ReportDisplay";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 
 export default async function Page({
@@ -10,6 +12,10 @@ export default async function Page({
 }) {
 
   const { id } = await params;
+
+  const sessionPromise = auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <div className="px-4">
@@ -26,7 +32,7 @@ export default async function Page({
       </div>
 
       <Suspense fallback={<div className="px-4 mt-2">Loading report...</div>}>
-        <ReportDisplay id={id} />
+        <ReportDisplay id={id} sessionPromise={sessionPromise} />
       </Suspense>
     </div>
   );
