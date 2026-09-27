@@ -86,11 +86,8 @@ export default function ListReports({ reportsPromise }: ListReportsProps) {
               <div className="col-span-2">
                 Updated At: {report.updated_at.toLocaleString()}
               </div>
-              <div className="col-span-2">
-                Sources: {report.sources.map(source => source.name).join(", ")}
-              </div>
-              <div className="col-span-2">
-                Reported Devices: {report.reported_devices.map(device => `${device.vendor_id}:${device.product_id}`).join(", ")}
+              <div className="col-span-4">
+                Reason: {report.reason}
               </div>
             </div>
           ))}

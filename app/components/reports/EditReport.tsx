@@ -581,6 +581,9 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
           <div>
             Updated At: {report.updated_at.toLocaleString()}
           </div>
+          <div className="flex items-center gap-2">
+            Reason: <textarea name="reason" defaultValue={report.reason} className="w-100 h-20 p-2" />
+          </div>
           {report.withdrawn_at && (
             <div>
               Withdrawn At: {report.withdrawn_at.toLocaleString()}
@@ -594,7 +597,7 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
         </div>
         <Button type="submit" disabled={loading}>
           {loading && <LoadingSpinner />}
-          Update Status
+          Update Status or Reason
         </Button>
       </form>
       <>

@@ -50,6 +50,9 @@ const ReportDisplay = async ({ id }: ReportDisplayProps) => {
           <div>
             Updated At: {report.updated_at.toLocaleString()}
           </div>
+          <div>
+            Reason: {report.reason}
+          </div>
           {report.withdrawn_at && (
             <div>
               Withdrawn At: {report.withdrawn_at.toLocaleString()}

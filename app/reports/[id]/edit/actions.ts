@@ -17,6 +17,7 @@ export async function updateReportStatus(
   const userId = formData.get("userId") as string;
   const newStatus = formData.get("newStatus") as report_status;
   const withdrawnNote = formData.get("withdrawnNote") as string | null;
+  const reason = formData.get("reason") as string | null;
 
   if (!userId || !await checkUserAuth(userId)) {
     return {
@@ -48,7 +49,8 @@ export async function updateReportStatus(
         {
           withdrawn_at: new Date(),
           withdrawn_note: withdrawnNote
-        })
+        }),
+        ...(reason && { reason })
       },
     });
   } catch (err) {
