@@ -460,7 +460,7 @@ const EditDevices = ({ report }: EditDevicesProps) => {
 
   useEffect(() => {
     const fetchMatchedDevices = async () => {
-      const matchMap = await getMatchedDevices(report);
+      const matchMap = await getMatchedDevices(report.reported_devices);
       setMatchMap(matchMap);
     };
     fetchMatchedDevices();

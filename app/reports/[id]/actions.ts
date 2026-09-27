@@ -39,12 +39,31 @@ export async function getFullReport(id: string) {
 }
 
 
-export async function getMatchedDevices(report: FullReport) {
+export async function getReportDevices(reportId: bigint) {
+  const report = await prisma.reports.findFirst({
+    where: { id: reportId },
+    include: {
+      reported_devices: {
+        include: {
+          reported_issues: true,
+          reported_other_device_names: true,
+        },
+      },
+    },
+   });
+
+   return report?.reported_devices ?? [];
+}
+
+
+export async function getMatchedDevices(
+  reported_devices: FullReport['reported_devices']
+): Promise<Map<bigint, FullDeviceInfo[]>> {
 
   const matchMap = new Map<bigint, FullDeviceInfo[]>();
 
   const matchedEntries = await Promise.all(
-    report.reported_devices.map(async (device) => {
+    reported_devices.map(async (device) => {
       const devices: FullDeviceInfo[] = await prisma.devices.findMany({
         where: {
           product_id: device.product_id,

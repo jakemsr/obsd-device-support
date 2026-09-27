@@ -9,7 +9,7 @@ interface ShowDevicesProps {
 
 const ShowDevices = async ({ report }: ShowDevicesProps) => {
 
-  const matchMap = await getMatchedDevices(report);
+  const matchMap = await getMatchedDevices(report.reported_devices);
 
   return (
     <>
