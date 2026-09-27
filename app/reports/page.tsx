@@ -1,20 +1,19 @@
 import { Suspense } from "react";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { setShowAllReports } from "./actions";
-import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import type { ReportWithRelations } from "@/lib/local-types";
 import { Button } from "@/app/components/Button";
 import ListReports from "@/app/components/reports/ListReports";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 export default async function Page() {
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const currentUser: AuthUser | null = await getCurrentUser();
 
-  if (!session || !session.user) {
+  if (!currentUser) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh">
         <h1>
@@ -27,17 +26,15 @@ export default async function Page() {
     );
   }
 
-  const user = session.user;
-
   const cookieStore = await cookies();
 
   const showAllReports =
-    user.role === "editor" &&
+    currentUser.role === "editor" &&
     cookieStore.get("reports_view")?.value === "all";
 
   const reportsPromise: Promise<ReportWithRelations[]> = prisma.reports.findMany({
     where: showAllReports ? undefined : {
-      user_id: user.id
+      user_id: currentUser.id
     },
     include: {
       sources: {
@@ -69,7 +66,7 @@ export default async function Page() {
           {showAllReports ? "All Reports" : "Your Reports"}
         </h1>
 
-        {user.role === "editor" && (
+        {currentUser.role === "editor" && (
           <form action={setShowAllReports}>
             <input
               type="hidden"

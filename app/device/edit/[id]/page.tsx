@@ -1,8 +1,8 @@
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
-import { FullDeviceInfo } from "@/lib/local-types";
 import prisma from "@/lib/prisma";
 import EditDevice from "@/app/components/devices/EditDevice";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser, FullDeviceInfo } from "@/lib/local-types";
+
 
 export default async function Page({
   params
@@ -12,11 +12,9 @@ export default async function Page({
 
   const { id } = await params;
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const currentUser: AuthUser | null = await getCurrentUser();
 
-  if (!session || !session.user || session.user.role !== "editor") {
+  if (!currentUser || currentUser.role !== "editor") {
     return (<h1>Not logged in or not editor</h1>);
   }
 

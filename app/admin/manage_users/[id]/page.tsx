@@ -1,8 +1,8 @@
-import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { headers } from "next/headers";
 import EditUserButton from "@/app/components/admin/EditUserButton";
 import { User } from "@/app/generated/prisma/client";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 interface PageProps {
@@ -12,11 +12,9 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const currentUser: AuthUser | null = await getCurrentUser();
 
-  if (!session || !session.user || session.user.role !== "admin") {
+  if (!currentUser || currentUser.role !== "admin") {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh">
         <h1>

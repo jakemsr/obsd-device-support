@@ -1,25 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { auth } from '@/lib/auth';
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 export async function POST(request: NextRequest) {
 
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  });
+  const currentUser: AuthUser | null = await getCurrentUser();
 
-  if (!session || !session.user) {
+  if (!currentUser || currentUser.role !== 'admin') {
     return new Response(
       JSON.stringify({ error: 'Unauthorized' }),
       { status: 401, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
-
-  if (session.user.role !== 'admin') {
-    return new Response(
-      JSON.stringify({ error: 'Forbidden: Admins only' }),
-      { status: 403, headers: { 'Content-Type': 'application/json' } }
     );
   }
 

@@ -1,6 +1,9 @@
 import type { Prisma } from "@/app/generated/prisma/client";
 import { auth } from "@/lib/auth";
 
+
+export type AuthUser = typeof auth.$Infer.Session.user;
+
 export type AuthSession = NonNullable<
   Awaited<ReturnType<typeof auth.api.getSession>>
 >;

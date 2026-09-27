@@ -1,15 +1,13 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import Link from "next/link";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 export default async function Page() {
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const currentUser: AuthUser | null = await getCurrentUser();
 
-  if (!session || !session.user || session.user.role !== "admin") {
+  if (!currentUser || currentUser.role !== "admin") {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh">
         <h1>

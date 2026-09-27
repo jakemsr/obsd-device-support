@@ -1,17 +1,14 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { User } from "@/app/generated/prisma/client";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 export default async function Page() {
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
-
-  if (!session || !session.user || session.user.role !== "admin") {
+  const currentUser: AuthUser | null = await getCurrentUser();
+  if (!currentUser || currentUser.role !== "admin") {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh">
         <h1>
@@ -24,7 +21,7 @@ export default async function Page() {
     );
   }
 
-  const users = await prisma.user.findMany({
+  const users: User[] = await prisma.user.findMany({
     orderBy: [
       { role: "asc" },
       { email: "asc" },

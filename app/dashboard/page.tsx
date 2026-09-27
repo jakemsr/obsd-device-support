@@ -1,14 +1,13 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import Link from "next/link";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 export default async function Page() {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
 
-  if (!session || !session.user) {
+  const currentUser: AuthUser | null = await getCurrentUser();
+
+  if (!currentUser) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh">
         <h1>
@@ -25,7 +24,7 @@ export default async function Page() {
     [key: string]: string;
   };
 
-  const actions: Action[] = session.user.role === "admin" ?
+  const actions: Action[] = currentUser.role === "admin" ?
     [
       { "manage users": "/admin/manage_users" },
       { "manage content": "/admin/manage_content" }
@@ -34,7 +33,7 @@ export default async function Page() {
       { "view reports": "/reports" }
     ];
 
-  if (session.user.role === "editor") {
+  if (currentUser.role === "editor") {
     actions.push({ "view reviews": "/report-reviews" });
   }
 
@@ -44,7 +43,7 @@ export default async function Page() {
         Dashboard
       </h1>
       <div>
-        Welcome, {session.user?.name || session.user?.email}!
+        Welcome, {currentUser.name || currentUser.email}!
       </div>
       <div>
         Actions:

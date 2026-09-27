@@ -1,16 +1,14 @@
 import Link from "next/link";
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
 import { getOtherNames, OtherName } from "./actions";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 export default async function Page() {
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const currentUser: AuthUser | null = await getCurrentUser();
 
-  if (!session || !session.user || session.user.role !== 'admin') {
+  if (!currentUser || currentUser.role !== 'admin') {
     return (
       <div>
         <h1>Unauthorized</h1>

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { headers } from 'next/headers';
 import prisma from "@/lib/prisma";
-import { auth } from '@/lib/auth';
 import EditOtherName from "@/app/components/admin/EditOtherName";
 import { getOtherNameById, OtherNameWithDevice } from "../actions";
+import { getCurrentUser } from "@/lib/check-user-auth";
+import type { AuthUser } from "@/lib/local-types";
 
 
 export default async function Page({
@@ -12,11 +12,9 @@ export default async function Page({
   params: Promise<{ id: string }>
 }) {
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const currentUser: AuthUser | null = await getCurrentUser();
 
-  if (!session || !session.user || session.user.role !== 'admin') {
+  if (!currentUser || currentUser.role !== 'admin') {
     return (
       <div>
         <h1>Unauthorized</h1>
