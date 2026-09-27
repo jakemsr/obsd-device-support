@@ -4,8 +4,9 @@ import { useState, ChangeEvent, useEffect } from 'react';
 import { toast } from 'sonner';
 import { support_type } from '@/app/generated/prisma/enums'
 import { Button, LoadingSpinner } from '@/app/components/Button';
-import { checkAuth, reportSumbission } from './actions';
+import { reportSumbission } from './actions';
 import { InitialActionState } from '@/lib/local-types';
+import { getUserId } from '@/lib/check-user-auth';
 
 
 export default function Page() {
@@ -66,7 +67,7 @@ export default function Page() {
   
   useEffect(() => {
     const fetchUserId = async () => {
-      const userId = await checkAuth();
+      const userId = await getUserId();
       setUserId(userId);
       setLoading(false);
     };
