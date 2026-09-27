@@ -42,6 +42,7 @@ export type ReportsMinAggregateOutputType = {
   updated_at: Date | null
   withdrawn_at: Date | null
   withdrawn_note: string | null
+  reason: string | null
 }
 
 export type ReportsMaxAggregateOutputType = {
@@ -52,6 +53,7 @@ export type ReportsMaxAggregateOutputType = {
   updated_at: Date | null
   withdrawn_at: Date | null
   withdrawn_note: string | null
+  reason: string | null
 }
 
 export type ReportsCountAggregateOutputType = {
@@ -62,6 +64,7 @@ export type ReportsCountAggregateOutputType = {
   updated_at: number
   withdrawn_at: number
   withdrawn_note: number
+  reason: number
   _all: number
 }
 
@@ -82,6 +85,7 @@ export type ReportsMinAggregateInputType = {
   updated_at?: true
   withdrawn_at?: true
   withdrawn_note?: true
+  reason?: true
 }
 
 export type ReportsMaxAggregateInputType = {
@@ -92,6 +96,7 @@ export type ReportsMaxAggregateInputType = {
   updated_at?: true
   withdrawn_at?: true
   withdrawn_note?: true
+  reason?: true
 }
 
 export type ReportsCountAggregateInputType = {
@@ -102,6 +107,7 @@ export type ReportsCountAggregateInputType = {
   updated_at?: true
   withdrawn_at?: true
   withdrawn_note?: true
+  reason?: true
   _all?: true
 }
 
@@ -199,6 +205,7 @@ export type ReportsGroupByOutputType = {
   updated_at: Date
   withdrawn_at: Date | null
   withdrawn_note: string | null
+  reason: string
   _count: ReportsCountAggregateOutputType | null
   _avg: ReportsAvgAggregateOutputType | null
   _sum: ReportsSumAggregateOutputType | null
@@ -232,6 +239,7 @@ export type reportsWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"reports"> | Date | string
   withdrawn_at?: Prisma.DateTimeNullableFilter<"reports"> | Date | string | null
   withdrawn_note?: Prisma.StringNullableFilter<"reports"> | string | null
+  reason?: Prisma.StringFilter<"reports"> | string
   reportReviews?: Prisma.Report_reviewsListRelationFilter
   sources?: Prisma.Report_sourcesListRelationFilter
   reported_devices?: Prisma.Reported_devicesListRelationFilter
@@ -246,6 +254,7 @@ export type reportsOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   withdrawn_at?: Prisma.SortOrderInput | Prisma.SortOrder
   withdrawn_note?: Prisma.SortOrderInput | Prisma.SortOrder
+  reason?: Prisma.SortOrder
   reportReviews?: Prisma.report_reviewsOrderByRelationAggregateInput
   sources?: Prisma.report_sourcesOrderByRelationAggregateInput
   reported_devices?: Prisma.reported_devicesOrderByRelationAggregateInput
@@ -263,6 +272,7 @@ export type reportsWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"reports"> | Date | string
   withdrawn_at?: Prisma.DateTimeNullableFilter<"reports"> | Date | string | null
   withdrawn_note?: Prisma.StringNullableFilter<"reports"> | string | null
+  reason?: Prisma.StringFilter<"reports"> | string
   reportReviews?: Prisma.Report_reviewsListRelationFilter
   sources?: Prisma.Report_sourcesListRelationFilter
   reported_devices?: Prisma.Reported_devicesListRelationFilter
@@ -277,6 +287,7 @@ export type reportsOrderByWithAggregationInput = {
   updated_at?: Prisma.SortOrder
   withdrawn_at?: Prisma.SortOrderInput | Prisma.SortOrder
   withdrawn_note?: Prisma.SortOrderInput | Prisma.SortOrder
+  reason?: Prisma.SortOrder
   _count?: Prisma.reportsCountOrderByAggregateInput
   _avg?: Prisma.reportsAvgOrderByAggregateInput
   _max?: Prisma.reportsMaxOrderByAggregateInput
@@ -295,6 +306,7 @@ export type reportsScalarWhereWithAggregatesInput = {
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"reports"> | Date | string
   withdrawn_at?: Prisma.DateTimeNullableWithAggregatesFilter<"reports"> | Date | string | null
   withdrawn_note?: Prisma.StringNullableWithAggregatesFilter<"reports"> | string | null
+  reason?: Prisma.StringWithAggregatesFilter<"reports"> | string
 }
 
 export type reportsCreateInput = {
@@ -304,6 +316,7 @@ export type reportsCreateInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
@@ -318,6 +331,7 @@ export type reportsUncheckedCreateInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
@@ -330,6 +344,7 @@ export type reportsUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
@@ -344,6 +359,7 @@ export type reportsUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
@@ -357,6 +373,7 @@ export type reportsCreateManyInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
 }
 
 export type reportsUpdateManyMutationInput = {
@@ -366,6 +383,7 @@ export type reportsUpdateManyMutationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type reportsUncheckedUpdateManyInput = {
@@ -376,6 +394,7 @@ export type reportsUncheckedUpdateManyInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type reportsCountOrderByAggregateInput = {
@@ -386,6 +405,7 @@ export type reportsCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   withdrawn_at?: Prisma.SortOrder
   withdrawn_note?: Prisma.SortOrder
+  reason?: Prisma.SortOrder
 }
 
 export type reportsAvgOrderByAggregateInput = {
@@ -400,6 +420,7 @@ export type reportsMaxOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   withdrawn_at?: Prisma.SortOrder
   withdrawn_note?: Prisma.SortOrder
+  reason?: Prisma.SortOrder
 }
 
 export type reportsMinOrderByAggregateInput = {
@@ -410,6 +431,7 @@ export type reportsMinOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   withdrawn_at?: Prisma.SortOrder
   withdrawn_note?: Prisma.SortOrder
+  reason?: Prisma.SortOrder
 }
 
 export type reportsSumOrderByAggregateInput = {
@@ -530,6 +552,7 @@ export type reportsCreateWithoutSourcesInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
   user: Prisma.UserCreateNestedOneWithoutReportsInput
@@ -543,6 +566,7 @@ export type reportsUncheckedCreateWithoutSourcesInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
 }
@@ -570,6 +594,7 @@ export type reportsUpdateWithoutSourcesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
@@ -583,6 +608,7 @@ export type reportsUncheckedUpdateWithoutSourcesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
 }
@@ -594,6 +620,7 @@ export type reportsCreateWithoutReported_devicesInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
   user: Prisma.UserCreateNestedOneWithoutReportsInput
@@ -607,6 +634,7 @@ export type reportsUncheckedCreateWithoutReported_devicesInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
 }
@@ -634,6 +662,7 @@ export type reportsUpdateWithoutReported_devicesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
@@ -647,6 +676,7 @@ export type reportsUncheckedUpdateWithoutReported_devicesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
 }
@@ -658,6 +688,7 @@ export type reportsCreateWithoutReportReviewsInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
   user: Prisma.UserCreateNestedOneWithoutReportsInput
@@ -671,6 +702,7 @@ export type reportsUncheckedCreateWithoutReportReviewsInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
 }
@@ -698,6 +730,7 @@ export type reportsUpdateWithoutReportReviewsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
@@ -711,6 +744,7 @@ export type reportsUncheckedUpdateWithoutReportReviewsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
 }
@@ -722,6 +756,7 @@ export type reportsCreateWithoutUserInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesCreateNestedManyWithoutReportInput
@@ -734,6 +769,7 @@ export type reportsUncheckedCreateWithoutUserInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
   reportReviews?: Prisma.report_reviewsUncheckedCreateNestedManyWithoutReportInput
   sources?: Prisma.report_sourcesUncheckedCreateNestedManyWithoutReportInput
   reported_devices?: Prisma.reported_devicesUncheckedCreateNestedManyWithoutReportInput
@@ -776,6 +812,7 @@ export type reportsScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"reports"> | Date | string
   withdrawn_at?: Prisma.DateTimeNullableFilter<"reports"> | Date | string | null
   withdrawn_note?: Prisma.StringNullableFilter<"reports"> | string | null
+  reason?: Prisma.StringFilter<"reports"> | string
 }
 
 export type reportsCreateManyUserInput = {
@@ -785,6 +822,7 @@ export type reportsCreateManyUserInput = {
   updated_at?: Date | string
   withdrawn_at?: Date | string | null
   withdrawn_note?: string | null
+  reason?: string
 }
 
 export type reportsUpdateWithoutUserInput = {
@@ -794,6 +832,7 @@ export type reportsUpdateWithoutUserInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUpdateManyWithoutReportNestedInput
@@ -806,6 +845,7 @@ export type reportsUncheckedUpdateWithoutUserInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
   reportReviews?: Prisma.report_reviewsUncheckedUpdateManyWithoutReportNestedInput
   sources?: Prisma.report_sourcesUncheckedUpdateManyWithoutReportNestedInput
   reported_devices?: Prisma.reported_devicesUncheckedUpdateManyWithoutReportNestedInput
@@ -818,6 +858,7 @@ export type reportsUncheckedUpdateManyWithoutUserInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawn_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   withdrawn_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -877,6 +918,7 @@ export type reportsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updated_at?: boolean
   withdrawn_at?: boolean
   withdrawn_note?: boolean
+  reason?: boolean
   reportReviews?: boolean | Prisma.reports$reportReviewsArgs<ExtArgs>
   sources?: boolean | Prisma.reports$sourcesArgs<ExtArgs>
   reported_devices?: boolean | Prisma.reports$reported_devicesArgs<ExtArgs>
@@ -892,6 +934,7 @@ export type reportsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   updated_at?: boolean
   withdrawn_at?: boolean
   withdrawn_note?: boolean
+  reason?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reports"]>
 
@@ -903,6 +946,7 @@ export type reportsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   updated_at?: boolean
   withdrawn_at?: boolean
   withdrawn_note?: boolean
+  reason?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reports"]>
 
@@ -914,9 +958,10 @@ export type reportsSelectScalar = {
   updated_at?: boolean
   withdrawn_at?: boolean
   withdrawn_note?: boolean
+  reason?: boolean
 }
 
-export type reportsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "status" | "created_at" | "updated_at" | "withdrawn_at" | "withdrawn_note", ExtArgs["result"]["reports"]>
+export type reportsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "status" | "created_at" | "updated_at" | "withdrawn_at" | "withdrawn_note" | "reason", ExtArgs["result"]["reports"]>
 export type reportsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reportReviews?: boolean | Prisma.reports$reportReviewsArgs<ExtArgs>
   sources?: boolean | Prisma.reports$sourcesArgs<ExtArgs>
@@ -947,6 +992,7 @@ export type $reportsPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     updated_at: Date
     withdrawn_at: Date | null
     withdrawn_note: string | null
+    reason: string
   }, ExtArgs["result"]["reports"]>
   composites: {}
 }
@@ -1381,6 +1427,7 @@ export interface reportsFieldRefs {
   readonly updated_at: Prisma.FieldRef<"reports", 'DateTime'>
   readonly withdrawn_at: Prisma.FieldRef<"reports", 'DateTime'>
   readonly withdrawn_note: Prisma.FieldRef<"reports", 'String'>
+  readonly reason: Prisma.FieldRef<"reports", 'String'>
 }
     
 

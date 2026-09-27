@@ -1949,7 +1949,8 @@ export const ReportsScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   withdrawn_at: 'withdrawn_at',
-  withdrawn_note: 'withdrawn_note'
+  withdrawn_note: 'withdrawn_note',
+  reason: 'reason'
 } as const
 
 export type ReportsScalarFieldEnum = (typeof ReportsScalarFieldEnum)[keyof typeof ReportsScalarFieldEnum]
