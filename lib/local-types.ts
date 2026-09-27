@@ -76,3 +76,10 @@ export type SourceWithReports = Prisma.report_sourcesGetPayload<{
     form_report: true;
   };
 }>;
+
+export type ReportReview = Prisma.report_reviewsGetPayload<{
+  include: {
+    report: true;
+    reviewer: true;
+  };
+}>;

@@ -1,8 +1,11 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import ReportDisplay from "@/app/components/reports/ReportDisplay";
+import ShowReviews from "@/app/components/reports/ShowReviews";
+import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import type { ReportReview } from "@/lib/local-types";
 
 
 export default async function Page({
@@ -12,6 +15,17 @@ export default async function Page({
 }) {
 
   const { id } = await params;
+  const reportId = BigInt(id);
+
+  const reviewsPromise: Promise<ReportReview[]> = prisma.report_reviews.findMany({
+    where: {
+      report_id: reportId,
+    },
+    include: {
+      reviewer: true,
+      report: true,
+    },
+  });
 
   const sessionPromise = auth.api.getSession({
     headers: await headers(),
@@ -34,6 +48,15 @@ export default async function Page({
       <Suspense fallback={<div className="px-4 mt-2">Loading report...</div>}>
         <ReportDisplay id={id} sessionPromise={sessionPromise} />
       </Suspense>
+
+      <Suspense fallback={<div className="px-4 mt-2">Loading reviews...</div>}>
+        <ShowReviews
+          reviewsPromise={reviewsPromise}
+          sessionPromise={sessionPromise}
+          reportId={reportId}
+        />
+      </Suspense>
+
     </div>
   );
 }
