@@ -21,7 +21,11 @@ export default async function Page() {
     )
   }
 
-  const actions = session.user.role === "admin" ?
+  type Action = {
+    [key: string]: string;
+  };
+
+  const actions: Action[] = session.user.role === "admin" ?
     [
       { "manage users": "/admin/manage_users" },
       { "manage content": "/admin/manage_content" }
@@ -29,6 +33,10 @@ export default async function Page() {
       { "submit report": "/reports/submit" },
       { "view reports": "/reports" }
     ];
+
+  if (session.user.role === "editor") {
+    actions.push({ "view reviews": "/report-reviews" });
+  }
 
   return (
     <div className="m-4">
