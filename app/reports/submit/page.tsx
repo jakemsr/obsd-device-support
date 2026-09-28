@@ -4,8 +4,7 @@ import { useState, ChangeEvent, useEffect } from 'react';
 import { toast } from 'sonner';
 import { support_type } from '@/app/generated/prisma/enums'
 import { Button, LoadingSpinner } from '@/app/components/Button';
-import { reportSumbission } from './actions';
-import { InitialActionState } from '@/lib/local-types';
+import { reportSubmission } from '@/app/reports/submit/actions';
 import { getUserId } from '@/lib/check-user-auth';
 
 
@@ -84,7 +83,7 @@ export default function Page() {
     event.preventDefault();
     setSubmitting(true);
     const formData = new FormData(event.currentTarget);
-    const result = await reportSumbission(InitialActionState, formData);
+    const result = await reportSubmission(formData);
     if (result.success) {
       toast.success(result.message);
     } else {

@@ -7,9 +7,7 @@ import { normalizeDeviceId } from '@/lib/device-ids';
 import { getUserId } from '@/lib/check-user-auth';
 
 
-export async function reportSumbission(
-  prevState: ActionState, formData: FormData
-): Promise<ActionState> {
+export async function reportSubmission(formData: FormData): Promise<ActionState> {
   const userId = formData.get("user_id") as string;
   const bus = formData.get("bus") as string;
   const vendorId = formData.get("vendor_id") as string;
