@@ -13,9 +13,7 @@ export async function getSessionPromise(): Promise<AuthSession | null> {
 }
 
 export async function getCurrentUser(): Promise<AuthUser | null> {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const session = await getSessionPromise();
 
   if (!session || !session.user) {
     return null;
@@ -25,23 +23,11 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
 }
 
 export async function getUserId(): Promise<string | null> {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const currentUser = await getCurrentUser();
 
-  if (!session || !session.user) {
+  if (!currentUser) {
     return null;
   }
 
-  return session.user.id;
-}
-
-export async function checkUserAuth(userId: string): Promise<boolean> {
-
-  const currentUserId = await getUserId();
-  if (currentUserId !== userId) {
-    return false;
-  }
-
-  return true;
+  return currentUser.id;
 }

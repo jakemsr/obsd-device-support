@@ -2,7 +2,7 @@
 
 import { refresh } from "next/cache";
 import { ActionState } from "@/lib/local-types";
-import { checkUserAuth } from "@/lib/check-user-auth";
+import { getUserId } from "@/lib/check-user-auth";
 import prisma from "@/lib/prisma";
 
 
@@ -13,7 +13,7 @@ export async function submitReview(
   const userId = formData.get('userId') as string;
   const note = formData.get('note') as string;
 
-  if (!userId || !await checkUserAuth(userId)) {
+  if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,

@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
 import type { ActionState } from '@/lib/local-types'
 import { normalizeDeviceId } from '@/lib/device-ids';
-import { checkUserAuth } from '@/lib/check-user-auth';
+import { getUserId } from '@/lib/check-user-auth';
 
 
 export async function updateReportStatus(
@@ -19,7 +19,7 @@ export async function updateReportStatus(
   const withdrawnNote = formData.get("withdrawnNote") as string | null;
   const reason = formData.get("reason") as string | null;
 
-  if (!userId || !await checkUserAuth(userId)) {
+  if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -90,7 +90,7 @@ export async function updateReportSource(
   const sourceUrl = formData.get("sourceUrl") as string | null;
   const sourceName = formData.get("sourceName") as string | null;
 
-  if (!userId || !await checkUserAuth(userId)) {
+  if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -162,7 +162,7 @@ export async function updateReportedDevice(
   const reportedIssues = formData.getAll("reportedIssues") as string[];
   const reportedOtherDeviceNames = formData.getAll("reportedOtherDeviceNames") as string[];
 
-  if (!userId || !await checkUserAuth(userId)) {
+  if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -255,7 +255,7 @@ export async function updateReportedIssues(
   const addedIssueCount = formData.get("addedIssueCount") as string;
 
 
-  if (!userId || !await checkUserAuth(userId)) {
+  if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,
@@ -346,7 +346,7 @@ export async function updateReportedOtherDeviceNames(
   const addedOtherDeviceNameCount = formData.get("addedOtherDeviceNameCount") as string;
 
 
-  if (!userId || !await checkUserAuth(userId)) {
+  if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,

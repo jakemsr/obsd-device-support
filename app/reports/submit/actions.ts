@@ -4,7 +4,7 @@ import { ActionState } from '@/lib/local-types';
 import prisma from '@/lib/prisma';
 import { support_type } from '@/app/generated/prisma/browser';
 import { normalizeDeviceId } from '@/lib/device-ids';
-import { checkUserAuth } from '@/lib/check-user-auth';
+import { getUserId } from '@/lib/check-user-auth';
 
 
 export async function reportSumbission(
@@ -34,7 +34,7 @@ export async function reportSumbission(
     });
   }
 
-  if (!userId || !await checkUserAuth(userId)) {
+  if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,
