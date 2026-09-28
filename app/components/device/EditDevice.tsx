@@ -4,7 +4,7 @@ import { FullDeviceInfo } from "@/lib/local-types";
 import { support_type } from "@/app/generated/prisma/enums";
 import { getDriverList, updateDevice, type DriverListEntry } from "@/app/device/edit/[id]/actions";
 import { use, useEffect, useState } from "react";
-import { Button } from "../Button";
+import { Button } from "@/app/components/Button";
 import { toast } from "sonner";
 
 

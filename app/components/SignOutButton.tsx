@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import { Button, LoadingSpinner } from "./Button";
+import { Button, LoadingSpinner } from "@/app/components/Button";
 
 
 export const SignOut = () => {

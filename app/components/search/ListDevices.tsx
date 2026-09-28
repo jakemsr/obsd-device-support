@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import DeviceListEntry from "./DeviceListEntry";
+import DeviceListEntry from "@/app/components/search/DeviceListEntry";
 import type { DeviceListEntryProps, FullDeviceInfo } from "@/lib/local-types";
 
 

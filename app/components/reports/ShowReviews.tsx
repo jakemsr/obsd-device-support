@@ -1,6 +1,6 @@
 import type { AuthSession, ReportReview } from "@/lib/local-types";
 import StartReviewButton from '@/app/components/report-reviews/StartReviewButton';
-import { Button } from '../Button';
+import { Button } from '@/app/components/Button';
 import Link from 'next/link';
 
 
