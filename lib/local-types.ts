@@ -57,13 +57,6 @@ export type ActionState = {
   message: string
 };
 
-const InitialActionState: ActionState = {
-  error: '',
-  success: false,
-  message: '',
-};
-export { InitialActionState };
-
 export type FullReportedDevice = Prisma.reported_devicesGetPayload<{
   include: {
     reported_issues: true;
