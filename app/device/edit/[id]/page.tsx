@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import EditDevice from "@/app/components/devices/EditDevice";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser, FullDeviceInfo } from "@/lib/local-types";
+import { Suspense } from "react";
 
 
 export default async function Page({
@@ -15,10 +16,14 @@ export default async function Page({
   const currentUser: AuthUser | null = await getCurrentUser();
 
   if (!currentUser || currentUser.role !== "editor") {
-    return (<h1>Not logged in or not editor</h1>);
+    return (
+      <div className="px-4">
+        Not logged in or not editor
+      </div>
+    );
   }
 
-  const device: FullDeviceInfo | null = await prisma.devices.findUnique({
+  const devicePromise: Promise<FullDeviceInfo | null> = prisma.devices.findUnique({
     where: { id: BigInt(id) },
     include: {
       vendors: true,
@@ -28,28 +33,15 @@ export default async function Page({
     },
   });
 
-  if (!device) {
-    return (
-      <div>
-        Device not found
-      </div>
-    );
-  }
-
   return (
-    <div>
-      Edit Device Page
-      <div>
-        Bus: {device.bus}
-      </div>
-      <div>
-        VID / PID: {device.bus === "USB" ? device.vendors.usb_id : device.vendors.pci_id} / {device.product_id}
-      </div>
-      <div>
-        Name {device.vendors.name} {device.name}
-      </div>
+    <div className="px-4">
+      <h1 className="text-2xl font-bold mb-4">
+        Edit Device Page
+      </h1>
 
-      <EditDevice device={device} />
+      <Suspense fallback={<div>Loading device...</div>}>
+        <EditDevice devicePromise={devicePromise} />
+      </Suspense>
 
     </div>
   );
