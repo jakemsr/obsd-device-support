@@ -6,9 +6,7 @@ import { getUserId } from "@/lib/check-user-auth";
 import prisma from "@/lib/prisma";
 
 
-export async function submitReview(
-  prevState: ActionState, formData: FormData
-): Promise<ActionState> {
+export async function submitReview(formData: FormData): Promise<ActionState> {
   const reportId = formData.get('reportId') as string;
   const userId = formData.get('userId') as string;
   const note = formData.get('note') as string;

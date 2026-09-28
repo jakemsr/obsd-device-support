@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { FullDeviceInfo, InitialActionState, ReportReview } from "@/lib/local-types";
+import { FullDeviceInfo, ReportReview } from "@/lib/local-types";
 import { Button } from "@/app/components/Button";
 import { updateReview } from "@/app/report-reviews/edit/[id]/actions";
 import { getMatchedDevices, getReportDevices } from "@/app/reports/[id]/actions"
@@ -32,7 +32,7 @@ const EditReview = ({ review }: EditReviewProps) => {
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const result = await updateReview(InitialActionState, formData);
+    const result = await updateReview(formData);
     if (result.success) {
       toast.success(result.message);
     } else {

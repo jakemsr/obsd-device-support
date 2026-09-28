@@ -2,7 +2,6 @@
 
 import { ChangeEvent, Suspense, use, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { InitialActionState } from "@/lib/local-types";
 import type { AuthSession, FullReport, FullReportedDevice, FullDeviceInfo, SourceWithReports } from "@/lib/local-types";
 import { report_status, source_type, support_type } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
@@ -30,7 +29,7 @@ const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) =>
     event.preventDefault();
     setLoading(true);
     const formData = new FormData(event.currentTarget);
-    const result = await updateReportSource(InitialActionState, formData);
+    const result = await updateReportSource(formData);
     if (result.success) {
       toast.success(result.message);
     } else {
@@ -152,17 +151,17 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
     switch (submitType) {
       case SubmitType.Device:
         setLoadingDevice(true);
-        result = await updateReportedDevice(InitialActionState, formData);
+        result = await updateReportedDevice(formData);
         setLoadingDevice(false);
         break;
       case SubmitType.Issues:
         setLoadingIssues(true);
-        result = await updateReportedIssues(InitialActionState, formData);
+        result = await updateReportedIssues(formData);
         setLoadingIssues(false);
         break;
       case SubmitType.OtherNames:
         setLoadingOtherNames(true);
-        result = await updateReportedOtherDeviceNames(InitialActionState, formData);
+        result = await updateReportedOtherDeviceNames(formData);
         setLoadingOtherNames(false);
         break;
     }
@@ -527,7 +526,7 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     event.preventDefault();
     setLoading(true);
     const formData = new FormData(event.currentTarget);
-    const result = await updateReportStatus(InitialActionState, formData);
+    const result = await updateReportStatus(formData);
     if (result.success) {
       toast.success(result.message);
     } else {

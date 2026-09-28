@@ -4,7 +4,6 @@ import type { FullReport } from "@/lib/local-types";
 import { Button } from '@/app/components/Button'
 import { submitReview } from "@/app/report-reviews/actions";
 import { toast } from "sonner";
-import { InitialActionState } from "@/lib/local-types";
 
 
 interface StartReviewProps {
@@ -17,7 +16,7 @@ const StartReview = ({ reportId, userId }: StartReviewProps) => {
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const result = await submitReview(InitialActionState, formData);
+    const result = await submitReview(formData);
     if (result.success) {
       toast.success(result.message);
     } else {

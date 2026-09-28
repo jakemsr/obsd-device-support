@@ -9,9 +9,7 @@ import { normalizeDeviceId } from '@/lib/device-ids';
 import { getUserId } from '@/lib/check-user-auth';
 
 
-export async function updateReportStatus(
-  prevState: ActionState, formData: FormData
-): Promise<ActionState> {
+export async function updateReportStatus(formData: FormData): Promise<ActionState> {
 
   const reportId = formData.get("reportId") as string;
   const userId = formData.get("userId") as string;
@@ -80,9 +78,7 @@ export async function updateReportStatus(
 }
 
 
-export async function updateReportSource(
-  prevState: ActionState, formData: FormData
-): Promise<ActionState> {
+export async function updateReportSource(formData: FormData): Promise<ActionState> {
   const userId = formData.get("userId") as string;
   const sourceId = formData.get("sourceId") as string;
   const reportId = formData.get("reportId") as string;
@@ -145,9 +141,7 @@ export async function updateReportSource(
   };
 }
 
-export async function updateReportedDevice(
-  prevState: ActionState, formData: FormData
-): Promise<ActionState> {
+export async function updateReportedDevice(formData: FormData): Promise<ActionState> {
 
   const reportId = formData.get("reportId") as string;
   const userId = formData.get("userId") as string;
@@ -246,9 +240,7 @@ export async function updateReportedDevice(
   };
 }
 
-export async function updateReportedIssues(
-  prevState: ActionState, formData: FormData
-): Promise<ActionState> {
+export async function updateReportedIssues(formData: FormData): Promise<ActionState> {
   const userId = formData.get("userId") as string;
   const deviceId = formData.get("deviceId") as string;
   const reportedIssueCount = formData.get("reportedIssueCount") as string;
@@ -337,9 +329,7 @@ export async function updateReportedIssues(
   };
 }
 
-export async function updateReportedOtherDeviceNames(
-  prevState: ActionState, formData: FormData
-): Promise<ActionState> {
+export async function updateReportedOtherDeviceNames(formData: FormData): Promise<ActionState> {
   const userId = formData.get("userId") as string;
   const deviceId = formData.get("deviceId") as string;
   const reportedOtherDeviceNameCount = formData.get("reportedOtherDeviceNameCount") as string;
