@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import SearchDevices from "../components/SearchDevices";
+import SearchDevices from "@/app/components/search/SearchDevices";
 
 
 export default async function Search({

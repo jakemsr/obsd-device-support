@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import SearchFields from "./components/SearchFields";
-import SearchFieldsSkeleton from "./components/SearchFieldsSkeleton";
+import SearchFields from "@/app/components/search/SearchFields";
+import SearchFieldsSkeleton from "@/app/components/search/SearchFieldsSkeleton";
 
 export default function Home() {
 

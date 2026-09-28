@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
-import { Button } from "./Button";
+import { Button } from "../Button";
 
 
 const getDeviceTypes = unstable_cache(

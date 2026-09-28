@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
-import ListDevices from "./ListDevices";
+import ListDevices from "@/app/components/search/ListDevices";
 import { FullDeviceInfo } from "@/lib/local-types";
-import { Prisma } from "../generated/prisma/client";
+import { Prisma } from "@/app/generated/prisma/client";
 
 
 interface SearchDevicesProps {
