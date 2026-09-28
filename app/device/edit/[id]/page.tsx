@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import EditDevice from "@/app/components/devices/EditDevice";
+import EditDevice from "@/app/components/device/EditDevice";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser, FullDeviceInfo } from "@/lib/local-types";
 import { Suspense } from "react";
