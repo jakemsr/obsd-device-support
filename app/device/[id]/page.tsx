@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import DeviceCard from "@/app/components/DeviceCard";
+import DeviceCard from "@/app/components/device/DeviceCard";
 
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
