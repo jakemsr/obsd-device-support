@@ -8,8 +8,6 @@ export type AuthSession = NonNullable<
   Awaited<ReturnType<typeof auth.api.getSession>>
 >;
 
-export type AuthSessionPromise = Promise<AuthSession | null>;
-
 export type FullDeviceInfo = Prisma.devicesGetPayload<{
   include: {
     vendors: true;

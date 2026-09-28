@@ -1,10 +1,9 @@
 import prisma from "@/lib/prisma";
-import { headers } from "next/headers";
 import Link from "next/link";
 import EditReport from "@/app/components/reports/EditReport";
 import { Suspense } from "react";
-import { AuthSessionPromise, FullReport } from "@/lib/local-types";
-import { auth } from "@/lib/auth";
+import { AuthSession, FullReport } from "@/lib/local-types";
+import { getSessionPromise } from "@/lib/check-user-auth";
 
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -36,10 +35,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     }
   });
 
-  const sessionPromise: AuthSessionPromise = auth.api.getSession({
-    headers: await headers(),
-  });
-
+  const sessionPromise: Promise<AuthSession | null> = getSessionPromise();
 
   return (
     <div className="px-4 mt-4">

@@ -1,4 +1,4 @@
-import type { ReportReview } from "@/lib/local-types";
+import type { AuthSession, ReportReview } from "@/lib/local-types";
 import StartReviewButton from '@/app/components/report-reviews/StartReviewButton';
 import { Button } from '../Button';
 import Link from 'next/link';
@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 interface ShowReviewsProps {
   reviewsPromise: Promise<ReportReview[]>;
-  sessionPromise: Promise<any>;
+  sessionPromise: Promise<AuthSession | null>;
   reportId: bigint;
   editingReviewId?: bigint;
 }

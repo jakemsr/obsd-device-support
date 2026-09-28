@@ -3,7 +3,7 @@
 import { ChangeEvent, Suspense, use, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { InitialActionState } from "@/lib/local-types";
-import type { AuthSessionPromise, FullReport, FullReportedDevice, FullDeviceInfo, SourceWithReports } from "@/lib/local-types";
+import type { AuthSession, FullReport, FullReportedDevice, FullDeviceInfo, SourceWithReports } from "@/lib/local-types";
 import { report_status, source_type, support_type } from "@/app/generated/prisma/enums";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { getMatchedDevices } from '@/app/reports/[id]/actions';
@@ -490,7 +490,7 @@ const EditDevices = ({ report }: EditDevicesProps) => {
 
 interface EditReportProps {
   reportPromise: Promise<FullReport | null>;
-  sessionPromise: AuthSessionPromise;
+  sessionPromise: Promise<AuthSession | null>;
 }
 
 export default function EditReport({ reportPromise, sessionPromise }: EditReportProps) {

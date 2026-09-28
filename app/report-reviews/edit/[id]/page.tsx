@@ -1,9 +1,8 @@
 import ReportDisplay from "@/app/components/reports/ReportDisplay";
 import { Suspense } from "react";
-import { headers } from "next/headers";
 import prisma from "@/lib/prisma";
-import { auth } from "@/lib/auth";
-import { ReportReview } from "@/lib/local-types";
+import { getSessionPromise } from "@/lib/check-user-auth";
+import { AuthSession, ReportReview } from "@/lib/local-types";
 import EditReview from "@/app/components/report-reviews/EditReview";
 import ShowReviews from "@/app/components/reports/ShowReviews";
 
@@ -32,11 +31,9 @@ export default async function Page({
     return <div>Cannot edit a completed review</div>;
   }
 
-  const sessionPromise = auth.api.getSession({
-    headers: await headers(),
-  });
+  const sessionPromise: Promise<AuthSession | null> = getSessionPromise();
 
-  const reviewsPromise = prisma.report_reviews.findMany({
+  const reviewsPromise: Promise<ReportReview[]> = prisma.report_reviews.findMany({
     where: { report_id: BigInt(review.report_id) },
     include: {
       report: true,

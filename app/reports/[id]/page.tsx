@@ -3,9 +3,8 @@ import Link from "next/link";
 import ReportDisplay from "@/app/components/reports/ReportDisplay";
 import ShowReviews from "@/app/components/reports/ShowReviews";
 import prisma from "@/lib/prisma";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import type { ReportReview } from "@/lib/local-types";
+import type { AuthSession, ReportReview } from "@/lib/local-types";
+import { getSessionPromise } from "@/lib/check-user-auth";
 
 
 export default async function Page({
@@ -27,9 +26,7 @@ export default async function Page({
     },
   });
 
-  const sessionPromise = auth.api.getSession({
-    headers: await headers(),
-  });
+  const sessionPromise: Promise<AuthSession | null> = getSessionPromise();
 
   return (
     <div className="px-4">

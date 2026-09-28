@@ -2,8 +2,15 @@
 
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
-import type { AuthUser } from "@/lib/local-types";
+import type { AuthSession, AuthUser } from "@/lib/local-types";
 
+
+export async function getSessionPromise(): Promise<AuthSession | null> {
+  const sessionPromise = auth.api.getSession({
+    headers: await headers()
+  });
+  return sessionPromise;
+}
 
 export async function getCurrentUser(): Promise<AuthUser | null> {
   const session = await auth.api.getSession({
