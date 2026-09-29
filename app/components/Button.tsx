@@ -26,3 +26,17 @@ export const Button = ({ onClick, children, disabled, type }: ButtonProps) => {
     </button>
   )
 }
+
+interface LinkButtonProps {
+  children?: React.ReactNode;
+}
+
+export const LinkButton = ({ children }: LinkButtonProps) => {
+  return (
+    <div
+      className="flex items-center justify-center text-sm sm:text-base p-2 bg-blue-500 text-white rounded hover:scale-105 transition-transform duration-200"
+    >
+      {children}
+    </div>
+  )
+}
