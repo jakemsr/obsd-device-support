@@ -86,7 +86,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
         reason: reason,
       },
     });
-    console.log("Created report with ID: ", report.id);
 
     // create report sources
     const reportSource = await prisma.report_sources.create({
@@ -97,7 +96,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
         url: 'localhost',
       }
     });
-    console.log("Created report source with ID: ", reportSource.id);
 
     // create form_report
     const formReport = await prisma.form_reports.create({
@@ -108,7 +106,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
         payload: JSON.stringify(Object.fromEntries(formData.entries())),
       }
     });
-    console.log("Created form report with ID: ", formReport.id);
 
     // create reported device
     const reportedDevice = await prisma.reported_devices.create({
@@ -123,7 +120,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
         support_status: validatedSupportStatus,
       }
     });
-    console.log("Created reported device with ID: ", reportedDevice.id);
 
     // create reported issues
     for (const issue of issues) {
@@ -134,7 +130,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
           description: issue,
         }
       });
-      console.log("Created reported issue with ID: ", reportedIssue.id);
     }
 
     // create reported other device names
@@ -147,7 +142,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
           product_name: otherName.product,
         }
       });
-      console.log("Created reported other device name with ID: ", reportedOtherDeviceName.id);
     }
   } catch (error) {
     return {
