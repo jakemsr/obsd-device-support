@@ -27,10 +27,6 @@ export default async function Page({
     return <div>Report Review not found</div>;
   }
 
-  if (review.completed_at !== null) {
-    return <div>Cannot edit a completed review</div>;
-  }
-
   const sessionPromise: Promise<AuthSession | null> = getSessionPromise();
 
   const reviewsPromise: Promise<ReportReview[]> = prisma.report_reviews.findMany({
@@ -53,11 +49,11 @@ export default async function Page({
           reviewsPromise={reviewsPromise}
           sessionPromise={sessionPromise}
           reportId={review.report_id}
-          editingReviewId={review.id}
+          editingReviewId={review.completed_at === null ? review.id : undefined}
         />
       </Suspense>
 
-      <EditReview review={review} />
+      {review.completed_at === null && <EditReview review={review} />}
     </>
   );
 
