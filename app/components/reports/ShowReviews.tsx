@@ -1,6 +1,6 @@
 import type { AuthSession, ReportReview } from "@/lib/local-types";
 import StartReviewButton from '@/app/components/report-reviews/StartReviewButton';
-import { Button } from '@/app/components/Button';
+import { LinkButton } from '@/app/components/Button';
 import Link from 'next/link';
 
 
@@ -43,9 +43,9 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
               {review.reviewer_id === userId && review.completed_at === null && (
                 <div>
                   <Link href={`/report-reviews/edit/${review.id}`}>
-                    <Button type="button">
+                    <LinkButton>
                       Update Review
-                    </Button>
+                    </LinkButton>
                   </Link>
                 </div>
               )}
