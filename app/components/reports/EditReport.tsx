@@ -504,8 +504,8 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     return <div>Not authorized to edit this report</div>;
   }
 
-  if (report.status === "withdrawn") {
-    return <div>Cannot edit a withdrawn report</div>;
+  if (report.status !== report_status.pending) {
+    return <div>Cannot edit a report with status {report.status.split("_").join(" ")}</div>;
   }
 
   const statusOptions = Object.values(report_status).map((value) => ({

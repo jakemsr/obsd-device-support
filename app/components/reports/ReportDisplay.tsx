@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { report_status } from "@/app/generated/prisma/enums";
 import { Button } from "@/app/components/Button";
 import { Suspense } from "react";
 import { getFullReport } from "@/app/reports/[id]/actions";
@@ -61,7 +62,7 @@ const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
             </div>
           )}
         </div>
-        {session.user.id === report.user_id && report.status !== "withdrawn" && (
+        {session.user.id === report.user_id && report.status === report_status.pending && (
           <div>
             <Link href={`/reports/${id}/edit`}>
               <Button type="button">
