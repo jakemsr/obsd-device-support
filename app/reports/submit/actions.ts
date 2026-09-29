@@ -62,7 +62,14 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
   }
 
   // validate support status
-  if (!Object.values(support_type).includes(supportStatus as support_type)) {
+  let validatedSupportStatus = undefined;
+  for (const status of Object.values(support_type)) {
+    if (status === supportStatus) {
+      validatedSupportStatus = status;
+      break;
+    }
+  }
+  if (!validatedSupportStatus) {
     return {
       error: 'Invalid support status',
       success: false,
@@ -110,7 +117,7 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
         reported_vendor: reportedVendor,
         reported_product: reportedProduct,
         reported_driver: reportedDriver,
-        support_status: supportStatus as support_type        
+        support_status: validatedSupportStatus,
       }
     });
     console.log("Created reported device with ID: ", reportedDevice.id);

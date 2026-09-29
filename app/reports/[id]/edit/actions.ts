@@ -13,7 +13,7 @@ export async function updateReportStatus(formData: FormData): Promise<ActionStat
 
   const reportId = formData.get("reportId") as string;
   const userId = formData.get("userId") as string;
-  const newStatus = formData.get("newStatus") as report_status;
+  const newStatus = formData.get("newStatus") as string;
   const withdrawnNote = formData.get("withdrawnNote") as string | null;
   const reason = formData.get("reason") as string | null;
 
@@ -33,16 +33,26 @@ export async function updateReportStatus(formData: FormData): Promise<ActionStat
     };
   }
 
-  const valid = Object.values(report_status);
-  if (!valid.includes(newStatus as typeof report_status[keyof typeof report_status])) {
-    return { error: 'Invalid input', success: false, message: 'Bad report status' };
+  let validatedStatus = undefined;
+  for (const status of Object.values(report_status)) {
+    if (status === newStatus) {
+      validatedStatus = status;
+      break;
+    }
+  }
+  if (!validatedStatus) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Bad report status'
+    };
   }
 
   try {
     await prisma.reports.update({
       where: { id: BigInt(reportId) },
       data: {
-        status: newStatus as report_status,
+        status: validatedStatus,
         ...(newStatus === "withdrawn" &&
         {
           withdrawn_at: new Date(),
@@ -102,16 +112,26 @@ export async function updateReportSource(formData: FormData): Promise<ActionStat
     };
   }
 
-  const valid = Object.values(source_type);
-  if (!valid.includes(sourceType as typeof source_type[keyof typeof source_type])) {
-    return { error: 'Invalid input', success: false, message: 'Bad source type' };
+  let validatedSourceType = undefined;
+  for (const type of Object.values(source_type)) {
+    if (type === sourceType) {
+      validatedSourceType = type;
+      break;
+    }
+  }
+  if (!validatedSourceType) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Bad source type'
+    };
   }
 
   try {
     const newSource = await prisma.report_sources.create({
       data: {
         report_id: BigInt(reportId),
-        source_type: sourceType as source_type,
+        source_type: validatedSourceType,
         url: sourceUrl,
         name: sourceName,
       }
@@ -185,9 +205,19 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionSt
     };
   }
 
-  const valid = Object.values(support_type);
-  if (!valid.includes(supportStatus as typeof support_type[keyof typeof support_type])) {
-    return { error: 'Invalid input', success: false, message: 'Bad support status' };
+  let validatedSupportStatus = undefined;
+  for (const status of Object.values(support_type)) {
+    if (status === supportStatus) {
+      validatedSupportStatus = status;
+      break;
+    }
+  }
+  if (!validatedSupportStatus) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Bad support status'
+    };
   }
 
   try {
@@ -200,7 +230,7 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionSt
         reported_vendor: vendorName,
         reported_product: productName,
         reported_driver: driverName,
-        support_status: supportStatus as support_type,
+        support_status: validatedSupportStatus,
       }
     });
     await prisma.reported_devices.update({
