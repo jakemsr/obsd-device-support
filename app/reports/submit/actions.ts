@@ -9,6 +9,7 @@ import { getUserId } from '@/lib/check-user-auth';
 
 export async function reportSubmission(formData: FormData): Promise<ActionState> {
   const userId = formData.get("user_id") as string;
+  const reason = formData.get("reason") as string;
   const bus = formData.get("bus") as string;
   const vendorId = formData.get("vendor_id") as string;
   const productId = formData.get("product_id") as string;
@@ -40,7 +41,7 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     };
   }
 
-  if (!userId || !bus || !vendorId || !productId || !reportedVendor || !reportedProduct || !reportedDriver || !supportStatus) {
+  if (!reason || !bus || !vendorId || !productId || !reportedDriver || !supportStatus) {
     return {
       error: 'Missing fields',
       success: false,
@@ -80,7 +81,10 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
   try {
     // create parent report
     const report = await prisma.reports.create({
-      data: { user_id: userId },
+      data: {
+        user_id: userId,
+        reason: reason,
+      },
     });
     console.log("Created report with ID: ", report.id);
 

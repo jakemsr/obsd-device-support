@@ -88,6 +88,15 @@ export default function Page() {
 
         <div className="grid grid-cols-3 gap-2 max-w-fit">
 
+          <div className="font-bold">Reason</div>
+          <div className="col-span-2">
+            <textarea
+              name="reason"
+              placeholder="brief reason for report"
+              className="h-20 w-full"
+            />
+          </div>
+
           <div className="font-bold">Bus</div>
           <div className="col-span-2">
             <select name="bus">
