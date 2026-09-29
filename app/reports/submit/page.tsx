@@ -17,9 +17,9 @@ export default function Page() {
     value: string;
   }
 
-  const [issueFields, setIssueFields] = useState<valueField[]>([{ value: '' }]);
-  const [otherNameVendorFields, setOtherNameVendorFields] = useState<valueField[]>([{ value: '' }]);
-  const [otherNameProductFields, setOtherNameProductFields] = useState<valueField[]>([{ value: '' }]);
+  const [issueFields, setIssueFields] = useState<valueField[]>([]);
+  const [otherNameVendorFields, setOtherNameVendorFields] = useState<valueField[]>([]);
+  const [otherNameProductFields, setOtherNameProductFields] = useState<valueField[]>([]);
 
   const handleIssueChange = (index: number, event: ChangeEvent<HTMLTextAreaElement>) => {
     const data = [...issueFields];
@@ -47,22 +47,6 @@ export default function Page() {
     setOtherNameVendorFields([...otherNameVendorFields, { value: '' }]);
     setOtherNameProductFields([...otherNameProductFields, { value: '' }]);
   };
-
-  const removeIssueField = (index: number) => {
-    const data = [...issueFields];
-    data.splice(index, 1);
-    setIssueFields(data);
-  };  
-
-  const removeOtherNameField = (index: number) => {
-    let data = [...otherNameVendorFields];
-    data.splice(index, 1);
-    setOtherNameVendorFields(data);
-
-    data = [...otherNameProductFields];
-    data.splice(index, 1);
-    setOtherNameProductFields(data);
-  };  
   
   useEffect(() => {
     const fetchUserId = async () => {
@@ -102,10 +86,10 @@ export default function Page() {
       <form onSubmit={handleSubmit}>
         <input type="hidden" name="user_id" value={userId} />
 
-        <div className="grid grid-cols-2 gap-2 max-w-fit">
+        <div className="grid grid-cols-3 gap-2 max-w-fit">
 
           <div className="font-bold">Bus</div>
-          <div>
+          <div className="col-span-2">
             <select name="bus">
               <option value="usb">USB</option>
               <option value="pci">PCI</option>
@@ -113,32 +97,32 @@ export default function Page() {
           </div>
 
           <div className="font-bold">Vendor ID</div>
-          <div>
+          <div className="col-span-2">
             <input type="text" name="vendor_id" />
           </div>
 
           <div className="font-bold">Product ID</div>
-          <div>
+          <div className="col-span-2">
             <input type="text" name="product_id" />
           </div>
 
           <div className="font-bold">Vendor Name</div>
-          <div>
+          <div className="col-span-2">
             <input type="text" name="reported_vendor" />
           </div>
 
           <div className="font-bold">Product Name</div>
-          <div>
+          <div className="col-span-2">
             <input type="text" name="reported_product" />
           </div>
 
           <div className="font-bold">Driver</div>
-          <div>
+          <div className="col-span-2">
             <input type="text" name="reported_driver" />
           </div>
 
           <div className="font-bold">Support Status</div>
-          <div>
+          <div className="col-span-2">
             <select name="support_status">
               {Object.values(support_type).map((status) => (
                 <option key={status} value={status}>
@@ -148,65 +132,75 @@ export default function Page() {
             </select>
           </div>
 
-          <div className="font-bold col-span-2 text-left">Issues</div>
-          {issueFields.map((field, index) => (
-            <div key={index} className="col-span-2 flex gap-2">
-              <textarea
-                name={`issue${index}`}
-                value={field.value}
-                onChange={(e) => handleIssueChange(index, e)}
-                className="w-[80%]"
-              />
-              <Button
-                type="button"
-                onClick={() => removeIssueField(index)}
-              >
-                Remove
-              </Button>
+          <div className="col-span-3 mt-4">
+            <div className="font-bold">
+              Issues
             </div>
-          ))}
+            {issueFields.map((field, index) => (
+              <div key={index} className="mt-2 w-full pl-4 flex flex-col gap-2">
+                <div>
+                  Issue #{index + 1}
+                </div>
+                <div>
+                  <textarea
+                    name={`issue${index}`}
+                    value={field.value}
+                    onChange={(e) => handleIssueChange(index, e)}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
           <input type="hidden" name="numIssues" value={issueFields.length} />
-          <div className="col-span-2">
+          <div className="col-span-3">
             <Button type="button" onClick={addIssueField}>
-              Add Another Issue
+              Add Issue
             </Button>
           </div>
 
-          <div className="font-bold col-span-2 text-left">Other Names</div>
-          {otherNameVendorFields.map((field, index) => (
-            <div key={index} className="col-span-2 flex items-center gap-2">
-              Vendor
-              <input
-                type="text"
-                name={`otherNameVendor${index}`}
-                value={otherNameVendorFields[index].value}
-                onChange={(e) => handleOtherNameVendorChange(index, e)}
-                className="w-[40%]"
-              />
-              Product
-              <input
-                type="text"
-                name={`otherNameProduct${index}`}
-                value={otherNameProductFields[index].value}
-                onChange={(e) => handleOtherNameProductChange(index, e)}
-                className="w-[40%]"
-              />
-              <Button
-                type="button"
-                onClick={() => removeOtherNameField(index)}
-              >
-                Remove
-              </Button>
+          <div className="col-span-3 mt-4">
+            <div className="font-bold">
+              Other Names
             </div>
-          ))}
+            {otherNameVendorFields.map((field, index) => (
+              <div key={index} className="mt-2 w-full pl-4 grid grid-cols-3 gap-2">
+                <div className="col-span-3">
+                  Other Name #{index + 1}
+                </div>
+                <div className="col-span-1">
+                  Vendor
+                </div>
+                <div className="col-span-2">
+                  <input
+                    type="text"
+                    name={`otherNameVendor${index}`}
+                    value={otherNameVendorFields[index].value}
+                    onChange={(e) => handleOtherNameVendorChange(index, e)}
+                  />
+                </div>
+                <div className="col-span-1">
+                  Product
+                </div>
+                <div className="col-span-2">
+                  <input
+                    type="text"
+                    name={`otherNameProduct${index}`}
+                    value={otherNameProductFields[index].value}
+                    onChange={(e) => handleOtherNameProductChange(index, e)}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
           <input type="hidden" name="numOtherNames" value={otherNameVendorFields.length} />
-          <div className="col-span-2">
+          <div className="col-span-3">
             <Button type="button" onClick={addOtherNameField}>
-              Add Another Other Name
+              Add Other Name
             </Button>
           </div>
 
-          <div className="col-span-2 flex justify-center">
+          <div className="col-span-3 mt-4 flex justify-center">
             <Button type="submit" disabled={submitting}>
               {submitting && <LoadingSpinner />}
               Submit Report

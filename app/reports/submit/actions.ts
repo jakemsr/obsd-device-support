@@ -106,7 +106,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     });
     console.log("Created form report with ID: ", formReport.id);
 
-
     // create reported device
     const reportedDevice = await prisma.reported_devices.create({
       data: {
@@ -124,6 +123,7 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
 
     // create reported issues
     for (const issue of issues) {
+      if (!issue) continue;
       const reportedIssue = await prisma.reported_issues.create({
         data: {
           reported_device_id: reportedDevice.id,
@@ -135,6 +135,7 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
 
     // create reported other device names
     for (const otherName of otherNames) {
+      if (!otherName.vendor && !otherName.product) continue;
       const reportedOtherDeviceName = await prisma.reported_other_device_names.create({
         data: {
           reported_device_id: reportedDevice.id,
