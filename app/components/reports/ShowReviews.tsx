@@ -36,6 +36,9 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
               Review #{index + 1}
               <div>Reviewer: {review.reviewer.email}</div>
               <div>Created At: {review.created_at.toDateString()}</div>
+              {review.completed_at && (
+                <div>Completed At: {review.completed_at.toDateString()}</div>
+              )}
               <div>Notes: {review.notes}</div>
               {review.reviewer_id === userId && review.completed_at === null && (
                 <div>
