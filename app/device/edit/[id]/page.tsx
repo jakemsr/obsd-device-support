@@ -36,7 +36,7 @@ export default async function Page({
   return (
     <div className="px-4">
       <h1 className="text-2xl font-bold mb-4">
-        Edit Device Page
+        Edit Device {id}
       </h1>
 
       <Suspense fallback={<div>Loading device...</div>}>
