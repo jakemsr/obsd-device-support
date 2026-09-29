@@ -32,10 +32,10 @@ export default async function Page({ searchParams }: PageProps) {
   const userIdPromise = getUserId();
 
   return (
-    <div className="px-4">
+    <div className="px-4 py-4 sm:px-8">
 
       <h1 className="text-2xl font-bold text-center mb-4">
-        Submit Device Report
+        Submit Report for Device {deviceId}
       </h1>
 
       <Suspense fallback={<div>Loading report form...</div>}>

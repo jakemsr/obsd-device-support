@@ -38,20 +38,20 @@ export default async function Page() {
   }
 
   return (
-    <div className="m-4">
-      <h1>
+    <div className="px-4 py-4 sm:px-8">
+      <h1 className="text-2xl font-bold mb-4 text-center">
         Dashboard
       </h1>
       <div>
         Welcome, {currentUser.name || currentUser.email}!
       </div>
-      <div>
+      <div className="mt-4">
         Actions:
         <ul className="list-disc list-inside">
           {actions.map(action => (
             <li
               key={Object.keys(action)[0]}
-              className="text-link hover:underline"
+              className="px-4 text-link hover:underline"
             >
               <Link href={Object.values(action)[0]}>
                 {Object.keys(action)[0]}

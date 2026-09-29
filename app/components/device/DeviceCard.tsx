@@ -52,7 +52,7 @@ export default async function DeviceCard({ id }: { id: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 gap-x-16 p-4 m-4 max-w-fit">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 gap-x-16 max-w-fit">
       <div>
         <div className="grid grid-cols-2">
           <div className="font-bold">Vendor:</div>

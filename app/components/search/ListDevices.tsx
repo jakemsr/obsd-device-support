@@ -125,7 +125,7 @@ export default function ListDevices({ devices, search }: ListDevicesProps) {
         </div>
       </div>
 
-      <div className="flex px-4 mt-4">
+      <div className="flex px-4 py-4 sm:px-8">
         <div className="flex flex-col gap-2 min-w-40">
           Filters:
           <div>

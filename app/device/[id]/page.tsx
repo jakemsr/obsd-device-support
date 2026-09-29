@@ -8,18 +8,23 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const { id } = await params;
 
   return (
-    <>
-      <Suspense fallback={<div className="p-4">Loading device information...</div>}>
+    <div className="px-4 py-4 sm:px-8">
+      <div>
+        <h1 className="text-2xl font-bold text-center mb-4">
+          Device {id}
+        </h1>
+      </div>
+      <Suspense fallback={<div>Loading device information...</div>}>
         <DeviceCard id={id} />
       </Suspense>
 
-      <div className="py-4 px-4 sm:px-8 w-fit">
+      <div className="w-fit mt-4">
         <Link href={`/reports/submit?deviceId=${id}`}>
           <LinkButton>
             Submit Report for Device {id}
           </LinkButton>
         </Link>
       </div>
-    </>
+    </div>
   );
 }
