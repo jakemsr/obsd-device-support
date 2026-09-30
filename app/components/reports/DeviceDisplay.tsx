@@ -8,36 +8,59 @@ interface DeviceDisplayProps {
 
 const DeviceDisplay = ({ device, matchedDevices }: DeviceDisplayProps) => {
   return (
-    <div className="my-2 grid grid-cols-1 sm:grid-cols-2 gap-y-6">
-      <div>
-        <div>
-          Bus: {device.bus}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6">
+      <div className="grid grid-cols-3">
+        <div className="font-bold">
+          Bus:
         </div>
-        <div>
-          Vendor ID: {device.vendor_id}
+        <div className="col-span-2">
+          {device.bus}
         </div>
-        <div>
-          Product ID: {device.product_id}
+        <div className="font-bold">
+          Vendor ID:
         </div>
-        <div>
-          Reported Vendor: {device.reported_vendor}
+        <div className="col-span-2">
+          {device.vendor_id}
         </div>
-        <div>
-          Reported Product: {device.reported_product}
+        <div className="font-bold">
+          Product ID:
         </div>
-        <div>
-          Reported Driver: {device.reported_driver}
+        <div className="col-span-2">
+          {device.product_id}
         </div>
-        <div>
-          Support Status: {device.support_status}
+        <div className="font-bold">
+          Reported Vendor:
+        </div>
+        <div className="col-span-2">
+          {device.reported_vendor}
+        </div>
+        <div className="font-bold">
+          Reported Product:
+        </div>
+        <div className="col-span-2">
+          {device.reported_product}
+        </div>
+        <div className="font-bold">
+          Reported Driver:
+        </div>
+        <div className="col-span-2">
+          {device.reported_driver}
+        </div>
+        <div className="font-bold">
+          Support Status:
+        </div>
+        <div className="col-span-2">
+          {device.support_status}
         </div>
 
         {device.reported_issues.length > 0 && (
-          <div className="mt-2">
-            Reported Issues:
+          <div className="mt-2 col-span-3">
+            <div className="font-bold">
+              Reported Issues:
+            </div>
             {device.reported_issues.map(issue => (
               <div
-                className="px-4"
+                className="px-4 col-span-3"
                 key={issue.id}
               >
                 {issue.description}
@@ -47,11 +70,13 @@ const DeviceDisplay = ({ device, matchedDevices }: DeviceDisplayProps) => {
         )}
 
         {device.reported_other_device_names.length > 0 && (
-          <div className="mt-2">
-            Reported Other Device Names:
+          <div className="mt-2 col-span-3">
+            <div className="font-bold">
+              Reported Other Device Names:
+            </div>
             {device.reported_other_device_names.map(name => (
               <div
-                className="px-4"
+                className="px-4 col-span-3"
                 key={name.id}
               >
                 {name.vendor_name} {name.product_name}
@@ -62,45 +87,74 @@ const DeviceDisplay = ({ device, matchedDevices }: DeviceDisplayProps) => {
       </div>
 
       <div>
+        <div className="font-bold">
+          VID/PID Matches Existing Devices:
+        </div>
         {matchedDevices && matchedDevices.length > 0 ? (
-          <>
-            VID/PID Matches Existing Devices:
+          <div>
             {matchedDevices.map(matchedDevice => (
-              <div key={matchedDevice.id} className="px-4 mt-2">
-                <div>
-                  Vendor: {matchedDevice.vendors.name}
+              <div key={matchedDevice.id} className="grid grid-cols-3 px-4 mt-1">
+                <div className="font-bold">
+                  Vendor:
                 </div>
-                <div>
-                  Product: {matchedDevice.name}
+                <div className="col-span-2">
+                  {matchedDevice.vendors.name}
                 </div>
-                <div>
-                  Driver: {matchedDevice.drivers.name}
+                <div className="font-bold">
+                  Product:
+                </div>
+                <div className="col-span-2">
+                  {matchedDevice.name}
+                </div>
+                <div className="font-bold">
+                  Driver:
+                </div>
+                <div className="col-span-2">
+                  {matchedDevice.drivers.name}
                 </div>
 
+                <div className="col-span-3 font-bold">
+                  Issues:
+                </div>
                 {matchedDevice.issues.length > 0 ? (
-                  <div>
-                    Issues: {matchedDevice.issues.map(issue => (
-                      <div className="px-4" key={issue.id}>
+                  <div className="col-span-3">
+                    {matchedDevice.issues.map(issue => (
+                      <div className="px-4 mb-2" key={issue.id}>
                         {issue.description}
                       </div>
                     ))}
                   </div>
-                ) : <div>No known issues</div>}
+                ) : (
+                <div className="px-4 mb-2 col-span-3">
+                  No known issues
+                </div>
+                )}
 
+                <div className="col-span-3 font-bold">
+                  Other Device Names:
+                </div>
                 {matchedDevice.other_device_names.length > 0 ? (
-                  <div>
-                    Other Device Names: {matchedDevice.other_device_names.map(name => (
-                      <div className="px-4" key={name.id}>
+                  <div className="col-span-3">
+                    {matchedDevice.other_device_names.map(name => (
+                      <div className="px-4 mb-2" key={name.id}>
                         {name.vendor_name} {name.device_name}
                       </div>
                     ))}
                   </div>
-                ) : <div>No other device names</div>}
+                ) : (
+                  <div className="px-4 mb-2 col-span-3">
+                    No other device names
+                  </div>
+                )}
 
               </div>
             ))}
-          </>
-        ) : "No matching devices"}
+          </div>
+        ) : (
+          <div className="px-4 mt-1">
+            No matching devices
+          </div>
+        )}
       </div>
     </div>
   );

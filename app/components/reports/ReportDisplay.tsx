@@ -18,7 +18,7 @@ const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
 
   if (!report) {
     return (
-      <div className="px-4 mt-4">
+      <div>
         Report {id} not found!
       </div>
     );
@@ -29,41 +29,63 @@ const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
   if (!session || !session.user ||
     !(session.user.id === report.user_id || session.user.role === "editor")) {
     return (
-      <div className="px-4 mt-4">
+      <div>
         You must be logged in to view this report, or you do not have permission to view it.
       </div>
     );
   }
 
   return (
-    <div className="px-4 mt-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <div>
-            Status: {report.status.split("_").join(" ")}
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-3">
+          <div className="font-bold">
+            Status:
           </div>
-          <div>
-            Created At: {report.created_at.toLocaleString()}
+          <div className="col-span-2">
+           {report.status.split("_").join(" ")}
           </div>
-          <div>
-            Updated At: {report.updated_at.toLocaleString()}
+          <div className="font-bold">
+            Created At:
           </div>
-          <div>
-            Reason: {report.reason}
+          <div className="col-span-2">
+            {report.created_at.toLocaleString()}
+          </div>
+          <div className="font-bold">
+            Updated At:
+          </div>
+          <div className="col-span-2">
+            {report.updated_at.toLocaleString()}
+          </div>
+          <div className="font-bold">
+            Reason:
+          </div>
+          <div className="col-span-2">
+            {report.reason}
           </div>
           {report.withdrawn_at && (
-            <div>
-              Withdrawn At: {report.withdrawn_at.toLocaleString()}
-            </div>
+            <>
+              <div className="font-bold">
+                Withdrawn At:
+              </div>
+              <div className="col-span-2">
+                {report.withdrawn_at.toLocaleString()}
+              </div>
+            </>
           )}
           {report.withdrawn_note && (
-            <div>
-              Withdrawn Note: {report.withdrawn_note}
-            </div>
+            <>
+              <div className="font-bold">
+                Withdrawn Note:
+              </div>
+              <div className="col-span-2">
+                {report.withdrawn_note}
+              </div>
+            </>
           )}
         </div>
         {session.user.id === report.user_id && report.status === report_status.pending && (
-          <div>
+          <div className="w-fit">
             <Link href={`/reports/${id}/edit`}>
               <LinkButton>
                 Edit Report
@@ -75,10 +97,12 @@ const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
 
       {report.sources.length > 0 && (
         <div className="mt-4">
-          Sources:
+          <div className="font-bold">
+            Sources:
+          </div>
           {report.sources.map((source, index) => (
             <div
-              className="px-4 border-t"
+              className="px-4"
               key={source.id}
             >
               <SourceDisplay index={index} source={source} />

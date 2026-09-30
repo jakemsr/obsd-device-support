@@ -16,12 +16,17 @@ const ShowDevices = async ({ report }: ShowDevicesProps) => {
       {
         report.reported_devices.length > 0 && (
           <div className="mt-4">
-            Reported Devices:
-            {report.reported_devices.map(device => (
+            <div className="font-bold">
+              Reported Devices:
+            </div>
+            {report.reported_devices.map((device, index) => (
               <div
-                className="px-4 border-t"
-                key={device.id}
+                className="px-4 mt-1"
+                key={index}
               >
+                <div className="font-bold">
+                  Device #{index + 1}
+                </div>
                 <DeviceDisplay device={device} matchedDevices={matchMap.get(device.id)} />
               </div>
             ))}

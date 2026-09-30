@@ -29,7 +29,12 @@ export default async function Page({
   const sessionPromise: Promise<AuthSession | null> = getSessionPromise();
 
   return (
-    <div className="px-4">
+    <div className="px-4 py-4 sm:px-8">
+      <div>
+        <h1 className="text-2xl font-bold text-center mb-4">
+          Report ID {id}
+        </h1>
+      </div>
       <div className="mb-4">
         <Link
           href="/reports"
@@ -38,15 +43,12 @@ export default async function Page({
           &larr; Back to reports
         </Link>
       </div>
-      <div>
-        Report ID {id}
-      </div>
 
-      <Suspense fallback={<div className="px-4 mt-2">Loading report...</div>}>
+      <Suspense fallback={<div>Loading report...</div>}>
         <ReportDisplay id={id} sessionPromise={sessionPromise} />
       </Suspense>
 
-      <Suspense fallback={<div className="px-4 mt-2">Loading reviews...</div>}>
+      <Suspense fallback={<div>Loading reviews...</div>}>
         <ShowReviews
           reviewsPromise={reviewsPromise}
           sessionPromise={sessionPromise}
