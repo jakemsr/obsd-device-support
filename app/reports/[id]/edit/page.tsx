@@ -38,14 +38,16 @@ export default async function Page({ params }: { params: { id: string } }) {
   const sessionPromise: Promise<AuthSession | null> = getSessionPromise();
 
   return (
-    <div className="px-4 mt-4">
+    <div className="px-4 py-4 sm:px-8">
+      <h1 className="text-2xl font-bold text-center">
+        Edit Report {id}
+      </h1>
       <Link
         href="/reports"
         className="text-link hover:underline"
       >
         &larr; Back to reports
       </Link>
-      <h1 className="mt-4">Edit Report {id}</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <EditReport reportPromise={reportPromise} sessionPromise={sessionPromise} />
       </Suspense>

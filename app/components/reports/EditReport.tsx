@@ -40,25 +40,25 @@ const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) =>
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-2 max-w-fit">
-        <div className="col-span-4">
+      <form onSubmit={handleSubmit} className="grid grid-cols-3 gap-2 max-w-fit">
+        <div className="col-span-3 font-bold">
           Source #{index + 1}
         </div>
         {source.name && (
           <>
-            <div>
+            <div className="font-bold">
               Name:
             </div>
-            <div className="col-span-3">
+            <div className="col-span-2">
               <input type="text" name="sourceName" defaultValue={source.name} />
             </div>
           </>
         )}
         <>
-          <div>
+          <div className="font-bold">
             Type:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <select name="sourceType" defaultValue={source.source_type}>
               {Object.values(source_type).map((type) => (
                 <option key={type} value={type}>{type}</option>
@@ -68,10 +68,10 @@ const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) =>
         </>
         {source.url && (
           <>
-            <div>
+            <div className="font-bold">
               URL:
             </div>
-            <div className="col-span-3">
+            <div className="col-span-2">
               <input type="text" name="sourceUrl" defaultValue={source.url} />
             </div>
           </>
@@ -79,7 +79,7 @@ const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) =>
         <input type="hidden" name="sourceId" value={String(source.id)} />
         <input type="hidden" name="reportId" value={String(source.report_id)} />
         <input type="hidden" name="userId" value={userId} />
-        <div className="col-span-4">
+        <div className="col-span-3 mt-1">
           <Button type="submit">
             {loading && <LoadingSpinner />}
             Update Source #{index + 1}
@@ -184,51 +184,51 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
       <div>
         <form
           onSubmit={(e) => handleSubmit(e, SubmitType.Device)}
-          className="grid grid-cols-4 gap-2"
+          className="grid grid-cols-3 gap-2"
         >
           <input type="hidden" name="reportId" value={String(device.report_id)} />
           <input type="hidden" name="userId" value={report.user_id} />
           <input type="hidden" name="deviceId" value={String(device.id)} />
-          <div>
+          <div className="font-bold">
             Bus:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <input type="text" name="bus" defaultValue={device.bus} />
           </div>
-          <div>
+          <div className="font-bold">
             Vendor ID:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <input type="text" name="vendorId" defaultValue={device.vendor_id} />
           </div>
-          <div>
+          <div className="font-bold">
             Product ID:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <input type="text" name="productId" defaultValue={device.product_id} />
           </div>
-          <div>
+          <div className="font-bold">
             Vendor:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <input type="text" name="vendorName" defaultValue={device.reported_vendor ?? ""} />
           </div>
-          <div>
+          <div className="font-bold">
             Product:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <input type="text" name="productName" defaultValue={device.reported_product ?? ""} />
           </div>
-          <div>
+          <div className="font-bold">
             Driver:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <input type="text" name="driverName" defaultValue={device.reported_driver ?? ""} />
           </div>
-          <div>
+          <div className="font-bold">
             Support Status:
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <select name="supportStatus" defaultValue={device.support_status}>
               {Object.values(support_type).map(status => (
                 <option key={status} value={status}>
@@ -237,7 +237,7 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
               ))}
             </select>
           </div>
-          <div className="col-span-4">
+          <div className="col-span-3">
             {device.reported_issues.map(issue => (
               <input key={issue.id} type="hidden" name="reportedIssues" value={String(issue.id)} />
             ))}
@@ -251,16 +251,10 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
           </div>
         </form>
 
-        <div className="mt-6">
-          Reported Issues:
-          {device.reported_issues.length === 0 ? (
-            <div className="px-4">
-              No reported issues
-              <Button type="button" onClick={addIssueField}>
-                Add Another Issue
-              </Button>
-            </div>
-          ) : (
+        <div className="mt-4">
+          <div className="font-bold">
+            Issues:
+          </div>
             <form
               onSubmit={(e) => handleSubmit(e, SubmitType.Issues)}
               className="px-4"
@@ -269,13 +263,13 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
               <input type="hidden" name="deviceId" value={String(device.id)} />
               <input type="hidden" name="reportedIssueCount" value={String(device.reported_issues.length)} />
               {device.reported_issues.map((issue, index) => (
-                <div key={index} className="grid grid-cols-4 gap-4">
+                <div key={index} className="grid grid-cols-3 gap-4">
                   <input type="hidden" name={`reportedIssueId${index}`} value={String(issue.id)} />
-                  <div>
+                  <div className="font-bold">
                     Issue #{index + 1}:
                   </div>
                   <textarea
-                    className="px-4 col-span-3"
+                    className="px-4 col-span-2"
                     name={`reportedIssueText${index}`}
                     defaultValue={issue.description}
                     key={issue.id}
@@ -284,21 +278,21 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
               ))}
               <input type="hidden" name="addedIssueCount" value={String(addedIssueFields.length)} />
               {addedIssueFields.map((issue, index) => (
-                <div key={index} className="grid grid-cols-4 gap-4">
-                  <div>
+                <div key={index} className="grid grid-cols-3 gap-4 mt-2">
+                  <div className="font-bold">
                     Issue #{device.reported_issues.length + index + 1}:
                   </div>
                   <textarea
-                    className="px-4 col-span-3"
+                    className="px-4 col-span-2"
                     name={`addedIssueText${index}`}
                     value={issue.value}
                     onChange={(e) => handleAddedIssueChange(index, e)}
                   />
                 </div>
               ))}
-              <div className="mt-2">
+              <div className="mt-1">
                 <Button type="button" onClick={addIssueField}>
-                  Add Another Issue
+                  Add Issue
                 </Button>
               </div>
               <div className="mt-2">
@@ -308,19 +302,12 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
                 </Button>
               </div>
             </form>
-          )}
         </div>
 
-        <div className="mt-6">
-          Other device names:
-          {device.reported_other_device_names.length === 0 ? (
-            <div className="px-4">
-              No reported other device names
-              <Button type="button" onClick={addOtherDeviceNameField}>
-                Add Another Other Device Name
-              </Button>
-            </div>
-          ) : (
+        <div className="mt-4">
+          <div className="font-bold">
+            Other device names:
+          </div>
             <form
               onSubmit={(e) => handleSubmit(e, SubmitType.OtherNames)}
               className="px-4"
@@ -329,15 +316,15 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
               <input type="hidden" name="deviceId" value={String(device.id)} />
               <input type="hidden" name="reportedOtherDeviceNameCount" value={String(device.reported_other_device_names.length)} />
               {device.reported_other_device_names.map((name, index) => (
-                <div key={index} className="grid grid-cols-4">
+                <div key={index} className="grid grid-cols-3 gap-2">
                   <input type="hidden" name={`reportedOtherDeviceNameId${index}`} value={String(name.id)} />
-                  <div className="col-span-4 mt-2">
+                  <div className="col-span-3 mt-1 font-bold">
                     Other Device Name #{index + 1}:
                   </div>
-                  <div>
-                    Vendor
+                  <div className="font-bold">
+                    Vendor:
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-2">
                     <input
                       type="text"
                       name={`reportedOtherDeviceNameVendorText${index}`}
@@ -345,10 +332,10 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
                       key={`${name.id}-${name.vendor_name}`}
                     />
                   </div>
-                  <div>
-                    Product
+                  <div className="font-bold">
+                    Product:
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-2">
                     <input
                       type="text"
                       name={`reportedOtherDeviceNameProductText${index}`}
@@ -359,15 +346,15 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
                 </div>
               ))}
               <input type="hidden" name="addedOtherDeviceNameCount" value={String(addedOtherDeviceNameVendorFields.length)} />
-              {addedOtherDeviceNameVendorFields.map((issue, index) => (
-                <div key={index} className="grid grid-cols-4">
-                  <div className="col-span-4">
+              {addedOtherDeviceNameVendorFields.map((name, index) => (
+                <div key={index} className="grid grid-cols-3 gap-2 mt-2">
+                  <div className="col-span-3 font-bold">
                     Other Device Name #{device.reported_other_device_names.length + index + 1}:
                   </div>
-                  <div>
-                    Vendor
+                  <div className="font-bold">
+                    Vendor:
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-2">
                     <input
                       type="text"
                       name={`addedOtherDeviceNameVendor${index}`}
@@ -375,10 +362,10 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
                       onChange={(e) => handleAddedOtherDeviceNameVendorChange(index, e)}
                     />
                   </div>
-                  <div>
-                    Product
+                  <div className="font-bold">
+                    Product:
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-2">
                     <input
                       type="text"
                       name={`addedOtherDeviceNameProduct${index}`}
@@ -390,7 +377,7 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
               ))}
               <div className="mt-2">
                 <Button type="button" onClick={addOtherDeviceNameField}>
-                  Add Another Other Device Name
+                  Add Other Device Name
                 </Button>
               </div>
               <div className="mt-2">
@@ -400,45 +387,61 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
                 </Button>
               </div>
             </form>
-          )}
         </div>
       </div>
 
       <div>
+        <div className="font-bold">
+          VID/PID Matches Existing Devices:
+        </div>
         {matchedDevices && matchedDevices.length > 0 ? (
           <>
-            VID/PID Matches Existing Devices:
             {matchedDevices.map(matchedDevice => (
-              <div key={matchedDevice.id} className="px-4 mt-2">
-                <div>
-                  Vendor: {matchedDevice.vendors.name}
+              <div key={matchedDevice.id} className="px-4 mt-2 grid grid-cols-3 gap-2">
+                <div className="font-bold">
+                  Vendor:
                 </div>
-                <div>
-                  Product: {matchedDevice.name}
+                <div className="col-span-2">
+                  {matchedDevice.vendors.name}
                 </div>
-                <div>
-                  Driver: {matchedDevice.drivers.name}
+                <div className="font-bold">
+                  Product:
+                </div>
+                <div className="col-span-2">
+                  {matchedDevice.name}
+                </div>
+                <div className="font-bold">
+                  Driver:
+                </div>
+                <div className="col-span-2">
+                 {matchedDevice.drivers.name}
                 </div>
 
-                {matchedDevice.issues.length > 0 ? (
-                  <div>
-                    Issues: {matchedDevice.issues.map(issue => (
+                <div className="font-bold col-span-3">
+                  Issues:
+                </div>
+                <div className="col-span-3 px-4">
+                  {matchedDevice.issues.length > 0 ? (
+                    matchedDevice.issues.map(issue => (
                       <div className="px-4" key={issue.id}>
                         {issue.description}
                       </div>
-                    ))}
-                  </div>
-                ) : <div>No known issues</div>}
+                    ))
+                  ) : <div>No known issues</div>}
+                </div>
 
-                {matchedDevice.other_device_names.length > 0 ? (
-                  <div>
-                    Other Device Names: {matchedDevice.other_device_names.map(name => (
+                <div className="font-bold col-span-3">
+                  Other Device Names:
+                </div>
+                <div className="col-span-3 px-4">
+                  {matchedDevice.other_device_names.length > 0 ? (
+                    matchedDevice.other_device_names.map(name => (
                       <div className="px-4" key={name.id}>
                         {name.vendor_name} {name.device_name}
                       </div>
-                    ))}
-                  </div>
-                ) : <div>No other device names</div>}
+                    ))
+                  ) : <div>No other device names</div>}
+                </div>
 
               </div>
             ))}
@@ -473,7 +476,7 @@ const EditDevices = ({ report }: EditDevicesProps) => {
             Reported Devices:
             {report.reported_devices.map(device => (
               <div
-                className="px-4 border-t"
+                className="px-4 mt-2"
                 key={device.id}
               >
                 <EditDeviceDisplay report={report} device={device} matchedDevices={matchMap.get(device.id)} />
@@ -547,10 +550,11 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="px-4 my-4">
-          <div>
-            Status: {report.status.split("_").join(" ")}
-            &nbsp;
+        <div className="grid grid-cols-3 gap-2 mt-4 w-fit">
+          <div className="font-bold">
+            Status:
+          </div>
+          <div className="col-span-2">
             <select
               name="newStatus"
               defaultValue={report.status}
@@ -565,47 +569,74 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
             <input type="hidden" name="reportId" value={report.id.toString()} />
             <input type="hidden" name="userId" value={report.user_id} />
             {showWithdrawnMessage && (
-              <div className="my-2 w-100 h-20">
+              <div className="mt-2 w-80 h-20">
                 <textarea
                   name="withdrawnNote"
                   placeholder="Provide a reason for withdrawing the report"
-                  className="w-full h-full p-2"
+                  className="w-full h-full"
                 />
               </div>
             )}
           </div>
-          <div>
-            Created At: {report.created_at.toLocaleString()}
+          <div className="font-bold">
+            Created At:
           </div>
-          <div>
-            Updated At: {report.updated_at.toLocaleString()}
+          <div className="col-span-2">
+            {report.created_at.toLocaleString()}
           </div>
-          <div className="flex items-center gap-2">
-            Reason: <textarea name="reason" defaultValue={report.reason} className="w-100 h-20 p-2" />
+          <div className="font-bold">
+            Updated At:
+          </div>
+          <div className="col-span-2">
+            {report.updated_at.toLocaleString()}
+          </div>
+          <div className="font-bold">
+            Reason:
+          </div>
+          <div className="col-span-2">
+            <textarea
+              name="reason"
+              defaultValue={report.reason}
+              className="w-80 h-20"
+            />
           </div>
           {report.withdrawn_at && (
-            <div>
-              Withdrawn At: {report.withdrawn_at.toLocaleString()}
-            </div>
+            <>
+              <div className="font-bold">
+                Withdrawn At:
+              </div>
+              <div className="col-span-2">
+                {report.withdrawn_at.toLocaleString()}
+              </div>
+            </>
           )}
           {report.withdrawn_note && (
-            <div>
-              Withdrawn Note: {report.withdrawn_note}
-            </div>
+            <>
+              <div className="font-bold">
+                Withdrawn Note:
+              </div>
+              <div className="col-span-2">
+                {report.withdrawn_note}
+              </div>
+            </>
           )}
+          <div className="col-span-3">
+            <Button type="submit" disabled={loading}>
+              {loading && <LoadingSpinner />}
+              Update Status or Reason
+            </Button>
+          </div>
         </div>
-        <Button type="submit" disabled={loading}>
-          {loading && <LoadingSpinner />}
-          Update Status or Reason
-        </Button>
       </form>
       <>
         {report.sources.length > 0 && (
           <div className="mt-4">
-            Sources:
+            <div className="font-bold">
+              Sources:
+            </div>
             {report.sources.map((source, index) => (
               <div
-                className="px-4 border-t"
+                className="px-4 mt-1"
                 key={source.id}
               >
                 <EditSourceDisplay index={index} source={source} userId={report.user_id} />
