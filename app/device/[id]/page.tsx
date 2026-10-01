@@ -2,10 +2,13 @@ import { Suspense } from "react";
 import Link from "next/link";
 import DeviceCard from "@/app/components/device/DeviceCard";
 import { LinkButton } from "@/app/components/Button";
+import { getCurrentUser } from "@/lib/check-user-auth";
 
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+
+  const currentUser = await getCurrentUser();
 
   return (
     <div className="px-4 py-4 sm:px-8">
@@ -18,6 +21,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <DeviceCard id={id} />
       </Suspense>
 
+      {currentUser && (
       <div className="w-fit mt-4">
         <Link href={`/reports/submit?deviceId=${id}`}>
           <LinkButton>
@@ -25,6 +29,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </LinkButton>
         </Link>
       </div>
+      )}
+
     </div>
   );
 }
