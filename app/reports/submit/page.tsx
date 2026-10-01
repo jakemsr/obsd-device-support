@@ -35,7 +35,7 @@ export default async function Page({ searchParams }: PageProps) {
     <div className="px-4 py-4 sm:px-8">
 
       <h1 className="text-2xl font-bold text-center mb-4">
-        Submit Report for Device {deviceId}
+        Submit Report {deviceId ? `for Device ${deviceId}` : ""}
       </h1>
 
       <Suspense fallback={<div>Loading report form...</div>}>
