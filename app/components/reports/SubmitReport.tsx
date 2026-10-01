@@ -92,7 +92,7 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
 
         <div className="grid grid-cols-3 gap-2 max-w-fit">
 
-          <div className="font-bold">Reason</div>
+          <div className="font-bold">Reason:</div>
           <div className="col-span-2">
             <textarea
               name="reason"
@@ -101,7 +101,7 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
             />
           </div>
 
-          <div className="font-bold">Bus</div>
+          <div className="font-bold">Bus:</div>
           <div className="col-span-2">
             <select name="bus" defaultValue={defaultValues.bus}>
               <option value="USB">USB</option>
@@ -109,32 +109,32 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
             </select>
           </div>
 
-          <div className="font-bold">Vendor ID</div>
+          <div className="font-bold">Vendor ID:</div>
           <div className="col-span-2">
             <input type="text" name="vendor_id" defaultValue={defaultValues.vendor_id ?? ""} />
           </div>
 
-          <div className="font-bold">Product ID</div>
+          <div className="font-bold">Product ID:</div>
           <div className="col-span-2">
             <input type="text" name="product_id" defaultValue={defaultValues.product_id} />
           </div>
 
-          <div className="font-bold">Vendor Name</div>
+          <div className="font-bold">Vendor Name:</div>
           <div className="col-span-2">
             <input type="text" name="reported_vendor" defaultValue={defaultValues.reported_vendor} />
           </div>
 
-          <div className="font-bold">Product Name</div>
+          <div className="font-bold">Product Name:</div>
           <div className="col-span-2">
             <input type="text" name="reported_product" defaultValue={defaultValues.reported_product} />
           </div>
 
-          <div className="font-bold">Driver</div>
+          <div className="font-bold">Driver:</div>
           <div className="col-span-2">
             <input type="text" name="reported_driver" defaultValue={defaultValues.reported_driver} />
           </div>
 
-          <div className="font-bold">Support Status</div>
+          <div className="font-bold">Support Status:</div>
           <div className="col-span-2">
             <select name="support_status" defaultValue={defaultValues.support_status}>
               {Object.values(support_type).map((status) => (
@@ -147,7 +147,7 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
 
           <div className="col-span-3 mt-4">
             <div className="font-bold">
-              Issues
+              Issues:
             </div>
             {issueFields.map((field, index) => (
               <div key={index} className="mt-2 w-full pl-4 flex flex-col gap-2">
@@ -174,15 +174,15 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
 
           <div className="col-span-3 mt-4">
             <div className="font-bold">
-              Other Names
+              Other Names:
             </div>
             {otherNameVendorFields.map((field, index) => (
               <div key={index} className="mt-2 w-full pl-4 grid grid-cols-3 gap-2">
                 <div className="col-span-3">
-                  Other Name #{index + 1}
+                  Other Name #{index + 1}:
                 </div>
                 <div className="col-span-1">
-                  Vendor
+                  Vendor:
                 </div>
                 <div className="col-span-2">
                   <input
@@ -193,7 +193,7 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
                   />
                 </div>
                 <div className="col-span-1">
-                  Product
+                  Product:
                 </div>
                 <div className="col-span-2">
                   <input
