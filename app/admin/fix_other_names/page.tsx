@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getOtherNames, OtherName } from "./actions";
+import { getOtherNames, OtherName } from "@/app/admin/fix_other_names/actions";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser } from "@/lib/local-types";
 

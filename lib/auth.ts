@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth/minimal";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import prisma from "./prisma";
+import prisma from "@/lib/prisma";
 import { Resend } from "resend";
 import { VerificationEmail } from '@/emails/verification';
 import { PasswordResetEmail } from '@/emails/password-reset';

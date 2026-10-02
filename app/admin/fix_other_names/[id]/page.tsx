@@ -1,7 +1,7 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import EditOtherName from "@/app/components/admin/EditOtherName";
-import { getOtherNameById, OtherNameWithDevice } from "../actions";
+import { getOtherNameById, OtherNameWithDevice } from "@/app/admin/fix_other_names/actions";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser } from "@/lib/local-types";
 

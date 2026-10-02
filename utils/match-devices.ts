@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { readFile } from "node:fs/promises";
-import prisma from "../lib/prisma";
+import prisma from "@/lib/prisma";
 
 type DriverConfig = {
   name: string
