@@ -1,6 +1,5 @@
 'use client'
 
-import type { FullReport } from "@/lib/local-types";
 import { Button } from '@/app/components/Button'
 import { submitReview } from "@/app/report-reviews/actions";
 import { toast } from "sonner";

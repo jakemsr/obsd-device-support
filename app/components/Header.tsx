@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import NavDropDown from "./NavDropDown";
 import { authClient } from "@/lib/auth-client";
 import LoginModal from "./LoginModal";

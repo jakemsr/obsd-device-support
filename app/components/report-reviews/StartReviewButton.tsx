@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import StartReview from "@/app/components/report-reviews/StartReview"
-import type { FullReport } from "@/lib/local-types";
 import { Button } from '@/app/components/Button'
 
 interface StartReviewButtonProps {
