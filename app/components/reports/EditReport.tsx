@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, Suspense, use, useEffect, useState } from "react";
+import type { ChangeEventHandler } from "react";
 import { toast } from "sonner";
 import type { AuthSession, FullReport, FullReportedDevice, FullDeviceInfo, SourceWithReports } from "@/lib/local-types";
 import { report_status, source_type, support_type } from "@/app/generated/prisma/enums";
@@ -24,6 +25,15 @@ interface EditSourceDisplayProps {
 const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) => {
 
   const [loading, setLoading] = useState(false);
+  const [showSourceUrlField, setShowSourceUrlField] = useState(source.source_type === source_type.website);
+
+  const handleSourceTypeChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    if (event.target.value === source_type.website) {
+      setShowSourceUrlField(true);
+    } else {
+      setShowSourceUrlField(false);
+    }
+  };
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -59,20 +69,20 @@ const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) =>
             Type:
           </div>
           <div className="col-span-2">
-            <select name="sourceType" defaultValue={source.source_type}>
+            <select name="sourceType" defaultValue={source.source_type} onChange={handleSourceTypeChange}>
               {Object.values(source_type).map((type) => (
                 <option key={type} value={type}>{type}</option>
               ))}
             </select>
           </div>
         </>
-        {source.url && (
+        {showSourceUrlField && (
           <>
             <div className="font-bold">
               URL:
             </div>
             <div className="col-span-2">
-              <input type="text" name="sourceUrl" defaultValue={source.url} />
+              <input type="text" name="sourceUrl" defaultValue={source.url ?? ""} />
             </div>
           </>
         )}

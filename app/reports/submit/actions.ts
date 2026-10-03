@@ -2,7 +2,7 @@
 
 import { ActionState } from '@/lib/local-types';
 import prisma from '@/lib/prisma';
-import { support_type } from '@/app/generated/prisma/browser';
+import { source_type, support_type } from '@/app/generated/prisma/browser';
 import { normalizeDeviceId } from '@/lib/device-ids';
 import { getUserId } from '@/lib/check-user-auth';
 
@@ -17,6 +17,9 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
   const reportedProduct = formData.get("reported_product") as string;
   const reportedDriver = formData.get("reported_driver") as string;
   const supportStatus = formData.get("support_status") as string;
+  const sourceName = formData.get("source_name") as string;
+  const sourceType = formData.get("source_type") as string;
+  const sourceUrl = formData.get("source_url") as string;
 
   const numIssues = formData.get("numIssues") as string;
   const issues: string[] = [];
@@ -78,6 +81,22 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     };
   }
 
+  // validate source type
+  let validatedSourceType = undefined;
+  for (const type of Object.values(source_type)) {
+    if (type === sourceType) {
+      validatedSourceType = type;
+      break;
+    }
+  }
+  if (!validatedSourceType) {
+    return {
+      error: 'Invalid source type',
+      success: false,
+      message: 'The source type provided is not valid'
+    };
+  }
+
   try {
     // create parent report
     const report = await prisma.reports.create({
@@ -91,9 +110,9 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     const reportSource = await prisma.report_sources.create({
       data: {
         report_id: report.id,
-        source_type: 'observation',
-        name: 'Form Report',
-        url: 'localhost',
+        source_type: validatedSourceType,
+        name: sourceName,
+        url: sourceUrl,
       }
     });
 

@@ -2,7 +2,7 @@
 
 import { use, useState, ChangeEvent } from 'react';
 import { toast } from 'sonner';
-import { support_type } from '@/app/generated/prisma/enums'
+import { source_type, support_type } from '@/app/generated/prisma/enums'
 import { Button, LoadingSpinner } from '@/app/components/Button';
 import { reportSubmission } from '@/app/reports/submit/actions';
 import { FullDeviceInfo } from '@/lib/local-types';
@@ -26,6 +26,7 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
   }
 
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [showUrlField, setShowUrlField] = useState<boolean>(false);
 
   interface valueField {
     value: string;
@@ -47,12 +48,12 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
     setOtherNameVendorFields(data);
   };
 
-   const handleOtherNameProductChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
+  const handleOtherNameProductChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
     const data = [...otherNameProductFields];
     data[index].value = event.target.value;
     setOtherNameProductFields(data);
   };
- 
+
   const addIssueField = () => {
     setIssueFields([...issueFields, { value: '' }]);
   };
@@ -60,6 +61,15 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
   const addOtherNameField = () => {
     setOtherNameVendorFields([...otherNameVendorFields, { value: '' }]);
     setOtherNameProductFields([...otherNameProductFields, { value: '' }]);
+  };
+
+  const handleSourceTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const sourceType = event.target.value;
+    if (sourceType === source_type.website) {
+      setShowUrlField(true);
+    } else {
+      setShowUrlField(false);
+    }
   };
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
@@ -87,142 +97,180 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
 
 
   return (
-      <form onSubmit={handleSubmit}>
-        <input type="hidden" name="user_id" value={userId} />
+    <form onSubmit={handleSubmit}>
+      <input type="hidden" name="user_id" value={userId} />
 
-        <div className="grid grid-cols-3 gap-2 max-w-fit">
+      <div className="grid grid-cols-3 gap-2 max-w-fit">
 
-          <div className="font-bold">Reason:</div>
-          <div className="col-span-2">
-            <textarea
-              name="reason"
-              placeholder="brief reason for report"
-              className="h-20 w-full"
-            />
-          </div>
+        <div className="font-bold">Reason:</div>
+        <div className="col-span-2">
+          <textarea
+            name="reason"
+            placeholder="brief reason for report"
+            className="h-20 w-full"
+          />
+        </div>
 
-          <div className="font-bold">Bus:</div>
-          <div className="col-span-2">
-            <select name="bus" defaultValue={defaultValues.bus}>
-              <option value="USB">USB</option>
-              <option value="PCI">PCI</option>
-            </select>
-          </div>
+        <div className="font-bold">Bus:</div>
+        <div className="col-span-2">
+          <select name="bus" defaultValue={defaultValues.bus}>
+            <option value="USB">USB</option>
+            <option value="PCI">PCI</option>
+          </select>
+        </div>
 
-          <div className="font-bold">Vendor ID:</div>
-          <div className="col-span-2">
-            <input type="text" name="vendor_id" defaultValue={defaultValues.vendor_id ?? ""} />
-          </div>
+        <div className="font-bold">Vendor ID:</div>
+        <div className="col-span-2">
+          <input type="text" name="vendor_id" defaultValue={defaultValues.vendor_id ?? ""} />
+        </div>
 
-          <div className="font-bold">Product ID:</div>
-          <div className="col-span-2">
-            <input type="text" name="product_id" defaultValue={defaultValues.product_id} />
-          </div>
+        <div className="font-bold">Product ID:</div>
+        <div className="col-span-2">
+          <input type="text" name="product_id" defaultValue={defaultValues.product_id} />
+        </div>
 
-          <div className="font-bold">Vendor Name:</div>
-          <div className="col-span-2">
-            <input type="text" name="reported_vendor" defaultValue={defaultValues.reported_vendor} />
-          </div>
+        <div className="font-bold">Vendor Name:</div>
+        <div className="col-span-2">
+          <input type="text" name="reported_vendor" defaultValue={defaultValues.reported_vendor} />
+        </div>
 
-          <div className="font-bold">Product Name:</div>
-          <div className="col-span-2">
-            <input type="text" name="reported_product" defaultValue={defaultValues.reported_product} />
-          </div>
+        <div className="font-bold">Product Name:</div>
+        <div className="col-span-2">
+          <input type="text" name="reported_product" defaultValue={defaultValues.reported_product} />
+        </div>
 
-          <div className="font-bold">Driver:</div>
-          <div className="col-span-2">
-            <input type="text" name="reported_driver" defaultValue={defaultValues.reported_driver} />
-          </div>
+        <div className="font-bold">Driver:</div>
+        <div className="col-span-2">
+          <input type="text" name="reported_driver" defaultValue={defaultValues.reported_driver} />
+        </div>
 
-          <div className="font-bold">Support Status:</div>
-          <div className="col-span-2">
-            <select name="support_status" defaultValue={defaultValues.support_status}>
-              {Object.values(support_type).map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="col-span-3 mt-4">
-            <div className="font-bold">
-              Issues:
-            </div>
-            {issueFields.map((field, index) => (
-              <div key={index} className="mt-2 w-full pl-4 flex flex-col gap-2">
-                <div>
-                  Issue #{index + 1}
-                </div>
-                <div>
-                  <textarea
-                    name={`issue${index}`}
-                    value={field.value}
-                    onChange={(e) => handleIssueChange(index, e)}
-                    className="w-full"
-                  />
-                </div>
-              </div>
+        <div className="font-bold">Support Status:</div>
+        <div className="col-span-2">
+          <select name="support_status" defaultValue={defaultValues.support_status}>
+            {Object.values(support_type).map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
             ))}
-          </div>
-          <input type="hidden" name="numIssues" value={issueFields.length} />
-          <div className="col-span-3">
-            <Button type="button" onClick={addIssueField}>
-              Add Issue
-            </Button>
-          </div>
+          </select>
+        </div>
 
-          <div className="col-span-3 mt-4">
+        <div className="col-span-3 mt-4">
+          <div>
             <div className="font-bold">
-              Other Names:
+              Information Source:
             </div>
-            {otherNameVendorFields.map((field, index) => (
-              <div key={index} className="mt-2 w-full pl-4 grid grid-cols-3 gap-2">
-                <div className="col-span-3">
-                  Other Name #{index + 1}:
-                </div>
-                <div className="col-span-1">
-                  Vendor:
-                </div>
-                <div className="col-span-2">
-                  <input
-                    type="text"
-                    name={`otherNameVendor${index}`}
-                    value={otherNameVendorFields[index].value}
-                    onChange={(e) => handleOtherNameVendorChange(index, e)}
-                  />
-                </div>
-                <div className="col-span-1">
-                  Product:
-                </div>
-                <div className="col-span-2">
-                  <input
-                    type="text"
-                    name={`otherNameProduct${index}`}
-                    value={otherNameProductFields[index].value}
-                    onChange={(e) => handleOtherNameProductChange(index, e)}
-                  />
-                </div>
+            <div className="grid grid-cols-3 gap-2 pl-4">
+              <div className="font-bold">
+                Name:
               </div>
-            ))}
-          </div>
-          <input type="hidden" name="numOtherNames" value={otherNameVendorFields.length} />
-          <div className="col-span-3">
-            <Button type="button" onClick={addOtherNameField}>
-              Add Other Name
-            </Button>
-          </div>
-
-          <div className="col-span-3 mt-4 flex justify-center">
-            <Button type="submit" disabled={submitting}>
-              {submitting && <LoadingSpinner />}
-              Submit Report
-            </Button>
+              <div className="col-span-2">
+                <input type="text" name="source_name" />
+              </div>
+              <div className="font-bold">
+                Type:
+              </div>
+              <div className="col-span-2">
+                <select name="source_type" onChange={handleSourceTypeChange}>
+                  {Object.values(source_type).map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {showUrlField && (
+                <>
+                  <div className="font-bold">
+                    URL:
+                  </div>
+                  <div className="col-span-2">
+                    <input type="text" name="source_url" />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
-      </form>
+
+
+        <div className="col-span-3 mt-4">
+          <div className="font-bold">
+            Issues:
+          </div>
+          {issueFields.map((field, index) => (
+            <div key={index} className="mt-2 w-full pl-4 flex flex-col gap-2">
+              <div>
+                Issue #{index + 1}
+              </div>
+              <div>
+                <textarea
+                  name={`issue${index}`}
+                  value={field.value}
+                  onChange={(e) => handleIssueChange(index, e)}
+                  className="w-full"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <input type="hidden" name="numIssues" value={issueFields.length} />
+        <div className="col-span-3 pl-4">
+          <Button type="button" onClick={addIssueField}>
+            Add Issue
+          </Button>
+        </div>
+
+        <div className="col-span-3 mt-4">
+          <div className="font-bold">
+            Other Names:
+          </div>
+          {otherNameVendorFields.map((field, index) => (
+            <div key={index} className="mt-2 w-full pl-4 grid grid-cols-3 gap-2">
+              <div className="col-span-3">
+                Other Name #{index + 1}:
+              </div>
+              <div className="col-span-1">
+                Vendor:
+              </div>
+              <div className="col-span-2">
+                <input
+                  type="text"
+                  name={`otherNameVendor${index}`}
+                  value={otherNameVendorFields[index].value}
+                  onChange={(e) => handleOtherNameVendorChange(index, e)}
+                />
+              </div>
+              <div className="col-span-1">
+                Product:
+              </div>
+              <div className="col-span-2">
+                <input
+                  type="text"
+                  name={`otherNameProduct${index}`}
+                  value={otherNameProductFields[index].value}
+                  onChange={(e) => handleOtherNameProductChange(index, e)}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <input type="hidden" name="numOtherNames" value={otherNameVendorFields.length} />
+        <div className="col-span-3 pl-4">
+          <Button type="button" onClick={addOtherNameField}>
+            Add Other Name
+          </Button>
+        </div>
+
+        <div className="col-span-3 mt-4 flex justify-center">
+          <Button type="submit" disabled={submitting}>
+            {submitting && <LoadingSpinner />}
+            Submit Report
+          </Button>
+        </div>
+      </div>
+    </form>
   );
 };
 
 export default SubmitReport;
-  
