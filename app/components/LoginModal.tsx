@@ -13,13 +13,13 @@ enum SignInMode {
   passwordReset = "password reset",
 }
 
-interface SignInProps {
+interface SignInButtonProps {
   mode: SignInMode;
   handleClick: (mode: SignInMode) => void;
   authenticating: SignInMode;
 }
 
-const SignIn = ({ mode, handleClick, authenticating }: SignInProps) => {
+const SignInButton = ({ mode, handleClick, authenticating }: SignInButtonProps) => {
 
   let buttonText = `Sign In with ${mode}`;
   if (mode === SignInMode.signUp) {
@@ -173,7 +173,7 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
           {signMode !== SignInMode.signUp && (
             <>
               <div className="mt-2">
-                <SignIn
+                <SignInButton
                   mode={SignInMode.GitHub}
                   handleClick={handleClick}
                   authenticating={authenticating}
@@ -240,7 +240,7 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
               />
             </div>
           </div>
-          <SignIn
+          <SignInButton
             mode={signMode}
             handleClick={handleClick}
             authenticating={authenticating}
@@ -252,7 +252,7 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
           </div>
           <div className="my-2">
             Forgot Password?
-            <SignIn
+            <SignInButton
               mode={SignInMode.passwordReset}
               handleClick={handleClick}
               authenticating={authenticating}
