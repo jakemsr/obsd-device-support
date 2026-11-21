@@ -15,16 +15,13 @@ interface SubmitReportProps {
 
 const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
 
-  let device = null;
-  if (devicePromise) {
-    device = use(devicePromise)
-  }
-
   const userId = use(userIdPromise);
   if (userId === null) {
     return <div className="px-4 text-error">Please log in to submit a report.</div>;
   }
 
+  const device = use(devicePromise);
+  
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [showUrlField, setShowUrlField] = useState<boolean>(false);
 
