@@ -54,10 +54,10 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
   const handleClick = async (mode: SignInMode) => {
     setError(null);
     setAuthenticating(mode);
-    let data, error;
+    let error;
     switch (mode) {
       case SignInMode.GitHub:
-        ({ data, error } = await authClient.signIn.social({
+        ({ error } = await authClient.signIn.social({
           provider: "github",
           callbackURL: window.location.origin + "/dashboard",
         }));
@@ -67,7 +67,7 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
           error = new Error("Email and password are required");
           break;
         }
-        ({ data, error } = await authClient.signIn.email({
+        ({ error } = await authClient.signIn.email({
           email: email || "",
           password: password || "",
           callbackURL: window.location.origin + "/dashboard",
@@ -78,7 +78,7 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
           error = new Error("All fields are required for sign up");
           break;
         }
-        ({ data, error } = await authClient.signUp.email({
+        ({ error } = await authClient.signUp.email({
           name: `${firstName || ""} ${lastName || ""}`,
           firstName: firstName || "",
           lastName: lastName || "",
@@ -93,7 +93,7 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
           break;
         }
         const resetURL = window.location.origin + "/reset-password";
-        ({ data, error } = await authClient.requestPasswordReset({
+        ({ error } = await authClient.requestPasswordReset({
           email,
           redirectTo: resetURL,
         }));
