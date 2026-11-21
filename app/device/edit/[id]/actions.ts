@@ -2,7 +2,7 @@
 
 import { refresh } from "next/cache";
 import { support_type } from "@/app/generated/prisma/browser";
-import { ActionState } from "@/lib/local-types";
+import { ActionResult } from "@/lib/local-types";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/check-user-auth";
 
@@ -16,7 +16,7 @@ async function getDriverList(): Promise<DriverListEntry[]> {
   return drivers.map(driver => ({ id: driver.id, name: driver.name }));
 }
 
-async function updateDevice(data: FormData): Promise<ActionState> {
+async function updateDevice(data: FormData): Promise<ActionResult<string>> {
   const deviceId = data.get("device_id") as string;
   const supportStatus = data.get("support_status") as string;
   const driverId = data.get("driver_id") as string;
@@ -29,9 +29,8 @@ async function updateDevice(data: FormData): Promise<ActionState> {
 
   if (!currentUser || currentUser.role !== "editor") {
     return {
-      error: "Unauthorized",
-      success: false,
-      message: "Not logged in or not editor"
+      ok: false,
+      error: "Access denied"
     }
   }
 
@@ -39,9 +38,8 @@ async function updateDevice(data: FormData): Promise<ActionState> {
     !issuesCount || !addedIssuesCount ||
     !otherNamesCount || !addedOtherNamesCount) {
     return {
-      error: "Invalid input",
-      success: false,
-      message: "Missing fields"
+      ok: false,
+      error: "Missing fields"
     }
   }
 
@@ -92,9 +90,8 @@ async function updateDevice(data: FormData): Promise<ActionState> {
   }
   if (!validSupportStatus) {
     return {
-      success: false,
+      ok: false,
       error: "Invalid support status",
-      message: "Failed to update device"
     }
   }
 
@@ -141,18 +138,16 @@ async function updateDevice(data: FormData): Promise<ActionState> {
     }
   } catch (error) {
     return {
-      success: false,
-      error: String(error),
-      message: "Failed to update device"
+      ok: false,
+      error: String(error)
     }
   }
 
   refresh();
 
   return {
-    success: true,
-    error: "",
-    message: "Device updated successfully"
+    ok: true,
+    data: "Device updated successfully"
   }
 }
 

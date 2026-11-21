@@ -37,10 +37,10 @@ const EditReview = ({ review }: EditReviewProps) => {
     setLoading(true);
     const result = await updateReview(formData);
     setLoading(false);
-    if (result.success) {
-      toast.success(result.message);
+    if (result.ok) {
+      toast.success(result.data);
     } else {
-      toast.error(result.error + " " + result.message);
+      toast.error(result.error);
     }
   };
 

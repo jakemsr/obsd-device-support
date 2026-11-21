@@ -1,29 +1,27 @@
 "use server"
 
 import { refresh } from "next/cache";
-import { ActionState } from "@/lib/local-types";
+import { ActionResult } from "@/lib/local-types";
 import { getUserId } from "@/lib/check-user-auth";
 import prisma from "@/lib/prisma";
 
 
-export async function submitReview(formData: FormData): Promise<ActionState> {
+export async function submitReview(formData: FormData): Promise<ActionResult<string>> {
   const reportId = formData.get('reportId') as string;
   const userId = formData.get('userId') as string;
   const note = formData.get('note') as string;
 
   if (!userId || userId !== await getUserId()) {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'Not logged in or not the correct user'
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!reportId) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Report ID is missing'
+      ok: false,
+      error: "Report ID is missing"
     };
   }
 
@@ -37,17 +35,15 @@ export async function submitReview(formData: FormData): Promise<ActionState> {
     });
   } catch (err) {
     return {
-      error: 'Error',
-      success: false,
-      message: 'An error occurred while saving the review'
+      ok: false,
+      error: "An error occurred while saving the review"
     };
   }
 
   refresh();
   
   return {
-    error: "",
-    success: true,
-    message: 'Review successfully saved'
+    ok: true,
+    data: "Review successfully saved"
   };
 }

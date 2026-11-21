@@ -5,10 +5,10 @@ import { getCurrentUser } from '@/lib/check-user-auth';
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
 import { roles } from '@/app/generated/prisma/enums'
-import type { ActionState } from '@/lib/local-types'
+import type { ActionResult } from '@/lib/local-types'
 
 
-export async function updateRole(formData: FormData): Promise<ActionState> {
+export async function updateRole(formData: FormData): Promise<ActionResult<string>> {
 
   const userId = formData.get("userId") as string;
   const newRole = formData.get("role") as roles;
@@ -17,17 +17,15 @@ export async function updateRole(formData: FormData): Promise<ActionState> {
 
   if (!currentUser || currentUser.role !== "admin") {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'Not logged in or not an admin'
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!userId || !newRole) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'User ID or role is missing'
+      ok: false,
+      error: "User ID or role is missing"
     };
   }
 
@@ -40,25 +38,22 @@ export async function updateRole(formData: FormData): Promise<ActionState> {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2025") {
         return {
-          error: "Not found",
-          success: false,
-          message: "The user does not exist.",
+          ok: false,
+          error: "The user does not exist"
         };
       }
     }
 
     return {
-      error: "Database error",
-      success: false,
-      message: "Something went wrong while updating the role.",
+      ok: false,
+      error: "Something went wrong while updating the role"
     };
   }
 
   refresh();
 
   return {
-    error: '',
-    success: true,
-    message: 'Role updated successfully'
+    ok: true,
+    data: "Role updated successfully"
   };
 }

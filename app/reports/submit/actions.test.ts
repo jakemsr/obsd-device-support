@@ -60,7 +60,7 @@ beforeEach(() => {
 
 describe('reportSubmission validation', () => {
   test('accepts valid form fields and normalizes device IDs', async () => {
-    expect((await reportSubmission(validForm())).success).toBe(true);
+    expect((await reportSubmission(validForm())).ok).toBe(true);
     expect(mockDeviceCreate).toHaveBeenCalledWith(expect.objectContaining({
       data: expect.objectContaining({ vendor_id: '0x0bda', product_id: '0xf179' }),
     }));
@@ -81,23 +81,23 @@ describe('reportSubmission validation', () => {
   ])('rejects invalid %s before writing', async (key, value) => {
     const form = validForm();
     form.set(key, value);
-    expect((await reportSubmission(form)).success).toBe(false);
+    expect((await reportSubmission(form)).ok).toBe(false);
     expect(mockReportCreate).not.toHaveBeenCalled();
   });
 
   test('rejects missing indexed fields and file values', async () => {
     const form = validForm();
     form.delete('otherNameProduct0');
-    expect((await reportSubmission(form)).success).toBe(false);
+    expect((await reportSubmission(form)).ok).toBe(false);
     form.set('otherNameProduct0', 'Alternate name');
     form.set('issue0', new Blob(['not a string']));
-    expect((await reportSubmission(form)).success).toBe(false);
+    expect((await reportSubmission(form)).ok).toBe(false);
     expect(mockReportCreate).not.toHaveBeenCalled();
   });
 
   test('rejects a user who is not authenticated as the submitted user', async () => {
     mockGetUserId.mockResolvedValue('someone else');
-    expect((await reportSubmission(validForm())).error).toBe('Unauthorized');
+    expect((await reportSubmission(validForm())).ok).toBe(false);
     expect(mockReportCreate).not.toHaveBeenCalled();
   });
 });

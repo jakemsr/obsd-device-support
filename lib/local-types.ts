@@ -2,6 +2,8 @@ import type { Prisma } from "@/app/generated/prisma/client";
 import { auth } from "@/lib/auth";
 
 
+export type ActionResult<T> = { ok: true; data: T } | { ok: false; error: string };
+
 export type AuthUser = typeof auth.$Infer.Session.user;
 
 export type AuthSession = NonNullable<
@@ -50,12 +52,6 @@ export type FullReport = Prisma.reportsGetPayload<{
     };
   };
 }>;
-
-export type ActionState = {
-  error: string
-  success: boolean
-  message: string
-};
 
 export type FullReportedDevice = Prisma.reported_devicesGetPayload<{
   include: {

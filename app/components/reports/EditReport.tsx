@@ -40,10 +40,10 @@ const EditSourceDisplay = ({ index, source, userId }: EditSourceDisplayProps) =>
     setLoading(true);
     const formData = new FormData(event.currentTarget);
     const result = await updateReportSource(formData);
-    if (result.success) {
-      toast.success(result.message);
+    if (result.ok) {
+      toast.success(result.data);
     } else {
-      toast.error(result.error + ": " + result.message);
+      toast.error(result.error);
     }
     setLoading(false);
   };
@@ -175,8 +175,8 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
         setLoadingOtherNames(false);
         break;
     }
-    if (result.success) {
-      toast.success(result.message);
+    if (result.ok) {
+      toast.success(result.data);
       if (submitType === SubmitType.Issues) {
         setAddedIssueFields([]);
       } else if (submitType === SubmitType.OtherNames) {
@@ -184,7 +184,7 @@ const EditDeviceDisplay = ({ report, device, matchedDevices }: EditDeviceDisplay
         setAddedOtherDeviceNameProductFields([]);
       }
     } else {
-      toast.error(result.error + ": " + result.message);
+      toast.error(result.error);
     }
   };
 
@@ -540,10 +540,10 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     setLoading(true);
     const formData = new FormData(event.currentTarget);
     const result = await updateReportStatus(formData);
-    if (result.success) {
-      toast.success(result.message);
+    if (result.ok) {
+      toast.success(result.data);
     } else {
-      toast.error(result.error + ": " + result.message);
+      toast.error(result.error);
     }
     setLoading(false);
   };

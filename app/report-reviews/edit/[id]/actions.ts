@@ -1,13 +1,13 @@
 'use server'
 
-import { ActionState } from "@/lib/local-types";
+import { ActionResult } from "@/lib/local-types";
 import prisma from "@/lib/prisma";
 import { report_status } from "@/app/generated/prisma/enums";
 import { refresh } from "next/cache";
 import { getCurrentUser } from "@/lib/check-user-auth";
 
 
-export async function updateReview(formData: FormData): Promise<ActionState> {
+export async function updateReview(formData: FormData): Promise<ActionResult<string>> {
   const reviewId = formData.get("reviewId") as string;
   const notes = formData.get("notes") as string;
   const completed = formData.get("completed") === "on";
@@ -16,17 +16,15 @@ export async function updateReview(formData: FormData): Promise<ActionState> {
   const currentUser = await getCurrentUser();
   if (!currentUser || currentUser.role !== "editor") {
     return {
-      success: false,
-      error: "Unauthorized",
-      message: "You must be an editor to perform this action"
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!reviewId) {
     return {
-      success: false,
-      error: "Invalid input",
-      message: "Review ID is required"
+      ok: false,
+      error: "Review ID is required"
     };
   }
 
@@ -40,9 +38,8 @@ export async function updateReview(formData: FormData): Promise<ActionState> {
 
   if (!validReportStatus) {
     return {
-      success: false,
-      error: "Invalid input",
-      message: "The provided report status is not valid"
+      ok: false,
+      error: "Invalid report status"
     };
   }
 
@@ -62,17 +59,15 @@ export async function updateReview(formData: FormData): Promise<ActionState> {
     });
   } catch (error) {
     return {
-      success: false,
-      error: "Review update failed",
-      message: (error as Error).message
+      ok: false,
+      error: (error as Error).message
     };
   }
 
   refresh();
 
   return {
-    success: true,
-    error: "",
-    message: "Successfully updated review"
+    ok: true,
+    data: "Successfully updated review"
   };
 }

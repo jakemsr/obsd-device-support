@@ -4,12 +4,12 @@ import { refresh } from 'next/cache';
 import { report_status, report_element_status, source_type, support_type } from '@/app/generated/prisma/enums'
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
-import type { ActionState } from '@/lib/local-types'
+import type { ActionResult } from '@/lib/local-types'
 import { normalizeDeviceId } from '@/lib/device-ids';
 import { getUserId } from '@/lib/check-user-auth';
 
 
-export async function updateReportStatus(formData: FormData): Promise<ActionState> {
+export async function updateReportStatus(formData: FormData): Promise<ActionResult<string>> {
 
   const reportId = formData.get("reportId") as string;
   const userId = formData.get("userId") as string;
@@ -19,17 +19,15 @@ export async function updateReportStatus(formData: FormData): Promise<ActionStat
 
   if (!userId || userId !== await getUserId()) {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'Not logged in or doesn\'t own the report'
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!reportId || !newStatus) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Report ID or status is missing'
+      ok: false,
+      error: "Report ID or status is missing"
     };
   }
 
@@ -42,9 +40,8 @@ export async function updateReportStatus(formData: FormData): Promise<ActionStat
   }
   if (!validatedStatus) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Bad report status'
+      ok: false,
+      error: "Invalid report status"
     };
   }
 
@@ -65,30 +62,27 @@ export async function updateReportStatus(formData: FormData): Promise<ActionStat
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2025") {
         return {
-          error: "Not found",
-          success: false,
-          message: "The report does not exist.",
+          ok: false,
+          error: "The report does not exist",
         };
       }
     }
     return {
-      error: 'Database error',
-      success: false,
-      message: 'Something went wrong while updating the report status'
+      ok: false,
+      error: "Something went wrong while updating the report status"
     };
   }
 
   refresh();
 
   return {
-    error: '',
-    success: true,
-    message: 'Report status updated successfully'
+    ok: true,
+    data: "Report status updated successfully"
   };
 }
 
 
-export async function updateReportSource(formData: FormData): Promise<ActionState> {
+export async function updateReportSource(formData: FormData): Promise<ActionResult<string>> {
   const userId = formData.get("userId") as string;
   const sourceId = formData.get("sourceId") as string;
   const reportId = formData.get("reportId") as string;
@@ -98,17 +92,15 @@ export async function updateReportSource(formData: FormData): Promise<ActionStat
 
   if (!userId || userId !== await getUserId()) {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'Not logged in or doesn\'t own the report'
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!reportId || !sourceId || !sourceType) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Report ID, source ID or type is missing'
+      ok: false,
+      error: "Report ID, source ID or type is missing"
     };
   }
 
@@ -121,9 +113,8 @@ export async function updateReportSource(formData: FormData): Promise<ActionStat
   }
   if (!validatedSourceType) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Bad source type'
+      ok: false,
+      error: "Invalid source type"
     };
   }
 
@@ -146,22 +137,20 @@ export async function updateReportSource(formData: FormData): Promise<ActionStat
     });
   } catch (err) {
     return {
-      error: 'Database error',
-      success: false,
-      message: 'Something went wrong while updating the report source'
+      ok: false,
+      error: "Something went wrong while updating the report source"
     };
   }
 
   refresh();
 
   return {
-    error: '',
-    success: true,
-    message: 'Report source updated successfully'
+    ok: true,
+    data: "Report source updated successfully"
   };
 }
 
-export async function updateReportedDevice(formData: FormData): Promise<ActionState> {
+export async function updateReportedDevice(formData: FormData): Promise<ActionResult<string>> {
 
   const reportId = formData.get("reportId") as string;
   const userId = formData.get("userId") as string;
@@ -178,17 +167,15 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionSt
 
   if (!userId || userId !== await getUserId()) {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'Not logged in or doesn\'t own the report'
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!reportId || !bus || !vendorId || !productId) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Report ID, bus, vendor ID or product ID is missing'
+      ok: false,
+      error: "Report ID, bus, vendor ID or product ID is missing"
     };
   }
 
@@ -199,9 +186,8 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionSt
     normalizedProductId = normalizeDeviceId(productId);
   } catch (error) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Bad vendor ID or product ID'
+      ok: false,
+      error: "Invalid vendor ID or product ID"
     };
   }
 
@@ -214,9 +200,8 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionSt
   }
   if (!validatedSupportStatus) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Bad support status'
+      ok: false,
+      error: "Invalid support status"
     };
   }
 
@@ -255,22 +240,20 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionSt
     });
   } catch (err) {
     return {
-      error: 'Database error',
-      success: false,
-      message: 'Something went wrong while updating the reported device'
+      ok: false,
+      error: "Something went wrong while updating the reported device"
     };
   }
 
   refresh();
 
   return {
-    error: '',
-    success: true,
-    message: 'Report device updated successfully'
+    ok: true,
+    data: "Report device updated successfully"
   };
 }
 
-export async function updateReportedIssues(formData: FormData): Promise<ActionState> {
+export async function updateReportedIssues(formData: FormData): Promise<ActionResult<string>> {
   const userId = formData.get("userId") as string;
   const deviceId = formData.get("deviceId") as string;
   const reportedIssueCount = formData.get("reportedIssueCount") as string;
@@ -279,17 +262,15 @@ export async function updateReportedIssues(formData: FormData): Promise<ActionSt
 
   if (!userId || userId !== await getUserId()) {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'Not logged in or doesn\'t own the report'
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!deviceId || !reportedIssueCount || !addedIssueCount) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Device ID or an issue count are missing'
+      ok: false,
+      error: "Device ID or an issue count are missing"
     };
   }
 
@@ -344,22 +325,20 @@ export async function updateReportedIssues(formData: FormData): Promise<ActionSt
     }
   } catch (err) {
     return {
-      error: 'Database error',
-      success: false,
-      message: 'Something went wrong while updating the reported issues'
+      ok: false,
+      error: "Something went wrong while updating the reported issues"
     };
   }
 
   refresh();
 
   return {
-    error: '',
-    success: true,
-    message: 'Reported issues updated successfully'
+    ok: true,
+    data: "Reported issues updated successfully"
   };
 }
 
-export async function updateReportedOtherDeviceNames(formData: FormData): Promise<ActionState> {
+export async function updateReportedOtherDeviceNames(formData: FormData): Promise<ActionResult<string>> {
   const userId = formData.get("userId") as string;
   const deviceId = formData.get("deviceId") as string;
   const reportedOtherDeviceNameCount = formData.get("reportedOtherDeviceNameCount") as string;
@@ -368,17 +347,15 @@ export async function updateReportedOtherDeviceNames(formData: FormData): Promis
 
   if (!userId || userId !== await getUserId()) {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'Not logged in or doesn\'t own the report'
+      ok: false,
+      error: "Access denied"
     };
   }
 
   if (!deviceId || !reportedOtherDeviceNameCount || !addedOtherDeviceNameCount) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Device ID or a reported other device name count are missing'
+      ok: false,
+      error: "Device ID or a reported other device name count are missing"
     };
   }
 
@@ -437,17 +414,15 @@ export async function updateReportedOtherDeviceNames(formData: FormData): Promis
     }
   } catch (err) {
     return {
-      error: 'Database error',
-      success: false,
-      message: 'Something went wrong while updating the reported other device names'
+      ok: false,
+      error: "Something went wrong while updating the reported other device names"
     };
   }
 
   refresh();
 
   return {
-    error: '',
-    success: true,
-    message: 'Reported other device names updated successfully'
+    ok: true,
+    data: "Reported other device names updated successfully"
   };
 }

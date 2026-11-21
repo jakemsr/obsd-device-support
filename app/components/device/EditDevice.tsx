@@ -73,13 +73,13 @@ const EditDevice = ({ devicePromise }: EditDeviceProps) => {
     const formData = new FormData(event.currentTarget);
     const result = await updateDevice(formData);
     setLoading(false);
-    if (result.success) {
-      toast.success(result.message);
+    if (result.ok) {
+      toast.success(result.data);
       setAddedIssueFields([]);
       setAddedOtherDeviceNameVendorFields([]);
       setAddedOtherDeviceNameProductFields([]);
     } else {
-      toast.error(result.error + " " + result.message);
+      toast.error(result.error);
     }
   };
 

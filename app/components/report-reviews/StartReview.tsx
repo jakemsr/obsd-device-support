@@ -16,10 +16,10 @@ const StartReview = ({ reportId, userId }: StartReviewProps) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const result = await submitReview(formData);
-    if (result.success) {
-      toast.success(result.message);
+    if (result.ok) {
+      toast.success(result.data);
     } else {
-      toast.error(`${result.error}: ${result.message}`);
+      toast.error(result.error);
     }
   };
 

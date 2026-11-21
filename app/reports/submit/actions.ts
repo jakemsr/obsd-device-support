@@ -1,6 +1,6 @@
 'use server'
 
-import { ActionState } from '@/lib/local-types';
+import { ActionResult } from '@/lib/local-types';
 import prisma from '@/lib/prisma';
 import { source_type, support_type } from '@/app/generated/prisma/browser';
 import { normalizeDeviceId } from '@/lib/device-ids';
@@ -36,7 +36,7 @@ const reportSchema = z.object({
   })),
 });
 
-export async function reportSubmission(formData: FormData): Promise<ActionState> {
+export async function reportSubmission(formData: FormData): Promise<ActionResult<string>> {
 
   const entries = Array.from(formData.entries());
   const counts = z.object({
@@ -51,9 +51,8 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     counts.data.numOtherNames > entries.length ||
     !z.array(z.tuple([z.string(), z.string()])).safeParse(entries).success) {
     return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Invalid form fields or field counts'
+      ok: false,
+      error: "Invalid form fields or field counts"
     };
   }
 
@@ -79,9 +78,8 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
   if (!result.success) {
     const issue = result.error.issues[0];
     return {
-      error: 'Invalid input',
-      success: false,
-      message: `${issue.path.join('.')}: ${issue.message}`
+      ok: false,
+      error: `${issue.path.join('.')}: ${issue.message}`
     };
   }
 
@@ -94,9 +92,8 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
   const userId = user_id;
   if (!userId || userId !== await getUserId()) {
     return {
-      error: 'Unauthorized',
-      success: false,
-      message: 'You are not authorized to submit this report'
+      ok: false,
+      error: "Access denied"
     };
   }
 
@@ -167,15 +164,13 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     }
   } catch (error) {
     return {
-      error: 'Database error',
-      success: false,
-      message: 'Failed to create report'
+      ok: false,
+      error: (error as Error).message
     };
   }
 
   return {
-    error: '',
-    success: true,
-    message: 'Report submitted successfully'
+    ok: true,
+    data: "Report submitted successfully"
   };
 }
