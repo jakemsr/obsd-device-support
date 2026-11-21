@@ -13,6 +13,29 @@ enum SignInMode {
   passwordReset = "password reset",
 }
 
+interface SignInProps {
+  mode: SignInMode;
+  handleClick: (mode: SignInMode) => void;
+  authenticating: SignInMode;
+}
+
+const SignIn = ({ mode, handleClick, authenticating }: SignInProps) => {
+
+  let buttonText = `Sign In with ${mode}`;
+  if (mode === SignInMode.signUp) {
+    buttonText = "Sign Up";
+  } else if (mode === SignInMode.passwordReset) {
+    buttonText = "Request Reset";
+  }
+
+  return (
+    <Button onClick={() => handleClick(mode)} disabled={authenticating !== SignInMode.none}>
+      {authenticating === mode && <LoadingSpinner />}
+      {buttonText}
+    </Button>
+  )
+}
+
 interface LoginModalProps {
   onModalClose: () => void;
 }
@@ -28,105 +51,79 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState("");
 
-
-  interface SignInProps {
-    mode: SignInMode;
-    email?: string;
-    password?: string;
-    firstName?: string;
-    lastName?: string;
-  }
-
-  const SignIn = ({ mode, email, password, firstName, lastName }: SignInProps) => {
-
-    const handleClick = async () => {
-      setError(null);
-      setAuthenticating(mode);
-      let data, error;
-      switch (mode) {
-        case SignInMode.GitHub:
-          ({data, error} = await authClient.signIn.social({
-            provider: "github",
-            callbackURL: window.location.origin + "/dashboard",
-          }));
+  const handleClick = async (mode: SignInMode) => {
+    setError(null);
+    setAuthenticating(mode);
+    let data, error;
+    switch (mode) {
+      case SignInMode.GitHub:
+        ({ data, error } = await authClient.signIn.social({
+          provider: "github",
+          callbackURL: window.location.origin + "/dashboard",
+        }));
+        break;
+      case SignInMode.email:
+        if (!email || !password) {
+          error = new Error("Email and password are required");
           break;
-        case SignInMode.email:
-          if (!email || !password) {
-            error = new Error("Email and password are required");
-            break;
-          }
-          ({data, error} = await authClient.signIn.email({
-            email: email || "",
-            password: password || "",
-            callbackURL: window.location.origin + "/dashboard",
-          }));
+        }
+        ({ data, error } = await authClient.signIn.email({
+          email: email || "",
+          password: password || "",
+          callbackURL: window.location.origin + "/dashboard",
+        }));
+        break;
+      case SignInMode.signUp:
+        if (!firstName || !lastName || !email || !password) {
+          error = new Error("All fields are required for sign up");
+          break;
+        }
+        ({ data, error } = await authClient.signUp.email({
+          name: `${firstName || ""} ${lastName || ""}`,
+          firstName: firstName || "",
+          lastName: lastName || "",
+          email: email || "",
+          password: password || "",
+          callbackURL: window.location.origin + "/dashboard",
+        }));
+        break;
+      case SignInMode.passwordReset:
+        if (!email) {
+          error = new Error("Email is required for password reset");
+          break;
+        }
+        const resetURL = window.location.origin + "/reset-password";
+        ({ data, error } = await authClient.requestPasswordReset({
+          email,
+          redirectTo: resetURL,
+        }));
+        break;
+      default:
+        throw new Error(`Unsupported sign in mode: ${mode}`);
+    }
+    if (error) {
+      setError(error.message || null);
+    } else {
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      switch (mode) {
+        case SignInMode.passwordReset:
+          setMessage("Password reset email sent! Please check your inbox.");
+          setSignMode(mode);
           break;
         case SignInMode.signUp:
-          if (!firstName || !lastName || !email || !password) {
-            error = new Error("All fields are required for sign up");
-            break;
-          }
-          ({ data, error } = await authClient.signUp.email({
-            name: `${firstName || ""} ${lastName || ""}`,
-            firstName: firstName || "",
-            lastName: lastName || "",
-            email: email || "",
-            password: password || "",
-            callbackURL: window.location.origin + "/dashboard",
-          }));
-          break;
-        case SignInMode.passwordReset:
-          if (!email) {
-            error = new Error("Email is required for password reset");
-            break;
-          }
-          const resetURL = window.location.origin + "/reset-password";
-          ({ data, error } = await authClient.requestPasswordReset({
-            email,
-            redirectTo: resetURL,
-          }));
+          setMessage("Sign up successful! Please check your email to verify your account.");
+          setSignMode(mode);
           break;
         default:
-          throw new Error(`Unsupported sign in mode: ${mode}`);
+          setSignMode(SignInMode.email);
+          onModalClose();
+          break;
       }
-      if (error) {
-        setError(error.message || null);
-      } else {
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPassword("");
-        switch (mode) {
-          case SignInMode.passwordReset:
-            setMessage("Password reset email sent! Please check your inbox.");
-            setSignMode(mode);
-            break;
-          case SignInMode.signUp:
-            setMessage("Sign up successful! Please check your email to verify your account.");
-            setSignMode(mode);
-            break;
-          default:
-            setSignMode(SignInMode.email);
-            onModalClose();
-            break;
-        }
-      }
-      setAuthenticating(SignInMode.none);
     }
-
-    let buttonText = `Sign In with ${mode}`;
-    if (mode === SignInMode.signUp) {
-      buttonText = "Sign Up";
-    } else if (mode === SignInMode.passwordReset) {
-      buttonText = "Request Reset";
-    }
-
-    return (
-      <Button onClick={handleClick} disabled={authenticating !== SignInMode.none}>
-        {authenticating === mode && <LoadingSpinner />}
-        {buttonText}
-      </Button>
-    )
+    setAuthenticating(SignInMode.none);
   }
 
 
@@ -176,7 +173,11 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
         {signMode !== SignInMode.signUp && (
           <>
             <div className="mt-2">
-              <SignIn mode={SignInMode.GitHub} />
+              <SignIn
+                mode={SignInMode.GitHub}
+                handleClick={handleClick}
+                authenticating={authenticating}
+              />
             </div>
             <div className="flex items-center mt-2 px-4 w-full">
               <div className="grow border-t border-gray-300"></div>
@@ -241,10 +242,8 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
         </div>
         <SignIn
           mode={signMode}
-          email={email}
-          password={password}
-          firstName={firstName}
-          lastName={lastName}
+          handleClick={handleClick}
+          authenticating={authenticating}
         />
         <div className="mt-2">
           <span onClick={() => {setError(""); setSignMode(signMode === SignInMode.signUp ? SignInMode.email : SignInMode.signUp)}} className="cursor-pointer">
@@ -253,7 +252,11 @@ const LoginModal = ({ onModalClose }: LoginModalProps) => {
         </div>
         <div className="my-2">
           Forgot Password?
-          <SignIn mode={SignInMode.passwordReset} email={email} />
+          <SignIn
+            mode={SignInMode.passwordReset}
+            handleClick={handleClick}
+            authenticating={authenticating}
+          />
         </div>
       </div>
       )}
