@@ -5,95 +5,98 @@ import prisma from '@/lib/prisma';
 import { source_type, support_type } from '@/app/generated/prisma/browser';
 import { normalizeDeviceId } from '@/lib/device-ids';
 import { getUserId } from '@/lib/check-user-auth';
+import { z } from 'zod';
 
+const requiredString = z.string()
+  .refine(value => value.trim().length > 0, 'Required');
+const deviceIdSchema = z.string()
+  .regex(/^(?:[0-9a-fA-F]{4}|0x[0-9a-fA-F]{4})$/, 'Expected a four-digit hexadecimal ID');
+const countSchema = z.string()
+  .regex(/^(0|[1-9]\d*)$/, 'Expected a non-negative integer')
+  .transform(Number)
+  .refine(Number.isSafeInteger, 'Count is too large');
+
+const reportSchema = z.object({
+  user_id: requiredString,
+  reason: requiredString,
+  bus: z.enum(['USB', 'PCI']),
+  vendor_id: deviceIdSchema,
+  product_id: deviceIdSchema,
+  reported_vendor: z.string().nullable(),
+  reported_product: z.string().nullable(),
+  reported_driver: requiredString,
+  support_status: z.enum(support_type),
+  source_name: z.string().nullable(),
+  source_type: z.enum(source_type),
+  source_url: z.string().nullable(),
+  issues: z.array(z.string()),
+  otherNames: z.array(z.object({
+    vendor: z.string(),
+    product: z.string(),
+  })),
+});
 
 export async function reportSubmission(formData: FormData): Promise<ActionState> {
-  const userId = formData.get("user_id") as string;
-  const reason = formData.get("reason") as string;
-  const bus = formData.get("bus") as string;
-  const vendorId = formData.get("vendor_id") as string;
-  const productId = formData.get("product_id") as string;
-  const reportedVendor = formData.get("reported_vendor") as string;
-  const reportedProduct = formData.get("reported_product") as string;
-  const reportedDriver = formData.get("reported_driver") as string;
-  const supportStatus = formData.get("support_status") as string;
-  const sourceName = formData.get("source_name") as string;
-  const sourceType = formData.get("source_type") as string;
-  const sourceUrl = formData.get("source_url") as string;
 
-  const numIssues = formData.get("numIssues") as string;
-  const issues: string[] = [];
-  for (let i = 0; i < parseInt(numIssues); i++) {
-    issues.push(formData.get(`issue${i}`) as string);
+  const entries = Array.from(formData.entries());
+  const counts = z.object({
+    numIssues: countSchema,
+    numOtherNames: countSchema,
+  }).safeParse({
+    numIssues: formData.get("numIssues"),
+    numOtherNames: formData.get("numOtherNames"),
+  });
+  if (!counts.success ||
+      counts.data.numIssues > entries.length ||
+      counts.data.numOtherNames > entries.length ||
+      !z.array(z.tuple([z.string(), z.string()])).safeParse(entries).success) {
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: 'Invalid form fields or field counts'
+    };
   }
 
-  const numOtherNames = formData.get("numOtherNames") as string;
-  const otherNames: { vendor: string; product: string }[] = [];
-  for (let i = 0; i < parseInt(numOtherNames); i++) {
-    otherNames.push({
-      vendor: formData.get(`otherNameVendor${i}`) as string,
-      product: formData.get(`otherNameProduct${i}`) as string
-    });
+  const result = reportSchema.safeParse({
+    user_id: formData.get("user_id"),
+    reason: formData.get("reason"),
+    bus: formData.get("bus"),
+    vendor_id: formData.get("vendor_id"),
+    product_id: formData.get("product_id"),
+    reported_vendor: formData.get("reported_vendor"),
+    reported_product: formData.get("reported_product"),
+    reported_driver: formData.get("reported_driver"),
+    support_status: formData.get("support_status"),
+    source_name: formData.get("source_name"),
+    source_type: formData.get("source_type"),
+    source_url: formData.get("source_url"),
+    issues: Array.from({ length: counts.data.numIssues }, (_, i) => formData.get(`issue${i}`)),
+    otherNames: Array.from({ length: counts.data.numOtherNames }, (_, i) => ({
+      vendor: formData.get(`otherNameVendor${i}`),
+      product: formData.get(`otherNameProduct${i}`),
+    })),
+  });
+  if (!result.success) {
+    const issue = result.error.issues[0];
+    return {
+      error: 'Invalid input',
+      success: false,
+      message: `${issue.path.join('.')}: ${issue.message}`
+    };
   }
 
+  const { user_id, reason, bus, vendor_id, product_id, reported_vendor, reported_product,
+    reported_driver, support_status, source_name, source_type: sourceType, source_url,
+    issues, otherNames } = result.data;
+  const normalizedVendorId = normalizeDeviceId(vendor_id);
+  const normalizedProductId = normalizeDeviceId(product_id);
+
+  const userId = user_id;
   if (!userId || userId !== await getUserId()) {
     return {
       error: 'Unauthorized',
       success: false,
       message: 'You are not authorized to submit this report'
-    };
-  }
-
-  if (!reason || !bus || !vendorId || !productId || !reportedDriver || !supportStatus) {
-    return {
-      error: 'Missing fields',
-      success: false,
-      message: 'Please fill in all required fields'
-    };
-  }
-
-  let normalizedVendorId;
-  let normalizedProductId;
-  try {
-    normalizedVendorId = normalizeDeviceId(vendorId);
-    normalizedProductId = normalizeDeviceId(productId);
-  } catch (error) {
-    return {
-      error: 'Invalid input',
-      success: false,
-      message: 'Bad vendor ID or product ID'
-    };
-  }
-
-  // validate support status
-  let validatedSupportStatus = undefined;
-  for (const status of Object.values(support_type)) {
-    if (status === supportStatus) {
-      validatedSupportStatus = status;
-      break;
-    }
-  }
-  if (!validatedSupportStatus) {
-    return {
-      error: 'Invalid support status',
-      success: false,
-      message: 'The support status provided is not valid'
-    };
-  }
-
-  // validate source type
-  let validatedSourceType = undefined;
-  for (const type of Object.values(source_type)) {
-    if (type === sourceType) {
-      validatedSourceType = type;
-      break;
-    }
-  }
-  if (!validatedSourceType) {
-    return {
-      error: 'Invalid source type',
-      success: false,
-      message: 'The source type provided is not valid'
     };
   }
 
@@ -110,9 +113,9 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     const reportSource = await prisma.report_sources.create({
       data: {
         report_id: report.id,
-        source_type: validatedSourceType,
-        name: sourceName,
-        url: sourceUrl,
+        source_type: sourceType,
+        name: source_name,
+        url: source_url,
       }
     });
 
@@ -133,10 +136,10 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
         bus: bus,
         vendor_id: normalizedVendorId,
         product_id: normalizedProductId,
-        reported_vendor: reportedVendor,
-        reported_product: reportedProduct,
-        reported_driver: reportedDriver,
-        support_status: validatedSupportStatus,
+        reported_vendor: reported_vendor,
+        reported_product: reported_product,
+        reported_driver: reported_driver,
+        support_status: support_status,
       }
     });
 
