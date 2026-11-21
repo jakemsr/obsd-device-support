@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "verify:device-names": "tsx utils/verify-device-names.ts",
     "import:vendors-pci": "tsx utils/import-vendors-pci.ts",
     "import:devices": "tsx utils/match-devices.ts",
