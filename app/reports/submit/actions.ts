@@ -47,9 +47,9 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     numOtherNames: formData.get("numOtherNames"),
   });
   if (!counts.success ||
-      counts.data.numIssues > entries.length ||
-      counts.data.numOtherNames > entries.length ||
-      !z.array(z.tuple([z.string(), z.string()])).safeParse(entries).success) {
+    counts.data.numIssues > entries.length ||
+    counts.data.numOtherNames > entries.length ||
+    !z.array(z.tuple([z.string(), z.string()])).safeParse(entries).success) {
     return {
       error: 'Invalid input',
       success: false,
