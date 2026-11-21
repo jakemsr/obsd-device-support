@@ -24,7 +24,7 @@ const reportSchema = z.object({
   product_id: deviceIdSchema,
   reported_vendor: z.string().nullable(),
   reported_product: z.string().nullable(),
-  reported_driver: requiredString,
+  reported_driver: z.string().nullable(),
   support_status: z.enum(support_type),
   source_name: z.string().nullable(),
   source_type: z.enum(source_type),
