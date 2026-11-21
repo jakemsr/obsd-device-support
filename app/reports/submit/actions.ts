@@ -86,7 +86,7 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
   }
 
   const { user_id, reason, bus, vendor_id, product_id, reported_vendor, reported_product,
-    reported_driver, support_status, source_name, source_type: sourceType, source_url,
+    reported_driver, support_status, source_name, source_type, source_url,
     issues, otherNames } = result.data;
   const normalizedVendorId = normalizeDeviceId(vendor_id);
   const normalizedProductId = normalizeDeviceId(product_id);
@@ -113,7 +113,7 @@ export async function reportSubmission(formData: FormData): Promise<ActionState>
     const reportSource = await prisma.report_sources.create({
       data: {
         report_id: report.id,
-        source_type: sourceType,
+        source_type: source_type,
         name: source_name,
         url: source_url,
       }
