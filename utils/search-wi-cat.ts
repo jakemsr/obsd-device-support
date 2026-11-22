@@ -3,8 +3,23 @@ import prisma from "@/lib/prisma";
 import { createAuthClient } from "better-auth/client";
 import { support_type } from "@/app/generated/prisma/enums";
 import { normalizeDeviceId } from "@/lib/device-ids";
+import { z } from "zod";
 
 const args = process.argv.slice(2);
+
+const resultSchema = z.object({
+  fulltext: z.string(),
+  printouts: z.object({
+    Interface: z.array(z.unknown()),
+    "USB conn.": z.array(z.unknown()),
+    "Vendor ID": z.array(z.unknown()),
+    "Device ID": z.array(z.unknown()),
+  }),
+});
+
+const responseSchema = z.object({
+  results: z.union([z.record(z.string(), resultSchema), z.array(resultSchema)]).nullish(),
+}).nullable();
 
 // last driver added before last run: 91 an, but ONLY USB
 
@@ -39,7 +54,7 @@ async function getVendorAndDeviceIds(): Promise<{ device_id: bigint; vendor_usb_
   }));
 }
 
-async function fetchData(vendorID: string, deviceID: string): Promise<any> {
+async function fetchData(vendorID: string, deviceID: string): Promise<z.infer<typeof responseSchema>> {
 
   const fetchURLBase = "https://wikidevi.wi-cat.ru/index.php"
 
@@ -73,13 +88,14 @@ async function fetchData(vendorID: string, deviceID: string): Promise<any> {
   if (!contentType || !contentType.includes("application/json")) {
     return Promise.reject(new Error(`Expected JSON, got: ${contentType}`));
   }
+  let data: unknown;
   try {
-    const data = await response.json();
-    return data;
+    data = await response.json();
   } catch (error) {
     return null;
     //return Promise.reject(new Error(`Failed to parse JSON: ${error}`));
   }
+  return responseSchema.parse(data);
 }
 
 async function main() {
@@ -118,18 +134,18 @@ async function main() {
       console.log(`Fetching data for ${vendor_name} ${device_name}, ${vendor_usb_id}:${device_usb_id}`);
       try {
         const data = await fetchData(vendor_usb_id, device_usb_id);
-        if (!data || !data.results) {
+        if (!data?.results) {
           console.log(`No results found for ${vendor_usb_id}:${device_usb_id}`);
           continue;
         }
-        const fulltexts = Object.values(data.results).map((entry: any) => ({
+        const fulltexts = Object.values(data.results).map(entry => ({
           fulltext: entry.fulltext,
           interface: entry.printouts.Interface[0],
           USBconn: entry.printouts["USB conn."][0],
           vendorID: entry.printouts["Vendor ID"][0],
           deviceID: entry.printouts["Device ID"][0],
         }));
-        const filtered = fulltexts.filter((entry: any) =>
+        const filtered = fulltexts.filter(entry =>
           entry.interface === "USB" &&
           entry.USBconn === "Male A" &&
           entry.vendorID === vendor_usb_id &&
@@ -168,7 +184,7 @@ async function main() {
           });
 
           console.log(`Found ${filtered.length} matching entries:`);
-          filtered.forEach(async (entry: any, index: number) => {
+          filtered.forEach(async (entry) => {
             console.log(`Adding ${entry.fulltext}`);
 
             await prisma.reported_other_device_names.create({
