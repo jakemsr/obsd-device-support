@@ -1,6 +1,6 @@
 "use client";
 
-import { OtherNameWithDevice } from "@/app/admin/fix_other_names/actions";
+import { OtherNameWithDevice, updateOtherName } from "@/app/admin/fix_other_names/actions";
 import Link from "next/link";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { useState } from "react";
@@ -32,40 +32,19 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
   const [deviceName, setDeviceName] = useState(tryDeviceName);
   const [deleteEntry, setDeleteEntry] = useState(false);
 
-  const [apiResponse, setApiResponse] = useState<any>(null);
-  const [apiStatus, setApiStatus] = useState<any>(null);
+  const [error, setError] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setLoading(true);
-    // Send the POST request to the custom API endpoint
-    const response = await fetch(`/api/admin/fix_other_names`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(
-        {
-          vendor_name: vendorName,
-          device_name: deviceName,
-          delete_entry: deleteEntry,
-          id: other_name.id.toString()
-        }),
-    });
+    const response = await updateOtherName(vendorName, deviceName, deleteEntry, other_name.id.toString());
     if (!response.ok) {
-      setApiResponse({ error: "HTTP error!"});
-      setApiStatus(response.status);
-      if (!response.status) {
-        setApiStatus(500);
-      }
+      setError(response.error);
     } else {
-      setApiStatus(response.status);
-
-      // Unpack the response from the API route
-      const data = await response.json();
-      setApiResponse(data);
+      setMessage(response.data);
     }
     setLoading(false);
   };
@@ -122,24 +101,17 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
         </div>
       </form>
 
-      {apiResponse ? (
+      {message || error ? (
         <div className="mt-2">
-          {apiStatus && apiStatus >= 200 && apiStatus < 300 ? (
+          {message && (
             <div className="font-bold">
-              {apiResponse.message}:&nbsp;
-              {apiResponse.vendor_name}:&nbsp;
-              {apiResponse.device_name}
+              {message}
             </div>
-          ) : (
-            apiStatus && apiStatus >=300 && apiStatus < 400 ? (
-              <div className="text-yellow-600 font-bold">
-                redirect: {apiResponse.message}
-              </div>
-            ) : apiStatus && apiStatus >= 400 && apiStatus < 600 ? (
-              <div className="text-red-600 font-bold">
-                error: {apiResponse.error}: {apiResponse.details}
-              </div>
-            ) : null
+          )}
+          {error && (
+            <div className="text-red-600 font-bold">
+              {error}
+            </div>
           )}
         </div>
       ) : (
@@ -147,7 +119,9 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
           <h2 className="text-lg font-bold mt-4">Possible Vendors</h2>
           <ul>
             {vendors.filter(vendor => (other_name.devices.bus === "USB" && vendor.usb_id) || (other_name.devices.bus === "PCI" && vendor.pci_id)).map((vendor) => (
-              <li key={vendor.id}>"{vendor.name}" PCI ID: {vendor.pci_id ?? "null"} USB ID: {vendor.usb_id ?? "null"}</li>
+              <li key={vendor.id}>
+                &quot;{vendor.name}&quot; PCI ID: {vendor.pci_id ?? "null"} USB ID: {vendor.usb_id ?? "null"}
+              </li>
             ))}
           </ul>
         </div>
