@@ -16,14 +16,6 @@ const EditDevice = ({ devicePromise }: EditDeviceProps) => {
 
   const device = use(devicePromise);
 
-  if (!device) {
-    return (
-      <div className="px-4">
-        Device not found
-      </div>
-    );
-  }
-
   interface valueField {
     value: string;
   }
@@ -82,6 +74,14 @@ const EditDevice = ({ devicePromise }: EditDeviceProps) => {
       toast.error(result.error);
     }
   };
+
+  if (!device) {
+    return (
+      <div className="px-4">
+        Device not found
+      </div>
+    );
+  }
 
   return (
     <form

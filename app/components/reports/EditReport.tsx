@@ -509,18 +509,6 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
   const report = use(reportPromise);
   const session = use(sessionPromise);
 
-  if (!report) {
-    return <div>Report not found</div>;
-  }
-
-  if (!session || !session.user || session.user.id !== report.user_id) {
-    return <div>Not authorized to edit this report</div>;
-  }
-
-  if (report.status !== report_status.pending) {
-    return <div>Cannot edit a report with status {report.status.split("_").join(" ")}</div>;
-  }
-
   const statusOptions = Object.values(report_status).map((value) => ({
     value,
     label: value.replace(/_/g, " "),
@@ -556,6 +544,17 @@ export default function EditReport({ reportPromise, sessionPromise }: EditReport
     }
   };
 
+  if (!report) {
+    return <div>Report not found</div>;
+  }
+
+  if (!session || !session.user || session.user.id !== report.user_id) {
+    return <div>Not authorized to edit this report</div>;
+  }
+
+  if (report.status !== report_status.pending) {
+    return <div>Cannot edit a report with status {report.status.split("_").join(" ")}</div>;
+  }
 
   return (
     <>

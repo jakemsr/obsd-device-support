@@ -16,9 +16,6 @@ interface SubmitReportProps {
 const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
 
   const userId = use(userIdPromise);
-  if (userId === null) {
-    return <div className="px-4 text-error">Please log in to submit a report.</div>;
-  }
 
   const device = use(devicePromise);
   
@@ -92,6 +89,9 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
     support_status: device?.support_status ?? ''
   };
 
+  if (userId === null) {
+    return <div className="px-4 text-error">Please log in to submit a report.</div>;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
