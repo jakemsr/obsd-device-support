@@ -5,11 +5,12 @@ import { Suspense } from "react";
 import { getFullReport } from "@/app/reports/[id]/actions";
 import SourceDisplay from "@/app/components/reports/SourceDisplay";
 import ShowDevices from "@/app/components/reports/ShowDevices";
+import { AuthSession } from "@/lib/local-types";
 
 
 interface ReportDisplayProps {
   id: string;
-  sessionPromise: Promise<any>;
+  sessionPromise: Promise<AuthSession | null>;
 }
 
 const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
