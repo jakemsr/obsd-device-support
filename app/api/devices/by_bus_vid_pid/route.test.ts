@@ -42,7 +42,7 @@ describe("GET /api/devices/by_bus_vid_pid", () => {
 
     expect(response.status).toBe(400);
     expect(data).toEqual({
-      error: "Invalid vendor_id or product_id",
+      error: "Expected a four-digit hexadecimal ID: bda",
     });
   });
 

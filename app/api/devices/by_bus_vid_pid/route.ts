@@ -21,8 +21,9 @@ export async function GET(request: Request) {
     normalizedVendorId = normalizeDeviceId(vendorId);
     normalizedProductId = normalizeDeviceId(productId);
   } catch (error) {
+    const message = (error instanceof Error) ? error.message : String(error);
     return NextResponse.json(
-      { error: "Invalid vendor_id or product_id" },
+      { error: message },
       { status: 400 }
     );
   }
