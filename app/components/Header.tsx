@@ -19,8 +19,6 @@ export default function Header() {
   const {
     data: session,
     isPending,
-    error,
-    refetch
   } = authClient.useSession();
 
   return (
