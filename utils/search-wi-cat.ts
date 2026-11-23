@@ -160,7 +160,7 @@ async function main() {
           });
 
           // create report_source
-          const reportSource = await prisma.report_sources.create({
+          await prisma.report_sources.create({
             data: {
               report_id: report.id,
               name: "wikidevi.wi-cat.ru",
