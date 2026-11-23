@@ -7,6 +7,15 @@ import { normalizeDeviceId } from '@/lib/device-ids';
 import { getUserId } from '@/lib/check-user-auth';
 import { z } from 'zod';
 
+function formatFieldName(path: PropertyKey[]): string {
+  const key = String(path[path.length - 1] ?? "Field");
+  return key
+    .replace(/([A-Z])/g, " $1")      // split camelCase
+    .replace(/[_-]+/g, " ")          // split snake_case / kebab-case
+    .replace(/\b[a-z]/g, (char) => char.toUpperCase())
+    .trim();
+}
+
 const requiredString = z.string()
   .refine(value => value.trim().length > 0, 'Required');
 const deviceIdSchema = z.string().transform((value, ctx) => {
@@ -27,10 +36,10 @@ const reportSchema = z.object({
   user_id: requiredString,
   reason: requiredString,
   bus: z.enum(['USB', 'PCI']),
-  vendor_id: deviceIdSchema,
-  product_id: deviceIdSchema,
-  reported_vendor: z.string().nullable(),
-  reported_product: z.string().nullable(),
+  vendor_id: requiredString.pipe(deviceIdSchema),
+  product_id: requiredString.pipe(deviceIdSchema),
+  reported_vendor: requiredString,
+  reported_product: requiredString,
   reported_driver: z.string().nullable(),
   support_status: z.enum(support_type),
   source_name: z.string().nullable(),
@@ -86,7 +95,7 @@ export async function reportSubmission(formData: FormData): Promise<ActionResult
     const issue = result.error.issues[0];
     return {
       ok: false,
-      error: `${issue.path.join('.')}: ${issue.message}`
+      error: `${formatFieldName(issue.path)}: ${issue.message}`
     };
   }
 

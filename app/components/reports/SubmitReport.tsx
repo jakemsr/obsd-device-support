@@ -105,6 +105,7 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
             name="reason"
             placeholder="brief reason for report"
             className="h-20 w-full"
+            required
           />
         </div>
 
@@ -118,22 +119,42 @@ const SubmitReport = ({ userIdPromise, devicePromise }: SubmitReportProps) => {
 
         <div className="font-bold">Vendor ID:</div>
         <div className="col-span-2">
-          <input type="text" name="vendor_id" defaultValue={defaultValues.vendor_id ?? ""} />
+          <input
+            type="text"
+            name="vendor_id"
+            defaultValue={defaultValues.vendor_id ?? ""}
+            required
+          />
         </div>
 
         <div className="font-bold">Product ID:</div>
         <div className="col-span-2">
-          <input type="text" name="product_id" defaultValue={defaultValues.product_id} />
+          <input
+            type="text"
+            name="product_id"
+            defaultValue={defaultValues.product_id}
+            required
+          />
         </div>
 
         <div className="font-bold">Vendor Name:</div>
         <div className="col-span-2">
-          <input type="text" name="reported_vendor" defaultValue={defaultValues.reported_vendor} />
+          <input
+            type="text"
+            name="reported_vendor"
+            defaultValue={defaultValues.reported_vendor}
+            required
+          />
         </div>
 
         <div className="font-bold">Product Name:</div>
         <div className="col-span-2">
-          <input type="text" name="reported_product" defaultValue={defaultValues.reported_product} />
+          <input
+            type="text"
+            name="reported_product"
+            defaultValue={defaultValues.reported_product}
+            required
+          />
         </div>
 
         <div className="font-bold">Driver:</div>
