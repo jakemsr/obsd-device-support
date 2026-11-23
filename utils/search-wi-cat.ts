@@ -91,9 +91,8 @@ async function fetchData(vendorID: string, deviceID: string): Promise<z.infer<ty
   let data: unknown;
   try {
     data = await response.json();
-  } catch (error) {
+  } catch {
     return null;
-    //return Promise.reject(new Error(`Failed to parse JSON: ${error}`));
   }
   return responseSchema.parse(data);
 }
