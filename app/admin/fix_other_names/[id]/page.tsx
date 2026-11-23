@@ -4,6 +4,7 @@ import EditOtherName from "@/app/components/admin/EditOtherName";
 import { getOtherNameById, OtherNameWithDevice } from "@/app/admin/fix_other_names/actions";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser } from "@/lib/local-types";
+import type { vendors } from "@/app/generated/prisma/client";
 
 
 export default async function Page({
@@ -43,7 +44,7 @@ export default async function Page({
     possibleVendor = other_name.device_name.split(" ")[0];
   }
 
-  const vendors = await prisma.vendors.findMany({
+  const vendors: vendors[] = await prisma.vendors.findMany({
     where: {
       name: {
         contains: possibleVendor,
