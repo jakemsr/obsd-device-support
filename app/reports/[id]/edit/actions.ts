@@ -185,9 +185,10 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionRe
     normalizedVendorId = normalizeDeviceId(vendorId);
     normalizedProductId = normalizeDeviceId(productId);
   } catch (error) {
+    const message = (error instanceof Error) ? error.message : String(error);
     return {
       ok: false,
-      error: "Invalid vendor ID or product ID"
+      error: message
     };
   }
 
