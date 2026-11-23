@@ -29,10 +29,6 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
     }
   }
 
-  const [vendorName, setVendorName] = useState(tryVendorName);
-  const [deviceName, setDeviceName] = useState(tryDeviceName);
-  const [deleteEntry, setDeleteEntry] = useState(false);
-
   const [error, setError] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -40,8 +36,10 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const formData = new FormData(e.currentTarget);
+
     setLoading(true);
-    const response = await updateOtherName(vendorName, deviceName, deleteEntry, other_name.id.toString());
+    const response = await updateOtherName(formData);
     if (!response.ok) {
       setError(response.error);
     } else {
@@ -67,13 +65,17 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
         className="flex flex-col justify-start gap-2 mt-4"
         onSubmit={handleSubmit}
       >
+        <input
+          type="hidden"
+          name="device_id"
+          value={String(other_name.id)}
+        />
         <label>
           Vendor Name:
           <input
             type="text"
             name="vendor_name"
-            value={vendorName}
-            onChange={(e) => setVendorName(e.target.value)}
+            defaultValue={tryVendorName}
           />
         </label>
         <label>
@@ -81,8 +83,7 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
           <input
             type="text"
             name="device_name"
-            value={deviceName}
-            onChange={(e) => setDeviceName(e.target.value)}
+            defaultValue={tryDeviceName}
           />
         </label>
         <label>
@@ -90,8 +91,6 @@ export default function EditOtherName({ other_name, vendors }: EditOtherNameProp
           <input
             type="checkbox"
             name="delete_entry"
-            checked={deleteEntry}
-            onChange={(e) => setDeleteEntry(e.target.checked)}
           />
         </label>
         <div className="max-w-fit">
