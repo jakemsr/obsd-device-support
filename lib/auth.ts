@@ -17,7 +17,7 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     revokeSessionsOnPasswordReset: true,
-    sendResetPassword: async ({ user, url, token }, request) => {
+    sendResetPassword: async ({ user, url }) => {
       void resend.emails.send({
         from: 'obsd-device-db@notifications.jakemsr.dev',
         to: [user.email],
@@ -29,7 +29,7 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
-    sendVerificationEmail: async ({ user, url, token }, request) => {
+    sendVerificationEmail: async ({ user, url }) => {
       void resend.emails.send({
         from: 'obsd-device-db@notifications.jakemsr.dev',
         to: [user.email],
