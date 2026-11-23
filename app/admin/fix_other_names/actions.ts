@@ -4,6 +4,8 @@ import prisma from '@/lib/prisma';
 import { Prisma } from "@/app/generated/prisma/client";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser, ActionResult } from "@/lib/local-types";
+import { formatFieldName, requiredString } from "@/lib/zod-helpers";
+import { z } from "zod";
 
 
 export interface OtherName {
@@ -48,12 +50,15 @@ export async function getOtherNameById(id: bigint): Promise<OtherNameWithDevice 
   return other_name;
 }
 
-export async function updateOtherName(
-  vendor_name: string,
-  device_name: string,
-  delete_entry: boolean,
-  id: string
-): Promise<ActionResult<string>> {
+const updateOtherNameSchema = z.object({
+  vendor_name: requiredString,
+  device_name: requiredString,
+  delete_entry: z.literal("on").nullable()
+    .transform(value => value === "on"),
+  id: requiredString.pipe(z.string().regex(/^\d+$/, "Expected a numeric ID")),
+});
+
+export async function updateOtherName(formData: FormData): Promise<ActionResult<string>> {
 
   const currentUser: AuthUser | null = await getCurrentUser();
 
@@ -61,32 +66,31 @@ export async function updateOtherName(
     return { ok: false, error: "Access denied" };
   }
 
-  try {
-    if (!vendor_name) {
-      return { ok: false,  error: "Vendor name is required" };
-    }
-    if (!device_name) {
-      return { ok: false,  error: "Device name is required" };
-    }
-    if (delete_entry === undefined) {
-      return { ok: false, error: "Delete entry flag is required" };
-    }
-    if (!id) {
-      return { ok: false, error: "ID is required" };
-    }
+  const result = updateOtherNameSchema.safeParse({
+    vendor_name: formData.get("vendor_name"),
+    device_name: formData.get("device_name"),
+    delete_entry: formData.get("delete_entry"),
+    id: formData.get("device_id")
+  });
+  if (!result.success) {
+    const issue = result.error.issues[0];
+    return { ok: false, error: `${formatFieldName(issue.path)}: ${issue.message}` };
+  }
 
-    if (delete_entry) {
+  const validated = result.data;
+  try {
+    if (validated.delete_entry) {
       await prisma.other_device_names.delete({
-        where: { id: BigInt(id) },
+        where: { id: BigInt(validated.id) },
       });
-      return { ok: true, data: 'Deleted id: ' + id };
+      return { ok: true, data: 'Deleted id: ' + validated.id };
     }
 
     const updatedOtherName = await prisma.other_device_names.update({
-      where: { id: BigInt(id) },
+      where: { id: BigInt(validated.id) },
       data: {
-        vendor_name: vendor_name,
-        device_name: device_name,
+        vendor_name: validated.vendor_name,
+        device_name: validated.device_name,
       },
     });
 
