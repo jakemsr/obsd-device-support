@@ -29,7 +29,7 @@ const EditReview = ({ review }: EditReviewProps) => {
       }
     };
     fetchMatchedDevices();
-  }, []);
+  }, [review.report_id]);
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
