@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getOtherNames, OtherName } from "@/app/admin/fix_other_names/actions";
+import type { other_device_names } from "@/app/generated/prisma/client";
+import { getOtherNamesWithEmptyVendor } from "@/app/admin/fix_other_names/actions";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser } from "@/lib/local-types";
 
@@ -17,7 +18,7 @@ export default async function Page() {
     );
   }
 
-  const otherNames: OtherName[] = await getOtherNames();
+  const otherNames: other_device_names[] = await getOtherNamesWithEmptyVendor();
 
   return (
     <div className="px-4">
@@ -25,7 +26,7 @@ export default async function Page() {
         <h1>Fix Other Names</h1>
       </div>
       <div>
-        {otherNames.filter(otherName => otherName.vendor_name === "").map(({ id, vendor_name, device_name }) => (
+        {otherNames.map(({ id, vendor_name, device_name }) => (
           <div key={id.toString()}>
             <Link href={`/admin/fix_other_names/${id.toString()}`}>
               Vendor: {vendor_name} Device: {device_name}

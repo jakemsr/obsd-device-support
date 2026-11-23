@@ -5,18 +5,15 @@ import { Prisma } from "@/app/generated/prisma/client";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser, ActionResult } from "@/lib/local-types";
 import { formatFieldName, requiredString } from "@/lib/zod-helpers";
+import type { other_device_names } from "@/app/generated/prisma/client";
 import { z } from "zod";
 
 
-export interface OtherName {
-  id: bigint;
-  device_name: string;
-  device_id: bigint;
-  vendor_name: string;
-}
-
-export async function getOtherNames(): Promise<OtherName[]> {
+export async function getOtherNamesWithEmptyVendor(): Promise<other_device_names[]> {
   const other_names = await prisma.other_device_names.findMany({
+    where: {
+      vendor_name: ""
+    },
     orderBy: {
       device_name: "asc"
     }
