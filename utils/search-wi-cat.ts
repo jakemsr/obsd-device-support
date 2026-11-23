@@ -128,7 +128,7 @@ async function main() {
   }
 
   const vendorAndDeviceIds = await getVendorAndDeviceIds();
-  for (const { device_id, vendor_usb_id, vendor_name, device_usb_id, device_name, support_status } of vendorAndDeviceIds) {
+  for (const { vendor_usb_id, vendor_name, device_usb_id, device_name, support_status } of vendorAndDeviceIds) {
     if (vendor_usb_id && device_usb_id) {
       console.log(`Fetching data for ${vendor_name} ${device_name}, ${vendor_usb_id}:${device_usb_id}`);
       try {
