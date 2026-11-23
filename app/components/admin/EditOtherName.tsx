@@ -4,11 +4,12 @@ import { OtherNameWithDevice, updateOtherName } from "@/app/admin/fix_other_name
 import Link from "next/link";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { useState } from "react";
+import type { vendors } from "@/app/generated/prisma/client";
 
 
 interface EditOtherNameProps {
   other_name: OtherNameWithDevice;
-  vendors: { id: bigint, name: string | null, pci_id: string | null, usb_id: string | null }[];
+  vendors: vendors[];
 }
 
 export default function EditOtherName({ other_name, vendors }: EditOtherNameProps) {
