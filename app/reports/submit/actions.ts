@@ -9,8 +9,15 @@ import { z } from 'zod';
 
 const requiredString = z.string()
   .refine(value => value.trim().length > 0, 'Required');
-const deviceIdSchema = z.string()
-  .regex(/^(?:[0-9a-fA-F]{4}|0x[0-9a-fA-F]{4})$/, 'Expected a four-digit hexadecimal ID');
+const deviceIdSchema = z.string().transform((value, ctx) => {
+  try {
+    return normalizeDeviceId(value);
+  } catch (error) {
+    const message = (error instanceof Error) ? error.message : String(error);
+    ctx.addIssue({ code: 'custom', message: message });
+    return z.NEVER;
+  }
+});
 const countSchema = z.string()
   .regex(/^(0|[1-9]\d*)$/, 'Expected a non-negative integer')
   .transform(Number)
@@ -86,8 +93,6 @@ export async function reportSubmission(formData: FormData): Promise<ActionResult
   const { user_id, reason, bus, vendor_id, product_id, reported_vendor, reported_product,
     reported_driver, support_status, source_name, source_type, source_url,
     issues, otherNames } = result.data;
-  const normalizedVendorId = normalizeDeviceId(vendor_id);
-  const normalizedProductId = normalizeDeviceId(product_id);
 
   const userId = user_id;
   if (!userId || userId !== await getUserId()) {
@@ -131,8 +136,8 @@ export async function reportSubmission(formData: FormData): Promise<ActionResult
       data: {
         report_id: report.id,
         bus: bus,
-        vendor_id: normalizedVendorId,
-        product_id: normalizedProductId,
+        vendor_id: vendor_id,
+        product_id: product_id,
         reported_vendor: reported_vendor,
         reported_product: reported_product,
         reported_driver: reported_driver,
