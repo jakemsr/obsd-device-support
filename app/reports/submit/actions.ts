@@ -176,10 +176,10 @@ export async function reportSubmission(formData: FormData): Promise<ActionResult
         }
       });
     }
-  } catch (error) {
+  } catch {
     return {
       ok: false,
-      error: (error as Error).message
+      error: "An error occurred while submitting report"
     };
   }
 
