@@ -155,7 +155,7 @@ export default async function DeviceCard({ id }: { id: string }) {
           {device.other_device_names.length === 0 ? (
             <span>No known other names</span>
           ) : (
-          device.other_device_names.map((otherName, index) => (
+          device.other_device_names.map((otherName) => (
             <div
               key={otherName.id}
               className="mb-2"
