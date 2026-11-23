@@ -33,7 +33,7 @@ async function main() {
       }
     });
 
-    const newSources = await prisma.report_sources.createMany({
+    await prisma.report_sources.createMany({
       data: report.sources.map(source => ({
         report_id: newReport.id,
         name: source.name,
@@ -55,14 +55,14 @@ async function main() {
       }
     });
 
-    const newReportedIssues = await prisma.reported_issues.createMany({
+    await prisma.reported_issues.createMany({
       data: device.reported_issues.map(issue => ({
         reported_device_id: newReportedDevice.id,
         description: issue.description,
       })),
     });
 
-    const newReportedOtherDeviceNames = await prisma.reported_other_device_names.createMany({
+    await prisma.reported_other_device_names.createMany({
       data: device.reported_other_device_names.map(name => ({
         reported_device_id: newReportedDevice.id,
         vendor_name: name.vendor_name,
