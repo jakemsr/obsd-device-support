@@ -33,7 +33,7 @@ export async function submitReview(formData: FormData): Promise<ActionResult<str
         notes: note
       }
     });
-  } catch (err) {
+  } catch {
     return {
       ok: false,
       error: "An error occurred while saving the review"

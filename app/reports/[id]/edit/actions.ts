@@ -135,7 +135,7 @@ export async function updateReportSource(formData: FormData): Promise<ActionResu
         report_element_superseded_by_id: newSource.id,
       }
     });
-  } catch (err) {
+  } catch {
     return {
       ok: false,
       error: "Something went wrong while updating the report source"
@@ -239,7 +239,7 @@ export async function updateReportedDevice(formData: FormData): Promise<ActionRe
         reported_device_id: newDevice.id,
       }
     });
-  } catch (err) {
+  } catch {
     return {
       ok: false,
       error: "Something went wrong while updating the reported device"
@@ -324,7 +324,7 @@ export async function updateReportedIssues(formData: FormData): Promise<ActionRe
         }
       }
     }
-  } catch (err) {
+  } catch {
     return {
       ok: false,
       error: "Something went wrong while updating the reported issues"
@@ -413,7 +413,7 @@ export async function updateReportedOtherDeviceNames(formData: FormData): Promis
         }
       }
     }
-  } catch (err) {
+  } catch {
     return {
       ok: false,
       error: "Something went wrong while updating the reported other device names"
