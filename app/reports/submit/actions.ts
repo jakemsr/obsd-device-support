@@ -3,34 +3,15 @@
 import { ActionResult } from '@/lib/local-types';
 import prisma from '@/lib/prisma';
 import { source_type, support_type } from '@/app/generated/prisma/browser';
-import { normalizeDeviceId } from '@/lib/device-ids';
 import { getUserId } from '@/lib/check-user-auth';
 import { z } from 'zod';
+import {
+  formatFieldName,
+  requiredString,
+  deviceIdSchema,
+  countSchema
+} from '@/lib/zod-helpers';
 
-function formatFieldName(path: PropertyKey[]): string {
-  const key = String(path[path.length - 1] ?? "Field");
-  return key
-    .replace(/([A-Z])/g, " $1")      // split camelCase
-    .replace(/[_-]+/g, " ")          // split snake_case / kebab-case
-    .replace(/\b[a-z]/g, (char) => char.toUpperCase())
-    .trim();
-}
-
-const requiredString = z.string()
-  .refine(value => value.trim().length > 0, 'Required');
-const deviceIdSchema = z.string().transform((value, ctx) => {
-  try {
-    return normalizeDeviceId(value);
-  } catch (error) {
-    const message = (error instanceof Error) ? error.message : String(error);
-    ctx.addIssue({ code: 'custom', message: message });
-    return z.NEVER;
-  }
-});
-const countSchema = z.string()
-  .regex(/^(0|[1-9]\d*)$/, 'Expected a non-negative integer')
-  .transform(Number)
-  .refine(Number.isSafeInteger, 'Count is too large');
 
 const reportSchema = z.object({
   user_id: requiredString,
