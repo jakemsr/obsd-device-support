@@ -6,12 +6,16 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
 import { roles } from '@/app/generated/prisma/enums'
 import type { ActionResult } from '@/lib/local-types'
+import { formatFieldName, requiredString } from '@/lib/zod-helpers';
+import { z } from 'zod';
 
+
+const updateRoleSchema = z.object({
+  userId: requiredString,
+  role: z.enum(roles)
+});
 
 export async function updateRole(formData: FormData): Promise<ActionResult<string>> {
-
-  const userId = formData.get("userId") as string;
-  const newRole = formData.get("role") as roles;
 
   const currentUser = await getCurrentUser();
 
@@ -22,21 +26,23 @@ export async function updateRole(formData: FormData): Promise<ActionResult<strin
     };
   }
 
-  if (!userId || !newRole) {
-    return {
-      ok: false,
-      error: "User ID or role is missing"
-    };
+  const result = updateRoleSchema.safeParse({
+    userId: formData.get("userId"),
+    role: formData.get("role"),
+  });
+  if (!result.success) {
+    const issue = result.error.issues[0];
+    return { ok: false, error: `${formatFieldName(issue.path)}: ${issue.message}` };
   }
 
   try {
     await prisma.user.update({
-      where: { id: userId },
-      data: { role: newRole },
+      where: { id: result.data.userId },
+      data: { role: result.data.role },
     });
-  } catch (err) {
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      if (err.code === "P2025") {
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2025") {
         return {
           ok: false,
           error: "The user does not exist"
