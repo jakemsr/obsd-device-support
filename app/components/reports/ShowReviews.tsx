@@ -1,6 +1,7 @@
 import type { AuthSession, ReportReview } from "@/lib/local-types";
 import StartReviewButton from '@/app/components/report-reviews/StartReviewButton';
 import { LinkButton } from '@/app/components/Button';
+import { roles } from '@/app/generated/prisma/enums';
 import Link from 'next/link';
 
 
@@ -21,18 +22,19 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
   const userId = session?.user?.id ?? '';
 
   const addReview = userId !== '' &&
+    session?.user.role === roles.editor &&
     reviews.every(review => review.reviewer.id !== userId);
 
   return (
-    <div className="px-4">
-      {showReviews.length > 0 && (
-        <div className="mt-4">
-          Reviews:
+    <div className="mt-4">
+      <div className="font-bold">
+        Reviews:
+      </div>
+      <div className="px-4">
+        {showReviews.length > 0 ? (
+          <>
           {showReviews.map((review, index) => (
-            <div
-              className="px-4 border-t"
-              key={review.id}
-            >
+            <div key={review.id}>
               Review #{index + 1}
               <div>Reviewer: {review.reviewer.email}</div>
               <div>Created At: {review.created_at.toDateString()}</div>
@@ -51,13 +53,16 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
               )}
             </div>
           ))}
-          {addReview && (
-            <div className="mt-4">
-              <StartReviewButton reportId={reportId} userId={userId} />
-            </div>
-          )}
-        </div>
+          </>
+        ) : (
+          <div>No reviews yet.</div>
       )}
+        {addReview && (
+          <div className="mt-4">
+            <StartReviewButton reportId={reportId} userId={userId} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
