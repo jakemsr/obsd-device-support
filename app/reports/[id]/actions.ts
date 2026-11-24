@@ -7,36 +7,36 @@ import prisma from "@/lib/prisma";
 
 export async function getFullReport(reportId: string): Promise<ActionResult<FullReport | null>> {
   try {
-  const report: FullReport | null = await prisma.reports.findUnique({
-    where: {
-      id: BigInt(reportId),
-    },
-    include: {
-      sources: {
-        where: {
-          report_element_status: "current",
-        },
-        include: {
-          hwinspect_report: true,
-          form_report: true,
-        },
+    const report: FullReport | null = await prisma.reports.findUnique({
+      where: {
+        id: BigInt(reportId),
       },
-      reported_devices: {
-        where: {
-          report_element_status: "current",
+      include: {
+        sources: {
+          where: {
+            report_element_status: "current",
+          },
+          include: {
+            hwinspect_report: true,
+            form_report: true,
+          },
         },
-        include: {
-          reported_issues: {
-            where: { report_element_status: "current" },
+        reported_devices: {
+          where: {
+            report_element_status: "current",
           },
-          reported_other_device_names: {
-            where: { report_element_status: "current" },
-          },
+          include: {
+            reported_issues: {
+              where: { report_element_status: "current" },
+            },
+            reported_other_device_names: {
+              where: { report_element_status: "current" },
+            },
+          }
         }
       }
-    }
-  });
-  return { ok: true, data: report };
+    });
+    return { ok: true, data: report };
   } catch {
     return { ok: false, error: "Error fetching report" };
   }
@@ -54,9 +54,9 @@ export async function getReportDevices(reportId: bigint) {
         },
       },
     },
-   });
+  });
 
-   return report?.reported_devices ?? [];
+  return report?.reported_devices ?? [];
 }
 
 
@@ -94,5 +94,4 @@ export async function getMatchedDevices(
   }
 
   return matchMap;
-
 }
