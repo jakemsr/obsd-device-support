@@ -15,16 +15,17 @@ interface ReportDisplayProps {
 
 const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
 
-  const report = await getFullReport(id);
+  const result = await getFullReport(id);
 
-  if (!report) {
-    return (
-      <div>
-        Report {id} not found!
-      </div>
-    );
+  if (!result.ok) {
+    return <div>{result.error}</div>;
   }
 
+  if (!result.data) {
+    return <div>Report {id} not found!</div>
+  }
+
+  const report = result.data;
   const session = await sessionPromise;
 
   if (!session || !session.user ||

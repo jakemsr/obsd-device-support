@@ -1,13 +1,15 @@
 'use server';
 
 import type { FullDeviceInfo, FullReport } from '@/lib/local-types';
+import type { ActionResult } from '@/lib/local-types';
 import prisma from "@/lib/prisma";
 
 
-export async function getFullReport(id: string) {
+export async function getFullReport(reportId: string): Promise<ActionResult<FullReport | null>> {
+  try {
   const report: FullReport | null = await prisma.reports.findUnique({
     where: {
-      id: BigInt(id),
+      id: BigInt(reportId),
     },
     include: {
       sources: {
@@ -34,8 +36,10 @@ export async function getFullReport(id: string) {
       }
     }
   });
-
-  return report;
+  return { ok: true, data: report };
+  } catch {
+    return { ok: false, error: "Error fetching report" };
+  }
 }
 
 
