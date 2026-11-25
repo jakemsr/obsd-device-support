@@ -2,19 +2,21 @@
 
 import { FullDeviceInfo } from "@/lib/local-types";
 import { support_type } from "@/app/generated/prisma/enums";
-import { getDriverList, updateDevice, type DriverListEntry } from "@/app/device/edit/[id]/actions";
-import { ChangeEvent, use, useEffect, useState } from "react";
+import { updateDevice, type DriverListEntry } from "@/app/device/edit/[id]/actions";
+import { ChangeEvent, use, useState } from "react";
 import { Button, LoadingSpinner } from "@/app/components/Button";
 import { toast } from "sonner";
 
 
 interface EditDeviceProps {
   devicePromise: Promise<FullDeviceInfo | null>;
+  driverListPromise: Promise<DriverListEntry[]>;
 }
 
-const EditDevice = ({ devicePromise }: EditDeviceProps) => {
+const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
 
   const device = use(devicePromise);
+  const driverList = use(driverListPromise);
 
   interface valueField {
     value: string;
@@ -52,12 +54,6 @@ const EditDevice = ({ devicePromise }: EditDeviceProps) => {
   };
 
   const [loading, setLoading] = useState<boolean>(false);
-
-  const [driverList, setDriverList] = useState<DriverListEntry[]>([]);
-
-  useEffect(() => {
-    getDriverList().then(setDriverList);
-  }, []);
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();

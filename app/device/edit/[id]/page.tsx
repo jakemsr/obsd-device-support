@@ -3,6 +3,7 @@ import EditDevice from "@/app/components/device/EditDevice";
 import { getCurrentUser } from "@/lib/check-user-auth";
 import type { AuthUser, FullDeviceInfo } from "@/lib/local-types";
 import { Suspense } from "react";
+import { getDriverList } from "./actions";
 
 
 export default async function Page({
@@ -33,6 +34,8 @@ export default async function Page({
     },
   });
 
+  const driverListPromise = getDriverList();
+
   return (
     <div className="px-4">
       <h1 className="text-2xl font-bold mb-4">
@@ -40,7 +43,7 @@ export default async function Page({
       </h1>
 
       <Suspense fallback={<div>Loading device...</div>}>
-        <EditDevice devicePromise={devicePromise} />
+        <EditDevice devicePromise={devicePromise} driverListPromise={driverListPromise} />
       </Suspense>
 
     </div>
