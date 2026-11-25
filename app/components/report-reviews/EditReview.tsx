@@ -46,29 +46,31 @@ const EditReview = ({ review }: EditReviewProps) => {
 
   return (
     <div className="px-4 mt-2">
-      Edit Review:
-      <div className="grid grid-cols-2 border-t py-2">
+      <div className="font-bold">
+        Edit Review:
+      </div>
+      <div className="grid grid-cols-2 py-2">
         <div>
-          <form className="px-4 grid grid-cols-3 gap-2" onSubmit={handleSubmit}>
+          <form className="px-4 grid grid-cols-3" onSubmit={handleSubmit}>
             <input type="hidden" name="reviewId" value={review.id.toString()} />
-            <div>
-              Review Notes:
+            <div className="col-span-3 font-bold">
+              Notes:
             </div>
-            <div className="col-span-2">
+            <div className="col-span-3">
               <textarea
                 name="notes"
                 defaultValue={review.notes ?? ""}
                 className="w-80 h-20"
               />
             </div>
-            <div>
-              Review Completed:
+            <div className="font-bold">
+              Completed:
             </div>
             <div className="col-span-2">
               <input type="checkbox" name="completed" defaultChecked={review.completed_at !== null} />
             </div>
-            <div>
-              Report Status:
+            <div className="font-bold">
+              Status:
             </div>
             <div className="col-span-2">
               <select name="reportStatus" defaultValue={review.report.status ?? ""} >
@@ -88,7 +90,9 @@ const EditReview = ({ review }: EditReviewProps) => {
           </form>
         </div>
         <div>
-          Matched Devices:
+          <div className="font-bold">
+            Matched Devices:
+          </div>
           {matchedDevices ? (
             Array.from(matchedDevices.entries()).map(([deviceId, devices]) => (
               <div
@@ -98,15 +102,15 @@ const EditReview = ({ review }: EditReviewProps) => {
                 <ul>
                   {devices.map((device) => (
                     <li key={device.id.toString()}>
+                      {device.vendors.name} {device.name}
+                      &nbsp;
                       <Link
                         href={`/device/edit/${device.id.toString()}`}
                         target="_blank"
                         className="text-link hover:underline"
                       >
-                        Edit Device {device.id.toString()}:
+                        Edit
                       </Link>
-                      <br />
-                      {device.vendors.name} {device.name}
                     </li>
                   ))}
                 </ul>
