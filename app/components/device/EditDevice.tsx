@@ -137,6 +137,9 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
       </div>
       <div className="col-span-2">
         <input type="hidden" name="issues_count" value={String(device.issues.length)} />
+        {device.issues.length === 0 &&
+          addedIssueFields.length === 0 &&
+          <div>No issues</div>}
         {device.issues.map((issue, index) => (
           <div key={index}>
             <input type="hidden" name={`issue_id_${index}`} value={String(issue.id)} />
@@ -173,8 +176,11 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
       <div className="font-bold">
         Other Device Names:
       </div>
-      <input type="hidden" name="other_device_names_count" value={String(device.other_device_names.length)} />
-      <div className="col-span-2">
+      <div className="col-span-3 mb-2 px-4">
+        <input type="hidden" name="other_device_names_count" value={String(device.other_device_names.length)} />
+        {device.other_device_names.length === 0 &&
+          addedOtherDeviceNameVendorFields.length === 0 &&
+          <div>No other names</div>}
         {device.other_device_names.map((name, index) =>
           <div key={index}>
             <input type="hidden" name={`other_device_name_id_${index}`} value={String(name.id)} />
