@@ -110,7 +110,7 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
         Support Status:
       </div>
       <div className="col-span-2">
-        <select name="support_status" id="support_status" defaultValue={device.support_status}>
+        <select name="support_status" defaultValue={device.support_status}>
           {Object.values(support_type).map(type => (
             <option key={type} value={type}>
               {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -123,7 +123,7 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
         Driver:
       </div>
       <div className="col-span-2">
-        <select name="driver_id" id="driver_id" defaultValue={String(device.drivers.id)}>
+        <select name="driver_id" defaultValue={String(device.drivers.id)}>
           {driverList.map(driver => (
             <option key={driver.id} value={String(driver.id)}>
               {driver.name}
