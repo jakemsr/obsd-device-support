@@ -38,8 +38,10 @@ export default async function Page({
   });
 
   return (
-    <>
-      <div>Edit Report Review ID: {id}</div>
+    <div className="px-4">
+      <div className="mb-4 text-2xl font-bold text-center">
+        <h1>Edit Report Review</h1>
+      </div>
       <Suspense fallback={<div>Loading Report...</div>}>
         <ReportDisplay id={String(review.report_id)} sessionPromise={sessionPromise} />
       </Suspense>
@@ -54,7 +56,7 @@ export default async function Page({
       </Suspense>
 
       {review.completed_at === null && <EditReview review={review} />}
-    </>
+    </div>
   );
 
 }
