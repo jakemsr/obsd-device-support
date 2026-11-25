@@ -32,18 +32,44 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
       </div>
       <div className="px-4">
         {showReviews.length > 0 ? (
-          <>
+          <div className="sm:max-w-1/2">
           {showReviews.map((review, index) => (
-            <div key={review.id}>
-              Review #{index + 1}
-              <div>Reviewer: {review.reviewer.email}</div>
-              <div>Created At: {review.created_at.toDateString()}</div>
+            <div
+              key={review.id}
+              className="grid grid-cols-3"
+            >
+              <div className="font-bold col-span-3">
+                Review #{index + 1}
+              </div>
+              <div className="font-bold col-span-1">
+                Reviewer:
+              </div>
+              <div className="col-span-2">
+                {review.reviewer.email}
+              </div>
+              <div className="font-bold col-span-1">
+                Created At:
+              </div>
+              <div className="col-span-2">
+                {review.created_at.toLocaleString()}</div>
               {review.completed_at && (
-                <div>Completed At: {review.completed_at.toDateString()}</div>
+                <>
+                <div className="font-bold col-span-1">
+                  Completed At:
+                </div>
+                <div className="col-span-2">
+                  {review.completed_at.toLocaleString()}
+                </div>
+                </>
               )}
-              <div>Notes: {review.notes}</div>
+              <div className="font-bold col-span-1">
+                Notes:
+              </div>
+              <div className="col-span-2">
+                {review.notes}
+              </div>
               {review.reviewer_id === userId && review.completed_at === null && (
-                <div>
+                <div className="col-span-3 w-fit mt-2">
                   <Link href={`/report-reviews/edit/${review.id}`}>
                     <LinkButton>
                       Update Review
@@ -53,7 +79,7 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
               )}
             </div>
           ))}
-          </>
+          </div>
         ) : (
           <div>No reviews yet.</div>
       )}

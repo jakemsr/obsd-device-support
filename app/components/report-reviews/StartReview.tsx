@@ -25,13 +25,14 @@ const StartReview = ({ reportId, userId }: StartReviewProps) => {
 
   return (
     <div>
-      <p>New review for report: {reportId}</p>
+      Start new review
       <form onSubmit={handleSubmit}>
         <input type="hidden" name="reportId" value={reportId.toString()} />
         <input type="hidden" name="userId" value={userId} />
         <textarea
           name="note"
           placeholder="Write your review here..."
+          className="w-80 h-20"
         />
         <Button type="submit">
           Save Review
