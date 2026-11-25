@@ -3,11 +3,11 @@ import DeviceDisplay from "@/app/components/reports/DeviceDisplay";
 import type { FullReport } from "@/lib/local-types";
 
 
-interface ShowDevicesProps {
+interface ShowReportDevicesProps {
   report: FullReport;
 } 
 
-const ShowDevices = async ({ report }: ShowDevicesProps) => {
+const ShowReportDevices = async ({ report }: ShowReportDevicesProps) => {
 
   const matchMap = await getMatchedDevices(report.reported_devices);
 
@@ -37,4 +37,4 @@ const ShowDevices = async ({ report }: ShowDevicesProps) => {
   );
 }
 
-export default ShowDevices;
+export default ShowReportDevices;

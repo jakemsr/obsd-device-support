@@ -4,7 +4,7 @@ import { LinkButton } from "@/app/components/Button";
 import { Suspense } from "react";
 import { getFullReport } from "@/app/reports/[id]/actions";
 import SourceDisplay from "@/app/components/reports/SourceDisplay";
-import ShowDevices from "@/app/components/reports/ShowDevices";
+import ShowReportDevices from "@/app/components/reports/ShowReportDevices";
 import { AuthSession } from "@/lib/local-types";
 
 
@@ -114,7 +114,7 @@ const ReportDisplay = async ({ id, sessionPromise }: ReportDisplayProps) => {
       )}
 
       <Suspense fallback={<div className="px-4 mt-2">Loading devices...</div>}>
-        <ShowDevices report={report} />
+        <ShowReportDevices report={report} />
       </Suspense>
 
     </div>
