@@ -29,19 +29,19 @@ const DeviceDisplay = ({ device, matchedDevices }: DeviceDisplayProps) => {
           {device.product_id}
         </div>
         <div className="font-bold">
-          Reported Vendor:
+          Vendor:
         </div>
         <div className="col-span-2">
           {device.reported_vendor}
         </div>
         <div className="font-bold">
-          Reported Product:
+          Product:
         </div>
         <div className="col-span-2">
           {device.reported_product}
         </div>
         <div className="font-bold">
-          Reported Driver:
+          Driver:
         </div>
         <div className="col-span-2">
           {device.reported_driver}
