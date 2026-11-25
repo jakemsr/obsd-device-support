@@ -132,10 +132,10 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
         </select>
       </div>
 
-      <div className="font-bold">
+      <div className="col-span-3 font-bold">
         Issues:
       </div>
-      <div className="col-span-2">
+      <div className="col-span-3 mb-2 px-4">
         <input type="hidden" name="issues_count" value={String(device.issues.length)} />
         {device.issues.length === 0 &&
           addedIssueFields.length === 0 &&
@@ -173,7 +173,7 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
         </Button>
       </div>
 
-      <div className="font-bold">
+      <div className="font-bold col-span-3">
         Other Device Names:
       </div>
       <div className="col-span-3 mb-2 px-4">
@@ -241,11 +241,9 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
             </div>
           </div>
         ))}
-        <div className="mt-2">
-          <Button type="button" onClick={addOtherDeviceNameField}>
-            Add Other Device Name
-          </Button>
-        </div>
+        <Button type="button" onClick={addOtherDeviceNameField}>
+          Add Other Device Name
+        </Button>
       </div>
 
       <Button type="submit" disabled={loading}>
