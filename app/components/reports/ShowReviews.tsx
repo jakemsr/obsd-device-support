@@ -22,6 +22,7 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
   const userId = session?.user?.id ?? '';
 
   const addReview = userId !== '' &&
+    !editingReviewId &&
     session?.user.role === roles.editor &&
     reviews.every(review => review.reviewer.id !== userId);
 
