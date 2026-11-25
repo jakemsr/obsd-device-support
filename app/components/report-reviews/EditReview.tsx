@@ -114,6 +114,15 @@ const EditReview = ({ review }: EditReviewProps) => {
                     </li>
                   ))}
                 </ul>
+                {devices.length === 0 && (
+                  <Link
+                    href={`/device/add-reported/${deviceId}`}
+                    className="text-link hover:underline"
+                    target="_blank"
+                  >
+                    Add reported device
+                  </Link>
+                )}
               </div>
             ))
           ) : (
