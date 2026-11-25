@@ -125,7 +125,7 @@ const EditDevice = ({ devicePromise, driverListPromise }: EditDeviceProps) => {
       <div className="col-span-2">
         <select name="driver_id" defaultValue={String(device.drivers.id)}>
           {driverList.map(driver => (
-            <option key={driver.id} value={String(driver.id)}>
+            <option key={String(driver.id)} value={String(driver.id)}>
               {driver.name}
             </option>
           ))}
