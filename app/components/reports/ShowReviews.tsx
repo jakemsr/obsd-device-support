@@ -82,8 +82,10 @@ const ShowReviews = async ({ reviewsPromise, sessionPromise, reportId, editingRe
           ))}
           </div>
         ) : (
-          <div>No reviews yet.</div>
-      )}
+          <>
+            {reviews.length === 0 && <div>No reviews yet.</div>}
+          </>
+        )}
         {addReview && (
           <div className="mt-4">
             <StartReviewButton reportId={reportId} userId={userId} />
